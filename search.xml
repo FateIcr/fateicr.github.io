@@ -1,8 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2019%2F07%2F19%2Fhelloworld%2F</url>
-    <content type="text"><![CDATA[Just a test]]></content>
-  </entry>
+<search> 
+  
+  
+    
+    <entry>
+      <title>My blog building experience</title>
+      <link href="/2019/07/19/My-blog-building-experience/"/>
+      <url>/2019/07/19/My-blog-building-experience/</url>
+      
+        <content type="html"><![CDATA[<p>It’s my first time to build a blog, maybe my experience can help the green hands.<br>Operation System: macOS<br>2019.7.19 update, Github+hexo</p><h1 id="preparatory-work"><a href="#preparatory-work" class="headerlink" title="preparatory work"></a>preparatory work</h1><h2 id="install-git"><a href="#install-git" class="headerlink" title="install git"></a>install git</h2><p>download URL: <a href="https://git-scm.com/download" target="_blank" rel="noopener">https://git-scm.com/download</a><br>After installing git successfully, we need to bind git and our Github account.</p><ul><li><p>open iTerm</p></li><li><p>set the configuration information</p>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;name&quot;</span><br><span class="line">git config --global user.email &quot;email&quot;</span><br></pre></td></tr></table></figure></li><li><p>create ssh key file (the email should be the same as one above), copy the content of id_rsa.pub</p>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;email&quot;</span><br></pre></td></tr></table></figure></li><li><p>open <a href="https://github.com/settings/keys" target="_blank" rel="noopener">https://github.com/settings/keys</a>, new ssh key. Paste the content of id_rsa.pub into the key, and then click “add ssh key”.</p></li><li><p>check Github public key, open iTerm</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh git@github.com</span><br></pre></td></tr></table></figure></li></ul><h2 id="install-node-js"><a href="#install-node-js" class="headerlink" title="install node.js"></a>install node.js</h2><p>download url: <a href="https://nodejs.org/en/download/" target="_blank" rel="noopener">https://nodejs.org/en/download/</a></p><h2 id="install-hexo"><a href="#install-hexo" class="headerlink" title="install hexo"></a>install hexo</h2><p>Hexo is the framework of our blog site.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure><h1 id="build-a-blog"><a href="#build-a-blog" class="headerlink" title="build a blog"></a>build a blog</h1><h2 id="build-locally"><a href="#build-locally" class="headerlink" title="build locally"></a>build locally</h2><ul><li><p>create a new folder named “blog”</p></li><li><p>generate a hexo template</p>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd blog</span><br><span class="line">hexo init</span><br></pre></td></tr></table></figure></li><li><p>run <code>hexo server</code>, we can see the blog have been built successfully through localhost:4000  </p></li></ul><h2 id="link-blog-to-Github"><a href="#link-blog-to-Github" class="headerlink" title="link blog to Github"></a>link blog to Github</h2><ul><li><p>create a new project named “github_name.github.io”</p></li><li><p>open _config.yml, update deploy</p>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">    type: git</span><br><span class="line">    repository: https://github.com/github_name/github_name.github.io.git</span><br><span class="line">    branch: master</span><br></pre></td></tr></table></figure></li><li><p>install plugin</p>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">    npm install hexo-deployer-git --save</span><br><span class="line">    ```  </span><br><span class="line">* generate static files locally</span><br></pre></td></tr></table></figure><p>  hexo g</p>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">* push to Github</span><br><span class="line"></span><br><span class="line">    ``` </span><br><span class="line">    hexo d</span><br></pre></td></tr></table></figure></li><li><p>now we can visit <a href="https://github_name.github.io" target="_blank" rel="noopener">https://github_name.github.io</a></p></li></ul><h1 id="update-blog-content"><a href="#update-blog-content" class="headerlink" title="update blog content"></a>update blog content</h1><h2 id="update-article"><a href="#update-article" class="headerlink" title="update article"></a>update article</h2><ul><li><p>run <code>hexo new &quot;my first blog&quot;</code>, then we can find a .md file in the source/_posts folder</p></li><li><p>edit the file (Markdown)</p></li><li><p>push to Github</p>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure></li></ul><h2 id="add-menu"><a href="#add-menu" class="headerlink" title="add menu"></a>add menu</h2><ul><li><p>edit /theme/XXX/_config.yml, find “menu:”, add the menu you want</p></li><li><p>add pages</p>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new pages &quot;menu_name&quot;</span><br></pre></td></tr></table></figure></li></ul><h2 id="add-pictures-in-the-article"><a href="#add-pictures-in-the-article" class="headerlink" title="add pictures in the article"></a>add pictures in the article</h2><p>create a folder, “/theme/XXX/source/upload_image”, and save the pictures here</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![](/upload_image/a.jpg)</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> web </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> web </tag>
+            
+            <tag> hexo </tag>
+            
+            <tag> Github </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
 </search>
