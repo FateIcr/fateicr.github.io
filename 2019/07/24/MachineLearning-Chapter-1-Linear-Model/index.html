@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    }
+  };
+</script>
+
+  <meta name="description" content="线性模型 概述 对于样本\(\stackrel{\rightarrow}{x}\)，用列向量表示该样本\(\stackrel{\rightarrow}{x}={(x^{(1)},x^{(2)},…,x^{(n)})}^{T}\)。样本有\(n\)种特征，用\(x^{(i)}\)来表示样本的第\(i\)个特征。 线性模型(linear model)的形式为： \[f(\stackrel{\right">
+<meta name="keywords" content="machine learning,notes,linear model,python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MachineLearning Chapter-1 Linear Model">
+<meta property="og:url" content="http://yoursite.com/2019/07/24/MachineLearning-Chapter-1-Linear-Model/index.html">
+<meta property="og:site_name" content="Rian Ng">
+<meta property="og:description" content="线性模型 概述 对于样本\(\stackrel{\rightarrow}{x}\)，用列向量表示该样本\(\stackrel{\rightarrow}{x}={(x^{(1)},x^{(2)},…,x^{(n)})}^{T}\)。样本有\(n\)种特征，用\(x^{(i)}\)来表示样本的第\(i\)个特征。 线性模型(linear model)的形式为： \[f(\stackrel{\right">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/20190724_ML_Ridge.png">
+<meta property="og:updated_time" content="2019-07-24T15:01:07.008Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MachineLearning Chapter-1 Linear Model">
+<meta name="twitter:description" content="线性模型 概述 对于样本\(\stackrel{\rightarrow}{x}\)，用列向量表示该样本\(\stackrel{\rightarrow}{x}={(x^{(1)},x^{(2)},…,x^{(n)})}^{T}\)。样本有\(n\)种特征，用\(x^{(i)}\)来表示样本的第\(i\)个特征。 线性模型(linear model)的形式为： \[f(\stackrel{\right">
+<meta name="twitter:image" content="http://yoursite.com/images/20190724_ML_Ridge.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Rian Ng" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/07/24/MachineLearning-Chapter-1-Linear-Model/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  
+  <title>MachineLearning Chapter-1 Linear Model | Rian Ng</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Rian Ng</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>Commonweal 404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <a href="https://github.com/fateicr" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/24/MachineLearning-Chapter-1-Linear-Model/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rian Ng">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rian Ng">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MachineLearning Chapter-1 Linear Model
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-24 16:02:02 / Modified: 23:01:07" itemprop="dateCreated datePublished" datetime="2019-07-24T16:02:02+08:00">2019-07-24</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/2019/07/24/MachineLearning-Chapter-1-Linear-Model/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/24/MachineLearning-Chapter-1-Linear-Model/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+                 Views:  
+                <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+            </span>
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="线性模型">线性模型</h1>
+<h2 id="概述">概述</h2>
+<p>对于样本<span class="math inline">\(\stackrel{\rightarrow}{x}\)</span>，用列向量表示该样本<span class="math inline">\(\stackrel{\rightarrow}{x}={(x^{(1)},x^{(2)},…,x^{(n)})}^{T}\)</span>。样本有<span class="math inline">\(n\)</span>种特征，用<span class="math inline">\(x^{(i)}\)</span>来表示样本的第<span class="math inline">\(i\)</span>个特征。</p>
+<p>线性模型(linear model)的形式为： <span class="math display">\[f(\stackrel{\rightarrow}{x})=\stackrel{\rightarrow}{w}·\stackrel{\rightarrow}{x}+b\]</span></p>
+<p>其中<span class="math inline">\(\stackrel{\rightarrow}{w}={(w^{(1)},w^{(2)},…,w^{(n)})}^{T}\)</span>为每个特征对应的权重生成的权重向量。权重向量直观地表达了每个特征在预测中的重要性。</p>
+<p>线性模型其实就是一系列一次特征的线性组合，在二维层面是一条直线，三维层面则是一个平面，以此类推到<span class="math inline">\(n\)</span>维空间，这样可以理解为广义线性模型。</p>
+<p>常见的广义线性模型包括岭回归、lasso回归、Elastic Net、逻辑回归、线性判别分析等。 <a id="more"></a></p>
+<h2 id="算法">算法</h2>
+<h3 id="普通线性回归">普通线性回归</h3>
+<p>线性回归是一种回归分析技术，回归分析本质上就是找出因变量和自变量之间的联系。回归分析的因变量应该是连续变量，如果因变量为离散变量，则问题转化为分类问题，回归分析是一个监督学习的问题。</p>
+<p>给定数据集<span class="math inline">\(T=\{(\stackrel{\rightarrow}{x}_1,y_1),(\stackrel{\rightarrow}{x}_2,y_2),…,(\stackrel{\rightarrow}{x}_N,y_N)\}\)</span>, <span class="math inline">\(\stackrel{\rightarrow}{x}_i\in X\subseteq R^n\)</span>, <span class="math inline">\(\stackrel{\rightarrow}{y}_i\in Y\subseteq R\)</span>, <span class="math inline">\(i=1,2,…,N\)</span>。其中<span class="math inline">\(\stackrel{\rightarrow}{x}={(x^{(1)},x^{(2)},…,x^{(n)})}^{T}\)</span>。需要学习的模型为： <span class="math display">\[f(\stackrel{\rightarrow}{x})=\stackrel{\rightarrow}{w}·\stackrel{\rightarrow}{x}+b\]</span></p>
+<p>即：根据已知的数据集<span class="math inline">\(T\)</span>来计算参数<span class="math inline">\(\stackrel{\rightarrow}{w}\)</span>和<span class="math inline">\(b\)</span>。</p>
+<p>对于给定的样本<span class="math inline">\(\stackrel{\rightarrow}{x}_i\)</span>，其预测值为<span class="math inline">\(\hat{y}_i=f(\stackrel{\rightarrow}{x}_i)=\stackrel{\rightarrow}{w}·\stackrel{\rightarrow}{x}+b\)</span>。采用平方损失函数，在训练集<span class="math inline">\(T\)</span>上，模型的损失函数为： <span class="math display">\[L(f)=\sum_{i=1}^{N}(\hat{y}_i-y_i)^2=\sum_{i=1}^{N}(\stackrel{\rightarrow}{w}·\stackrel{\rightarrow}{x}+b-y_i)^2\]</span></p>
+<p>我们的目标是损失函数最小化，即： <span class="math display">\[(\stackrel{\rightarrow}{w}^*,b^*)=\arg\min_{\stackrel{\rightarrow}{w},b}\sum_{i=1}^{N}(\stackrel{\rightarrow}{w}·\stackrel{\rightarrow}{x}+b-y_i)^2\]</span></p>
+<p>可以利用梯度下降法来求解上述最优化问题的数值解。在使用梯度下降法的时候，要注意特征归一化(Feature Scaling)，这也是许多机器学习模型都要注意的问题。特征归一化可以有效地提升模型的收敛速度和模型精度。</p>
+<p>上述最优化问题实际上是有解析解的，可以用最小二乘法来求解解析解，该问题称为多元线性回归(multivariate linear regression)。</p>
+<p>令： <span class="math display">\[\vec{\tilde{w}}=(w^{(1)},w^{(2)},…,w^{(n)},b)^T=(\vec{w}^T,b)^T\\
+\vec{\tilde{x}}=(x^{(1)},x^{(2)},…,x^{(n)},1)^T=(\vec{x}^T,1)^T\\
+\vec{y}=(y_1,y_2,…,y_N)^T\]</span></p>
+<p>则有： <span class="math display">\[\sum_{i=1}^{N}(\stackrel{\rightarrow}{w}·\stackrel{\rightarrow}{x}+b-y_i)^2={(\vec{y}-(\vec{\tilde{x}}_1,\vec{\tilde{x}}_2,…,\vec{\tilde{x}}_N)^T\vec{\tilde{w}})}^T(\vec{y}-(\vec{\tilde{x}}_1,\vec{\tilde{x}}_2,…,\vec{\tilde{x}}_N)^T\vec{\tilde{w}})\]</span></p>
+<p>令： <span class="math display">\[\vec{x}=(\vec{\tilde{x}}_1,\vec{\tilde{x}}_2,…,\vec{\tilde{x}}_N)^T=\begin{bmatrix}\vec{\tilde{x}}_1^T\\\vec{\tilde{x}}_2^T\\…\\\vec{\tilde{x}}_N^T\end{bmatrix}=\begin{bmatrix}x_1^{(1)} &amp; x_1^{(2)} &amp; … &amp; x_1^{(n)} &amp; 1\\x_2^{(1)} &amp; x_2^{(2)} &amp; … &amp; x_2^{(n)} &amp; 1\\… &amp; … &amp; … &amp; … &amp; 1\\x_N^{(1)} &amp; x_N^{(2)} &amp; … &amp; x_N^{(n)} &amp; 1\end{bmatrix}\]</span></p>
+<p>则： <span class="math display">\[\vec{\tilde{w}}^*=\arg\min_{\vec{\tilde{w}}}(\vec{y}-\vec{x}\vec{\tilde{w}})^T(\vec{y}-\vec{x}\vec{\tilde{w}})\]</span></p>
+<p>令<span class="math inline">\(E_{\vec{\tilde{w}}}=(\vec{y}-\vec{x}\vec{\tilde{w}})^T(\vec{y}-\vec{x}\vec{\tilde{w}})\)</span>，求它的极小值。对<span class="math inline">\(\vec{\tilde{w}}\)</span>求导令导数为零，得到解析解： <span class="math display">\[\frac{\partial E_{\vec{\tilde{w}}}}{\partial \vec{\tilde{w}}}=2\vec{x}^T(\vec{x}\vec{\tilde{w}}-\vec{y})=\vec{0}\Longrightarrow \vec{x}^T\vec{x}\vec{\tilde{w}}=\vec{x}^T\vec{y}\]</span></p>
+<ul>
+<li>当<span class="math inline">\(\vec{x}^T\vec{x}\)</span>为满秩矩阵或者正定矩阵时，可得:<span class="math display">\[\vec{\tilde{w}}^*=(\vec{x}^T\vec{x})^{-1}\vec{x}^T\vec{y}\]</span>于是多元线性回归模型为：<span class="math display">\[f(\vec{\tilde{x}}_i)=\vec{\tilde{x}}^T_i\vec{\tilde{w}}^*\]</span></li>
+<li>当<span class="math inline">\(\vec{x}^T\vec{x}\)</span>不是满秩矩阵时。比如<span class="math inline">\(N&lt;n\)</span>（样本数量小于特征种类的数量），根据<span class="math inline">\(\vec{x}\)</span>的秩小于等于<span class="math inline">\((N,n)\)</span>中的最小值，即小于等于<span class="math inline">\(N\)</span>（矩阵的秩一定小于等于矩阵的行数和列数）；而矩阵<span class="math inline">\(\vec{x}^T\vec{x}\)</span>是<span class="math inline">\(n\times n\)</span>大小的，它的秩一定小于等于<span class="math inline">\(N\)</span>，因此不是满秩矩阵。此时存在多个解析解。常见的做法是引入正则化项，如<span class="math inline">\(L_1\)</span>正则化或者<span class="math inline">\(L_2\)</span>正则化，以<span class="math inline">\(L_2\)</span>正则化为例：<span class="math display">\[\vec{\tilde{w}}^*=\arg\min_{\vec{\tilde{w}}}[(\vec{y}-\vec{x}\vec{\tilde{w}})^T(\vec{y}-\vec{x}\vec{\tilde{w}})+\lambda||\vec{\tilde{w}}||_2^2]\]</span>其中，<span class="math inline">\(\lambda &gt;0\)</span>调整正则化项与均方误差的比例；<span class="math inline">\(||…||_2\)</span>为<span class="math inline">\(L_2\)</span>范数。</li>
+</ul>
+<p>根据上述原理，我们得到多元线性回归算法： * 输入：数据集 <span class="math inline">\(T=\{(\stackrel{\rightarrow}{x}_1,y_1),(\stackrel{\rightarrow}{x}_2,y_2),…,(\stackrel{\rightarrow}{x}_N,y_N)\},\)</span>$_iXR^n, <span class="math display">\[\stackrel{\rightarrow}{y}_i\in Y\subseteq R,\]</span>i=1,2,…,N<span class="math inline">\(，正则化项系数\)</span>&gt;0<span class="math inline">\(。 * 输出：\)</span><span class="math inline">\(f(\stackrel{\rightarrow}{x})=\stackrel{\rightarrow}{w}·\stackrel{\rightarrow}{x}+b\)</span>$ * 算法步骤： * 令：<span class="math display">\[\vec{\tilde{w}}=(w^{(1)},w^{(2)},…,w^{(n)},b)^T=(\vec{w}^T,b)^T\\\vec{\tilde{x}}=(x^{(1)},x^{(2)},…,x^{(n)},1)^T=(\vec{x}^T,1)^T\\\vec{y}=(y_1,y_2,…,y_N)^T\]</span>计算<span class="math display">\[\vec{x}=(\vec{\tilde{x}}_1,\vec{\tilde{x}}_2,…,\vec{\tilde{x}}_N)^T=\begin{bmatrix}\vec{\tilde{x}}_1^T\\\vec{\tilde{x}}_2^T\\…\\\vec{\tilde{x}}_N^T\end{bmatrix}=\begin{bmatrix}x_1^{(1)} &amp; x_1^{(2)} &amp; … &amp; x_1^{(n)} &amp; 1\\x_2^{(1)} &amp; x_2^{(2)} &amp; … &amp; x_2^{(n)} &amp; 1\\… &amp; … &amp; … &amp; … &amp; 1\\x_N^{(1)} &amp; x_N^{(2)} &amp; … &amp; x_N^{(n)} &amp; 1\end{bmatrix}\]</span> * 求解：<span class="math display">\[\vec{\tilde{w}}^*=\arg\min_{\vec{\tilde{w}}}[(\vec{y}-\vec{x}\vec{\tilde{w}})^T(\vec{y}-\vec{x}\vec{\tilde{w}})+\lambda||\vec{\tilde{w}}||_2^2]\]</span> * 最终得到模型：<span class="math display">\[f(\vec{\tilde{x}}_i)=\vec{\tilde{x}}^T_i\vec{\tilde{w}}^*\]</span></p>
+<h3 id="广义线性模型">广义线性模型</h3>
+<p>考虑单调可导函数<span class="math inline">\(h(·)\)</span>，令<span class="math inline">\(h(y)=\vec{w}^T\vec{x}+b\)</span>，这样得到的模型称为广义线性模型(generalized linear model)。</p>
+<p>广义线性模型的一个典型例子就是对数线性回归。当<span class="math inline">\(h(·)=\ln{(·)}\)</span>时当广义线性模型就是对数线性回归，即<span class="math display">\[\ln{y}=\vec{w}^T\vec{x}+b\]</span></p>
+<p>它是通过<span class="math inline">\(\exp(\vec{w}^T\vec{x}+b)\)</span>拟合<span class="math inline">\(y\)</span>的。它虽然称为广义线性回归，但实质上是非线性的。</p>
+<h3 id="逻辑回归">逻辑回归</h3>
+<p>上述内容都是在用线性模型进行回归学习，而线性模型也可以用于分类。考虑二类分类问题，给定数据集<span class="math inline">\(T=\{(\stackrel{\rightarrow}{x}_1,y_1),(\stackrel{\rightarrow}{x}_2,y_2),…,(\stackrel{\rightarrow}{x}_N,y_N)\},\)</span>$_iXR^n, <span class="math display">\[\stackrel{\rightarrow}{y}_i\in Y=\{0,1\},\]</span>i=1,2,…,N<span class="math inline">\(，其中\)</span>_i={(x_i<sup>{(1)},x_i</sup>{(2)},…,x_i<sup>{(n)})}</sup>{T}<span class="math inline">\(。我们需要知道\)</span>P(y/)<span class="math inline">\(，这里用条件概率的原因是：预测的时候都是已知\)</span><span class="math inline">\(，然后需要判断此时对应的\)</span>y$值。</p>
+<p>考虑到<span class="math inline">\(\vec{w}·\vec{x}+b\)</span>取值是连续的，因此它不能拟合离散变量。可以考虑用它来拟合条件概率<span class="math inline">\(P(y/\vec{x})\)</span>，因为概率的取值也是连续的。但是对于<span class="math inline">\(\vec{w}\neq \vec{0}\)</span>（若等于零向量则没有求解的价值），<span class="math inline">\(\vec{w}·\vec{x}+b\)</span>的取值是从<span class="math inline">\(-\infty \thicksim +\infty\)</span>，不符合概率取值为<span class="math inline">\(0\thicksim 1\)</span>，因此考虑采用广义线性模型，最理想的是单位阶跃函数：<span class="math display">\[P(y=1/\vec{x})=\left\{\begin{aligned}0,z&lt;0\\0.5,z=0\\1,z&gt;0\end{aligned}\right.,z=\vec{w}·\vec{x}+b\]</span></p>
+<p>但是阶跃函数不满足单调可导的性质，退而求其次，我们需要找一个可导的、与阶跃函数相似的函数。对数概率函数(logistic function)就是这样一个替代函数：<span class="math display">\[P(y=1/\vec{x})=\frac{1}{1+e^{-z}},z=\vec{w}·\vec{x}+b\]</span></p>
+<p>由于<span class="math inline">\(P(y=0/\vec{x})=1-P(y=1/\vec{x})\)</span>，则有：<span class="math inline">\(\ln{\frac{P(y=1/\vec{x})}{P(y=0/\vec{x})}}=z=\vec{w}·\vec{x}+b\)</span>。比值<span class="math inline">\(\frac{P(y=1/\vec{x})}{P(y=0/\vec{x})}\)</span>表示样本为正例的可能性比反例的可能性，称为概率(odds)，反映样本作为正例的相对可能性。概率大对数称为对数概率(log odds，也称为logit)。</p>
+<p>下面给出逻辑回归模型参数估计：给定训练数据集<span class="math inline">\(T=\{(\stackrel{\rightarrow}{x}_1,y_1),(\stackrel{\rightarrow}{x}_2,y_2),…,(\stackrel{\rightarrow}{x}_N,y_N)\}\)</span>，其中<span class="math inline">\(\vec{x}_i \in R^n,y_i \in \{0,1\}\)</span>。模型估计的原理：用极大似然估计法估计模型参数。</p>
+<p>为了便于讨论，我们将参数<span class="math inline">\(b\)</span>吸收进<span class="math inline">\(\vec{w}\)</span>中，令：<span class="math display">\[\vec{\tilde{w}}={(w^{(1)},w^{(2)},…,w^{(n)},b)}^{T}\in R^{n+1}\\\vec{\tilde{x}}={(x^{(1)},x^{(2)},…,x^{(n)},1)}^{T}\in R^{n+1}\]</span></p>
+<p>令<span class="math inline">\(P(Y=1/\vec{\tilde{x}})=\pi (\vec{\tilde{x}})=\frac{\exp (\vec{\tilde{w}}·\vec{\tilde{x}})}{1+\exp (\vec{\tilde{w}}·\vec{\tilde{x}})}\)</span>,<span class="math inline">\(P(Y= 0/\vec{\tilde{x}})=1-\pi (\vec{\tilde{x}})\)</span>，则似然函数为：<span class="math display">\[\prod_{i=1}^N[\pi (\vec{\tilde{x}}_i)]^{y_i}[1-\pi (\vec{\tilde{x}}_i)]^{1-y_i}\]</span></p>
+<p>对数似然函数为：<span class="math display">\[L(\vec{\tilde{w}})=\sum_{i=1}^N[y_i\log \pi (\vec{\tilde{x}}_i)+(1-y_i)\log (1-\pi (\vec{\tilde{x}}_i)]\\=\sum_{i=1}^N[y_i\log \frac{\pi (\vec{\tilde{x}}_i)}{1-\pi (\vec{\tilde{x}}_i)}+\log(1-\pi (\vec{\tilde{x}}_i))]\]</span></p>
+<p>又由于<span class="math inline">\(\pi (\vec{\tilde{x}}_i)=\frac{\exp (\vec{\tilde{w}}·\vec{\tilde{x}})}{1+\exp (\vec{\tilde{w}}·\vec{\tilde{x}})}\)</span>，因此：<span class="math display">\[L(\vec{\tilde{w}})=\sum_{i=1}^N[y_i(\vec{\tilde{w}}·\vec{\tilde{x}}_i)-\log (1+\exp(\vec{\tilde{w}}·\vec{\tilde{x}}_i))]\]</span></p>
+<p>对<span class="math inline">\(L(\vec{\tilde{w}})\)</span>求极大值，得到<span class="math inline">\(\vec{\tilde{w}}\)</span>的估计值。设估计值为<span class="math inline">\(\vec{\tilde{w}}^{*}\)</span>，则逻辑回归模型为：<span class="math display">\[P(Y=1/X=\vec{\tilde{x}})=\frac{\exp (\vec{\tilde{w}}^{*} ·\vec{\tilde{x}})}{1+\exp(\vec{\tilde{w}}^{*}·\vec{\tilde{x}})}\\P(Y=0/X=\vec{\tilde{x}})=\frac{1}{1+\exp(\vec{\tilde{w}}^{*}·\vec{\tilde{x}})}\]</span></p>
+<blockquote>
+<p>通常用梯度下降法或者拟牛顿法来求解该最大值问题</p>
+</blockquote>
+<p>以上讨论的都是二类分类的逻辑回归模型，可以推广到多类分类逻辑回归模型。设离散性随机变量Y的取值集合为：<span class="math inline">\(\{1,2,…,K\}\)</span>，则多类分类逻辑回归模型为：<span class="math display">\[P(Y=k/\vec{\tilde{x}})=\frac{\exp (\vec{\tilde{w}}_k ·\vec{\tilde{x}})}{1+\sum_{k=1}^{K-1}\exp(\vec{\tilde{w}}_k·\vec{\tilde{x}})},k=1,2,…,K-1\\P(Y=K/\vec{\tilde{x}})=\frac{1}{1+\sum_{k=1}^{K-1}\exp(\vec{\tilde{w}}_k·\vec{\tilde{x}})},\vec{\tilde{x}}\in R^{n+1},\vec{\tilde{w}}_k\in R^{n+1}\]</span></p>
+<p>其参数估计方法类似二类分类逻辑回归模型。</p>
+<h3 id="线性判别分析">线性判别分析</h3>
+<p>线性判别分析(Linear Discriminant Analysis, LDA)的思想： * 训练时：设法将训练样本投影到一条直线上，使得同类样本的投影点尽可能地接近、异类样本的投影点尽可能地远离。要学习的就是这样一条直线。 * 预测时：将待预测样本投影到学习到直线上，根据它的投影点的位置来判定它的类别。</p>
+<p>考虑二类分类问题，给定数据集<span class="math inline">\(T=\{(\stackrel{\rightarrow}{x}_1,y_1),(\stackrel{\rightarrow}{x}_2,y_2),…,(\stackrel{\rightarrow}{x}_N,y_N)\},\)</span>$_iXR^n, <span class="math display">\[\stackrel{\rightarrow}{y}_i\in Y=\{0,1\},\]</span>i=1,2,…,N<span class="math inline">\(，其中\)</span>_i={(x_i<sup>{(1)},x_i</sup>{(2)},…,x_i<sup>{(n)})}</sup>{T}$。</p>
+<ul>
+<li>设<span class="math inline">\(T_0\)</span>表示类别为0的样例的集合，这些样例的均值向量为<span class="math inline">\(\stackrel{\rightarrow}{\mu}_0={(\mu_0^{(1)},\mu_0^{(2)},…,\mu_0^{(n)})}^{T}\)</span>，这些样例的特征之间协方差矩阵为<span class="math inline">\(\sum_0\)</span>（协方差矩阵大小为<span class="math inline">\(n\times n\)</span>）。</li>
+<li>设<span class="math inline">\(T_1\)</span>表示类别为1的样例的集合，这些样例的均值向量为<span class="math inline">\(\stackrel{\rightarrow}{\mu}_1={(\mu_1^{(1)},\mu_1^{(2)},…,\mu_1^{(n)})}^{T}\)</span>，这些样例的特征之间协方差矩阵为<span class="math inline">\(\sum_1\)</span>（协方差矩阵大小为<span class="math inline">\(n\times n\)</span>）。</li>
+</ul>
+<p>假定直线为<span class="math inline">\(y=\vec{w}^T\vec{x}\)</span>（这里省略了<span class="math inline">\(b\)</span>，因为考察的是样本点在直线上的投影，总可以平行移动直线到原点而保持投影不变，此时<span class="math inline">\(b=0\)</span>），其中<span class="math inline">\(\stackrel{\rightarrow}{w}={(w^{(1)},w^{(2)},…,w^{(n)})}^{T}\)</span>,<span class="math inline">\(\stackrel{\rightarrow}{x}={(x^{(1)},x^{(2)},…,x^{(n)})}^{T}\)</span></p>
+<p>将数据投影到直线上，则</p>
+<ul>
+<li>两类样本的中心在直线上的投影分别为<span class="math inline">\(\vec{w}^T\vec{\mu}_0\)</span>和<span class="math inline">\(\vec{w}^T\vec{\mu}_1\)</span>。</li>
+<li>两类样本投影的方差分别为<span class="math inline">\(\vec{w}^T\sum_0\vec{w}\)</span>和<span class="math inline">\(\vec{w}^T\sum_1\vec{w}\)</span>。</li>
+</ul>
+<p>我们的目标是：同类样本的投影点尽可能地接近、异类样本点投影点尽可能地远离。那么可以使同类样例投影点点方差尽可能地小，即<span class="math inline">\(\vec{w}^T\sum_0\vec{w}+\vec{w}^T\sum_1\vec{w}\)</span>尽可能地小；可以使异类样例的中心的投影点尽可能地远，即<span class="math inline">\(||\vec{w}^T\vec{\mu}_0-\vec{w}^T\vec{\mu}_1||_2^2\)</span>尽可能地大。于是得到最大化的目标：<span class="math display">\[J=\frac{||\vec{w}^T\vec{\mu}_0-\vec{w}^T\vec{\mu}_1||_2^2}{\vec{w}^T\sum_0\vec{w}+\vec{w}^T\sum_1\vec{w}}=\frac{\vec{w}^T(\vec{\mu}_0-\vec{\mu}_1)(\vec{\mu}_0-\vec{\mu}_1)^T\vec{w}}{\vec{w}^T(\sum_0+\sum_1)\vec{w}}\]</span></p>
+<p>定义类内散度矩阵(within-class scatter matrix)：<span class="math display">\[S_w={\sum}_0+{\sum}_1=\sum_{\vec{x}\in T_0}(\vec{x}-\vec{\mu}_0)(\vec{x}-\vec{\mu}_0)^T+\sum_{\vec{x}\in T_1}(\vec{x}-\vec{\mu}_1)(\vec{x}-\vec{\mu}_1)^T\]</span></p>
+<p>定义类间散度矩阵(between-class scatter matrix)：<span class="math inline">\(S_b=(\vec{\mu}_0-\vec{\mu}_1)(\vec{\mu}_0-\vec{\mu}_1)^T\)</span>，它是向量<span class="math inline">\((\vec{\mu}_0-\vec{\mu}_1)\)</span>与它自身的外积，则LDA最大化的目标为：<span class="math display">\[J=\frac{\vec{w}^TS_b\vec{w}}{\vec{w}^TS_w\vec{w}}\]</span></p>
+<p><span class="math inline">\(J\)</span>也称为<span class="math inline">\(S_b\)</span>与<span class="math inline">\(S_w\)</span>的广义瑞利商。现在求解最优化问题：<span class="math display">\[\vec{w}^*=\arg \max_{\vec{w}}\frac{\vec{w}^TS_b\vec{w}}{\vec{w}^TS_w\vec{w}}\]</span></p>
+<p>由于分子与分母都是关于<span class="math inline">\(\vec{w}\)</span>的二次项，因此上式的解与<span class="math inline">\(\vec{w}\)</span>的长度无关。令<span class="math inline">\(\vec{w}^TS_w\vec{w}=1\)</span>，则最优化问题改写为：<span class="math display">\[\vec{w}^*=\arg \min_{\vec{w}}-\vec{w}^TS_b\vec{w}\\s.t.\vec{w}^TS_w\vec{w}=1\]</span></p>
+<p>应用拉格朗日乘子法：<span class="math display">\[S_b\vec{w}=\lambda S_w\vec{w}\]</span></p>
+<p>令<span class="math inline">\((\vec{\mu}_0-\vec{\mu}_1)^T\vec{w}=\lambda_{\vec{w}}\)</span>，其中<span class="math inline">\(\lambda_{\vec{w}}\)</span>为实数。则<span class="math display">\[S_b\vec{w}=(\vec{\mu}_0-\vec{\mu}_1)(\vec{\mu}_0-\vec{\mu}_1)^T\vec{w}=\lambda_{\vec{w}}(\vec{\mu}_0-\vec{\mu}_1)=\lambda S_w\vec{w}\]</span></p>
+<p>由于与<span class="math inline">\(\vec{w}\)</span>的长度无关，可以令<span class="math inline">\(\lambda_{\vec{w}}=\lambda\)</span>，则有：<span class="math display">\[(\vec{\mu}_0-\vec{\mu}_1)=S_w\vec{w}\Longrightarrow \vec{w}=S_w^{-1}(\vec{\mu}_0-\vec{\mu}_1)\]</span></p>
+<p>上述讨论的是二类分类LDA算法。可以将它推广到多分类任务中：假定存在<span class="math inline">\(M\)</span>个类，属于第<span class="math inline">\(i\)</span>个类的样本的集合为<span class="math inline">\(T_i\)</span>，<span class="math inline">\(T_i\)</span>中的样例数为<span class="math inline">\(m_i\)</span>，则有：<span class="math inline">\(\sum_{i=1}^Mm_i=N\)</span>，其中<span class="math inline">\(N\)</span>为样本总数。设<span class="math inline">\(T_i\)</span>表示类别为<span class="math inline">\(i，i=1,2,…,M\)</span>的样例的集合，这些样例的均值向量为：<span class="math display">\[\vec{\mu}_i=(\mu_i^{(1)},\mu_i^{(2)},…,\mu_i^{(n)})^T=\frac{1}{m_i}\sum_{\vec{x}_i\in T_i}\vec{x}_i\]</span></p>
+<p>这些样例的特征之间协方差矩阵为<span class="math inline">\(\sum_i\)</span>（协方差矩阵大小为<span class="math inline">\(n\times n\)</span>）。定义<span class="math inline">\(\vec{\mu}=(\mu^{(1)},\mu^{(2)},…,\mu^{(n)})^T=\frac{1}{N}\sum_{i=1}^N\vec{x}_i\)</span>是所有样例的均值向量。</p>
+<ul>
+<li><p>要使得同类样例的投影点尽可能地接近，则可以使同类样例投影点的方差尽可能地小，因此定义类别的类内散度矩阵为<span class="math inline">\(S_{wi}=\sum_{\vec{x}\in T_i}(\vec{x}-\vec{\mu}_i)(\vec{x}-\vec{\mu}_i)^T\)</span>；定义类内散度矩阵为<span class="math inline">\(S_w=\sum_{i=1}^MS_{wi}\)</span>。</p>
+<blockquote>
+<p>类别的类内散度矩阵为<span class="math inline">\(S_{wi}=\sum_{\vec{x}\in T_i}(\vec{x}-\vec{\mu}_i)(\vec{x}-\vec{\mu}_i)^T\)</span>，实际上就等于样本集<span class="math inline">\(T_i\)</span>的协方差矩阵<span class="math inline">\(\sum_i\)</span>。</p>
+</blockquote></li>
+<li><p>要使异类样例的投影点尽可能地远，则可以使异类样例中心的投影点尽可能地远，由于这里不止两个中心点，因此不能简单地套用二类LDA的做法（即两个中心点的距离）。这里用每一类样本集的中心点距和总的中心点的距离作为度量。考虑到每一类样本集的大小可能不同（密度分布不均），故我们对这个距离加以权重，因此定义类间散度矩阵<span class="math inline">\(S_b=\sum_{i=1}^Mm_i(\vec{\mu}_i-\vec{\mu})(\vec{\mu}_i-\vec{\mu})^T\)</span>。</p>
+<blockquote>
+<p><span class="math inline">\((\vec{\mu}_i-\vec{\mu})(\vec{\mu}_i-\vec{\mu})^T\)</span>也是一个协方差矩阵，它刻画的是第<span class="math inline">\(i\)</span>类与总体之间的关系。</p>
+</blockquote></li>
+</ul>
+<p>设<span class="math inline">\(W\in R^{n\times (M-1)}\)</span>是投影矩阵。经过推导可以得到最大化的目标：<span class="math display">\[J=\frac{tr(W^TS_bW)}{tr(W^TS_wW)}\]</span></p>
+<p>其中<span class="math inline">\(tr(.)\)</span>表示矩阵的迹。一个矩阵的迹是矩阵对角线的元素之和，它是一个矩阵的不变量，也等于所有特征值之和。</p>
+<blockquote>
+<p>还有一个常用的矩阵不变量是矩阵的行列式，它等于矩阵的所有特征值之积。</p>
+</blockquote>
+<p>多分类LDA将样本投影到<span class="math inline">\(M-1\)</span>维空间，因此它是一种经典的监督降维技术。</p>
+<h2 id="python实战">Python实战</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">import numpy as np</span><br><span class="line">from sklearn import datasets, linear_model, discriminant_analysis, model_selection</span><br></pre></td></tr></table></figure>
+<p>在线性回归问题中，数据集使用了scikit-learn自带的一个数据集。该数据集有442个样本；每个样本有10个特征；每个特征都是浮点数，数据都在-0.2～0.2之间；样本的目标在整数25～346之间。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def load_data():</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    加载数据集并随机切分数据集为两个部分，其中test_size指定了测试集为原始数据集的大小/比例</span><br><span class="line">    :return: list：训练样本集、测试样本集、训练样本集对应的标签值、测试样本集对应的标签值</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    diabetes = datasets.load_diabetes()</span><br><span class="line">    return model_selection.train_test_split(diabetes.data, diabetes.target,</span><br><span class="line">                                            test_size=0.25, random_state=0)</span><br></pre></td></tr></table></figure>
+<h3 id="线性回归模型">线性回归模型</h3>
+<p>LinearRegression是scikit-learn提供的线性回归模型 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class sklearn.linear_model.LinearRegression(fit_intercept=True, normalize=Fasle, copy_X=True, n_jobs=1)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>参数
+<ul>
+<li>fit_intercept : boolean, optional, default True. 指定是否需要计算b值, 如果为False则不计算b值。</li>
+<li>normalize : boolean, optional, default False. 如果为True，那么训练样本会在回归之前被归一化。</li>
+<li>copy_X : boolean, optional, default True. 如果为True，则会复制X。</li>
+<li>n_jobs : int or None, optional (default=None). 任务并行时指定的CPU数量，如果为-1则使用所有可用的CPU。</li>
+</ul></li>
+<li>属性
+<ul>
+<li>coef_ : 权重向量</li>
+<li>intercept_ : b值</li>
+</ul></li>
+<li>方法
+<ul>
+<li>fit(X, y[, sample_weight]): 训练模型</li>
+<li>predict(X): 用模型进行预测，返回预测值</li>
+<li>score(X, y[, sample_weight]): 返回预测性能得分
+<ul>
+<li>设预测集为<span class="math inline">\(T_{test}\)</span>，真实值为<span class="math inline">\(y_i\)</span>，真实值的均值为<span class="math inline">\(\overline{y}\)</span>，预测值为<span class="math inline">\(\hat{y}_i\)</span>，则：<span class="math display">\[score=1-\frac{\sum_{T_{test}}(y_i-\hat{y}_i)^2}{(y_i-\overline{y})^2}\]</span>
+<ul>
+<li>score不超过1，但是可能为负值（预测效果太差）。</li>
+<li>score越大，预测性能越好。</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">def demo_LinearRegression(*data):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    使用LinearRegression函数</span><br><span class="line">    :param data: 训练样本集、测试样本集、训练样本集对应的标签值、测试样本集对应的标签值</span><br><span class="line">    :return: 权重向量、b值，预测结果的均方误差，预测性能得分</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    regr = linear_model.LinearRegression()</span><br><span class="line">    regr.fit(X_train, y_train)</span><br><span class="line">    print(&apos;Coefficients: %s&apos; % regr.coef_)</span><br><span class="line">    print(&apos;Intercept: %.2f&apos; % regr.intercept_)</span><br><span class="line">    print(&apos;Residual sum of squares: %.2f&apos; % np.mean((regr.predict(X_test) - y_test) ** 2))</span><br><span class="line">    print(&apos;Score: %.2f&apos; % regr.score(X_test, y_test))</span><br></pre></td></tr></table></figure>
+<p>该函数简单地从训练数据集中学习，然后从测试数据中预测。调用该函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X_train, X_test, y_train, y_test = load_data()</span><br><span class="line">demo_LinearRegression(X_train, X_test, y_train, y_test)</span><br></pre></td></tr></table></figure>
+<p>输出结果如下： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Coefficients: [ -43.26774487 -208.67053951  593.39797213  302.89814903 -560.27689824</span><br><span class="line">  261.47657106   -8.83343952  135.93715156  703.22658427   28.34844354]</span><br><span class="line">Intercept: 153.07</span><br><span class="line">Residual sum of squares: 3180.20</span><br><span class="line">Score: 0.36</span><br></pre></td></tr></table></figure></p>
+<p>可以看到测试集中预测结果的均方误差为3180.20，预测性能得分仅为0.36。</p>
+<h3 id="线性回归模型的正则化">线性回归模型的正则化</h3>
+<p>前面理论部分提到对于多元线性回归，当<span class="math inline">\(\vec{x}^T\vec{x}\)</span>不是满秩矩阵时存在多个解析解，它们都能使得均方误差最小化，常见的做法是引入正则化项。所谓正则化，就是对模型的参数添加一些先验假设，控制模型空间，以达到使得模型复杂度较小的目的。岭回归和LASSO是目前最流行的两种线性回归正则化方法。根据不同的正则化方式，有不同的方法：</p>
+<ul>
+<li>Ridge Regression: 正则化项为：<span class="math inline">\(\alpha ||\vec{w}||_2^2,\alpha &gt;0\)</span>。</li>
+<li>Lasso Regression: 正则化项为：<span class="math inline">\(\alpha ||\vec{w}||_1, \alpha &gt;0\)</span>。</li>
+<li>Elastic Net: 正则化项为：<span class="math inline">\(\alpha \rho ||\vec{w}||_1+\frac{\alpha (1-\rho )}{2}||\vec{w}||_2^2,\alpha &gt;0,1\ge\rho \ge 0\)</span>。</li>
+</ul>
+<p>其中，正则项系数<span class="math inline">\(\alpha\)</span>的选择很关键，初始值建议一开始设置为0，先确定一个比较好的learning rate，然后固定该learning rate，给<span class="math inline">\(\alpha\)</span>一个值（比如1.0），然后根据validation accuracy将<span class="math inline">\(\alpha\)</span>增大或者缩小10倍（增减10倍为粗调节，当你确定了<span class="math inline">\(\alpha\)</span>合适的数量级后，比如<span class="math inline">\(\alpha=0.01\)</span>，再进一步细调节为0.02、0.03、0.0009等）。</p>
+<h4 id="岭回归">岭回归</h4>
+<p>岭回归(Ridge Regression)是一种正则化方法，通过值损失函数中加入<span class="math inline">\(L_2\)</span>范数惩罚项，来控制线性模型的复杂程度，从而使得模型更稳健。Ridge类实现了岭回归模型，其原型为： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">class sklearn.linear_model.Ridge(alpha=1.0, fit_intercept=True, normalize=False, </span><br><span class="line">copy_X=True, max_iter=None, tol=0.001, solver=&apos;auto, random_state=None)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>参数
+<ul>
+<li>alpha: <span class="math inline">\(\alpha\)</span>值，其值越大则正则化项的占比越大。</li>
+<li>fit_intercept: boolean，指定是否需要计算b值。</li>
+<li>max_iter: 一个整数，指定最大迭代次数。如果为None则为默认值，不同solver的默认值不同。</li>
+<li>normalize: boolean，如果为True，那么训练样本会在回归之前被归一化。</li>
+<li>copy_X: boolean，如果为True，则会复制X。</li>
+<li>solver: 一个字符串，指定求解最优化问题的算法。
+<ul>
+<li>auto: 根据数据集自动选择算法</li>
+<li>svd: 使用奇异值分解来计算回归系数</li>
+<li>cholesky: 使用scipy.linalg.solve函数来求解</li>
+<li>sparse_cg: 使用scipy.sparse.linalg.cg函数来求解</li>
+<li>lsqr: 使用scipy.sparse.linalg.lsqr函数来求解，运算速度最快</li>
+<li>sag: 使用Stochastic Average Gradient descent算法求解最优化问题</li>
+</ul></li>
+<li>tol: 一个浮点数，指定判断迭代收敛与否的阈值。</li>
+<li>random_state: 一个整数或者一个RandomState实例，或者None；在solver=sag时使用
+<ul>
+<li>如果为整数，则它指定了随机数生成器的种子</li>
+<li>如果为RandomState实例，则指定例随机数生成器</li>
+<li>如果为None，则使用默认的随机数生成器</li>
+</ul></li>
+</ul></li>
+<li>属性
+<ul>
+<li>coef_: 权重向量</li>
+<li>intercept_: b值</li>
+<li>n_iter_: 实际迭代次数</li>
+</ul></li>
+<li>方法
+<ul>
+<li>fit(X, y[, sample_weight]): 训练模型</li>
+<li>predict(X): 用模型进行预测，返回预测值</li>
+<li>score(X, y[, sample_weight]): 返回预测性能得分
+<ul>
+<li>设预测集为<span class="math inline">\(T_{test}\)</span>，真实值为<span class="math inline">\(y_i\)</span>，真实值的均值为<span class="math inline">\(\overline{y}\)</span>，预测值为<span class="math inline">\(\hat{y}_i\)</span>，则：<span class="math display">\[score=1-\frac{\sum_{T_{test}}(y_i-\hat{y}_i)^2}{(y_i-\overline{y})^2}\]</span>
+<ul>
+<li>score不超过1，但是可能为负值（预测效果太差）。</li>
+<li>score越大，预测性能越好。</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">def demo_Ridge(*data):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    使用Ridge函数</span><br><span class="line">    :param data: 训练样本集、测试样本集、训练样本集对应的标签值、测试样本集对应的标签值</span><br><span class="line">    :return: 权重向量、b值，预测结果的均方误差，预测性能得分</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    regr = linear_model.Ridge()</span><br><span class="line">    regr.fit(X_train, y_train)</span><br><span class="line">    print(&apos;Coefficients: %s&apos; % regr.coef_)</span><br><span class="line">    print(&apos;Intercept: %.2f&apos; % regr.intercept_)</span><br><span class="line">    print(&apos;Residual sum of squares: %.2f&apos; % np.mean((regr.predict(X_test) - y_test) ** 2))</span><br><span class="line">    print(&apos;Score: %.2f&apos; % regr.score(X_test, y_test))</span><br></pre></td></tr></table></figure>
+<p>该函数简单地从训练数据集中学习，然后从测试数据集中预测。这里的Ridge的所有参数都采用默认值。调用该函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X_train, X_test, y_train, y_test = load_data()</span><br><span class="line">demo_Ridge(X_train, X_test, y_train, y_test)</span><br></pre></td></tr></table></figure>
+<p>输出结果如下： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Coefficients: [  21.19927911  -60.47711393  302.87575204  179.41206395    8.90911449</span><br><span class="line">  -28.8080548  -149.30722541  112.67185758  250.53760873   99.57749017]</span><br><span class="line">Intercept: 152.45</span><br><span class="line">Residual sum of squares: 3192.33</span><br><span class="line">Score: 0.36</span><br></pre></td></tr></table></figure></p>
+<p>可以看到测试集中预测结果的均方误差为3192.33，预测性能得分仅为0.36。</p>
+<p>下面检验不同的<span class="math inline">\(\alpha\)</span>值对于预测性能的影响，给出测试函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">def demo_Ridge_alpha(*data):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    alphas = [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000]</span><br><span class="line">    scores = []</span><br><span class="line">    for i, alpha in enumerate(alphas):</span><br><span class="line">        regr = linear_model.Ridge(alpha=alpha)</span><br><span class="line">        regr.fit(X_train, y_train)</span><br><span class="line">        scores.append(regr.score(X_test, y_test))</span><br><span class="line">    ## 绘图</span><br><span class="line">    fig = plt.figure()</span><br><span class="line">    ax = fig.add_subplot(1, 1, 1)</span><br><span class="line">    ax.plot(alphas, scores)</span><br><span class="line">    ax.set_xlabel(r&quot;$\alpha$&quot;)</span><br><span class="line">    ax.set_ylabel(r&quot;score&quot;)</span><br><span class="line">    ax.set_xscale(&apos;log&apos;)</span><br><span class="line">    ax.set_title(&quot;Ridge&quot;)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<p>为了便于观察结果，将<span class="math inline">\(x\)</span>轴设置为了对数坐标。调用该函数： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X_train, X_test, y_train, y_test = load_data()</span><br><span class="line">demo_Ridge_alpha(X_train, X_test, y_train, y_test)</span><br></pre></td></tr></table></figure></p>
+<p>输出结果如下图所示： <img src="/images/20190724_ML_Ridge.png"></p>
+<p>可以看到，当<span class="math inline">\(\alpha\)</span>超过1之后，随着<span class="math inline">\(\alpha\)</span>的增长，预测性能急剧下降。这是因为<span class="math inline">\(\alpha\)</span>较大时，正则化项影响较大，模型趋于简单。</p>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------Thank you for your reading-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/machine-learning/" rel="tag"># machine learning</a>
+          
+            <a href="/tags/notes/" rel="tag"># notes</a>
+          
+            <a href="/tags/linear-model/" rel="tag"># linear model</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/19/My-blog-building-experience/" rel="next" title="My blog building experience">
+                <i class="fa fa-chevron-left"></i> My blog building experience
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  
+    <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Rian Ng">
+  
+  <p class="site-author-name" itemprop="name">Rian Ng</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+
+
+  <nav class="site-state motion-element">
+    
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+
+
+  <div class="links-of-author motion-element">
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/fateicr" title="GitHub &rarr; https://github.com/fateicr" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:rian.ng@icloud.com" title="E-Mail &rarr; mailto:rian.ng@icloud.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+
+
+
+
+          
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线性模型"><span class="nav-number">1.</span> <span class="nav-text">线性模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法"><span class="nav-number">1.2.</span> <span class="nav-text">算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#普通线性回归"><span class="nav-number">1.2.1.</span> <span class="nav-text">普通线性回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广义线性模型"><span class="nav-number">1.2.2.</span> <span class="nav-text">广义线性模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑回归"><span class="nav-number">1.2.3.</span> <span class="nav-text">逻辑回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线性判别分析"><span class="nav-number">1.2.4.</span> <span class="nav-text">线性判别分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python实战"><span class="nav-number">1.3.</span> <span class="nav-text">Python实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线性回归模型"><span class="nav-number">1.3.1.</span> <span class="nav-text">线性回归模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线性回归模型的正则化"><span class="nav-number">1.3.2.</span> <span class="nav-text">线性回归模型的正则化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#岭回归"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">岭回归</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rian Ng</span>
+
+  
+
+  
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'avPCijx9DDWA8iHwVkFjgCwV-gzGzoHsz',
+    appKey: 'jagyRS4e9VYKtc0i3gJU5i7E',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: 'en' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
