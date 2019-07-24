@@ -109,7 +109,7 @@
 <meta property="og:description" content="线性模型 概述 对于样本\(\stackrel{\rightarrow}{x}\)，用列向量表示该样本\(\stackrel{\rightarrow}{x}={(x^{(1)},x^{(2)},…,x^{(n)})}^{T}\)。样本有\(n\)种特征，用\(x^{(i)}\)来表示样本的第\(i\)个特征。 线性模型(linear model)的形式为： \[f(\stackrel{\right">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/images/20190724_ML_Ridge.png">
-<meta property="og:updated_time" content="2019-07-24T15:16:42.898Z">
+<meta property="og:updated_time" content="2019-07-24T15:20:18.636Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MachineLearning Chapter-1 Linear Model">
 <meta name="twitter:description" content="线性模型 概述 对于样本\(\stackrel{\rightarrow}{x}\)，用列向量表示该样本\(\stackrel{\rightarrow}{x}={(x^{(1)},x^{(2)},…,x^{(n)})}^{T}\)。样本有\(n\)种特征，用\(x^{(i)}\)来表示样本的第\(i\)个特征。 线性模型(linear model)的形式为： \[f(\stackrel{\right">
@@ -436,7 +436,7 @@
                 
               
 
-              <time title="Created: 2019-07-24 16:02:02 / Modified: 23:16:42" itemprop="dateCreated datePublished" datetime="2019-07-24T16:02:02+08:00">2019-07-24</time>
+              <time title="Created: 2019-07-24 16:02:02 / Modified: 23:20:18" itemprop="dateCreated datePublished" datetime="2019-07-24T16:02:02+08:00">2019-07-24</time>
             </span>
           
 
@@ -542,7 +542,13 @@
 <li>当<span class="math inline">\(\vec{x}^T\vec{x}\)</span>为满秩矩阵或者正定矩阵时，可得:<span class="math display">\[\vec{\tilde{w}}^*=(\vec{x}^T\vec{x})^{-1}\vec{x}^T\vec{y}\]</span>于是多元线性回归模型为：<span class="math display">\[f(\vec{\tilde{x}}_i)=\vec{\tilde{x}}^T_i\vec{\tilde{w}}^*\]</span></li>
 <li>当<span class="math inline">\(\vec{x}^T\vec{x}\)</span>不是满秩矩阵时。比如<span class="math inline">\(N&lt;n\)</span>（样本数量小于特征种类的数量），根据<span class="math inline">\(\vec{x}\)</span>的秩小于等于<span class="math inline">\((N,n)\)</span>中的最小值，即小于等于<span class="math inline">\(N\)</span>（矩阵的秩一定小于等于矩阵的行数和列数）；而矩阵<span class="math inline">\(\vec{x}^T\vec{x}\)</span>是<span class="math inline">\(n\times n\)</span>大小的，它的秩一定小于等于<span class="math inline">\(N\)</span>，因此不是满秩矩阵。此时存在多个解析解。常见的做法是引入正则化项，如<span class="math inline">\(L_1\)</span>正则化或者<span class="math inline">\(L_2\)</span>正则化，以<span class="math inline">\(L_2\)</span>正则化为例：<span class="math display">\[\vec{\tilde{w}}^*=\arg\min_{\vec{\tilde{w}}}[(\vec{y}-\vec{x}\vec{\tilde{w}})^T(\vec{y}-\vec{x}\vec{\tilde{w}})+\lambda||\vec{\tilde{w}}||_2^2]\]</span>其中，<span class="math inline">\(\lambda &gt;0\)</span>调整正则化项与均方误差的比例；<span class="math inline">\(||…||_2\)</span>为<span class="math inline">\(L_2\)</span>范数。</li>
 </ul>
-<p>根据上述原理，我们得到多元线性回归算法： * 输入：数据集 <span class="math inline">\(T=\{(\stackrel{\rightarrow}{x}_1,y_1),(\stackrel{\rightarrow}{x}_2,y_2),…,(\stackrel{\rightarrow}{x}_N,y_N)\}\)</span>, <span class="math inline">\(\stackrel{\rightarrow}{x}_i\in X\subseteq R^n\)</span>, <span class="math inline">\(\stackrel{\rightarrow}{y}_i\in Y\subseteq R\)</span>, <span class="math inline">\(i=1,2,…,N\)</span>，正则化项系数<span class="math inline">\(\lambda &gt;0\)</span>。 * 输出：<span class="math display">\[f(\stackrel{\rightarrow}{x})=\stackrel{\rightarrow}{w}·\stackrel{\rightarrow}{x}+b\]</span> * 算法步骤： * 令：<span class="math display">\[\vec{\tilde{w}}=(w^{(1)},w^{(2)},…,w^{(n)},b)^T=(\vec{w}^T,b)^T\\\vec{\tilde{x}}=(x^{(1)},x^{(2)},…,x^{(n)},1)^T=(\vec{x}^T,1)^T\\\vec{y}=(y_1,y_2,…,y_N)^T\]</span>计算<span class="math display">\[\vec{x}=(\vec{\tilde{x}}_1,\vec{\tilde{x}}_2,…,\vec{\tilde{x}}_N)^T=\begin{bmatrix}\vec{\tilde{x}}_1^T\\\vec{\tilde{x}}_2^T\\…\\\vec{\tilde{x}}_N^T\end{bmatrix}=\begin{bmatrix}x_1^{(1)} &amp; x_1^{(2)} &amp; … &amp; x_1^{(n)} &amp; 1\\x_2^{(1)} &amp; x_2^{(2)} &amp; … &amp; x_2^{(n)} &amp; 1\\… &amp; … &amp; … &amp; … &amp; 1\\x_N^{(1)} &amp; x_N^{(2)} &amp; … &amp; x_N^{(n)} &amp; 1\end{bmatrix}\]</span> * 求解：<span class="math display">\[\vec{\tilde{w}}^*=\arg\min_{\vec{\tilde{w}}}[(\vec{y}-\vec{x}\vec{\tilde{w}})^T(\vec{y}-\vec{x}\vec{\tilde{w}})+\lambda||\vec{\tilde{w}}||_2^2]\]</span> * 最终得到模型：<span class="math display">\[f(\vec{\tilde{x}}_i)=\vec{\tilde{x}}^T_i\vec{\tilde{w}}^*\]</span></p>
+<p>根据上述原理，我们得到多元线性回归算法：</p>
+<p>输入：数据集 <span class="math inline">\(T=\{(\stackrel{\rightarrow}{x}_1,y_1),(\stackrel{\rightarrow}{x}_2,y_2),…,(\stackrel{\rightarrow}{x}_N,y_N)\}\)</span>, <span class="math inline">\(\stackrel{\rightarrow}{x}_i\in X\subseteq R^n\)</span>, <span class="math inline">\(\stackrel{\rightarrow}{y}_i\in Y\subseteq R\)</span>, <span class="math inline">\(i=1,2,…,N\)</span>，正则化项系数<span class="math inline">\(\lambda &gt;0\)</span>。</p>
+<p>输出：<span class="math display">\[f(\stackrel{\rightarrow}{x})=\stackrel{\rightarrow}{w}·\stackrel{\rightarrow}{x}+b\]</span></p>
+<p>算法步骤：</p>
+<p>令：<span class="math display">\[\vec{\tilde{w}}=(w^{(1)},w^{(2)},…,w^{(n)},b)^T=(\vec{w}^T,b)^T\\\vec{\tilde{x}}=(x^{(1)},x^{(2)},…,x^{(n)},1)^T=(\vec{x}^T,1)^T\\\vec{y}=(y_1,y_2,…,y_N)^T\]</span>计算<span class="math display">\[\vec{x}=(\vec{\tilde{x}}_1,\vec{\tilde{x}}_2,…,\vec{\tilde{x}}_N)^T=\begin{bmatrix}\vec{\tilde{x}}_1^T\\\vec{\tilde{x}}_2^T\\…\\\vec{\tilde{x}}_N^T\end{bmatrix}=\begin{bmatrix}x_1^{(1)} &amp; x_1^{(2)} &amp; … &amp; x_1^{(n)} &amp; 1\\x_2^{(1)} &amp; x_2^{(2)} &amp; … &amp; x_2^{(n)} &amp; 1\\… &amp; … &amp; … &amp; … &amp; 1\\x_N^{(1)} &amp; x_N^{(2)} &amp; … &amp; x_N^{(n)} &amp; 1\end{bmatrix}\]</span></p>
+<p>求解：<span class="math display">\[\vec{\tilde{w}}^*=\arg\min_{\vec{\tilde{w}}}[(\vec{y}-\vec{x}\vec{\tilde{w}})^T(\vec{y}-\vec{x}\vec{\tilde{w}})+\lambda||\vec{\tilde{w}}||_2^2]\]</span></p>
+<p>最终得到模型：<span class="math display">\[f(\vec{\tilde{x}}_i)=\vec{\tilde{x}}^T_i\vec{\tilde{w}}^*\]</span></p>
 <h3 id="广义线性模型">广义线性模型</h3>
 <p>考虑单调可导函数<span class="math inline">\(h(·)\)</span>，令<span class="math inline">\(h(y)=\vec{w}^T\vec{x}+b\)</span>，这样得到的模型称为广义线性模型(generalized linear model)。</p>
 <p>广义线性模型的一个典型例子就是对数线性回归。当<span class="math inline">\(h(·)=\ln{(·)}\)</span>时当广义线性模型就是对数线性回归，即<span class="math display">\[\ln{y}=\vec{w}^T\vec{x}+b\]</span></p>
@@ -564,7 +570,11 @@
 <p>以上讨论的都是二类分类的逻辑回归模型，可以推广到多类分类逻辑回归模型。设离散性随机变量Y的取值集合为：<span class="math inline">\(\{1,2,…,K\}\)</span>，则多类分类逻辑回归模型为：<span class="math display">\[P(Y=k/\vec{\tilde{x}})=\frac{\exp (\vec{\tilde{w}}_k ·\vec{\tilde{x}})}{1+\sum_{k=1}^{K-1}\exp(\vec{\tilde{w}}_k·\vec{\tilde{x}})},k=1,2,…,K-1\\P(Y=K/\vec{\tilde{x}})=\frac{1}{1+\sum_{k=1}^{K-1}\exp(\vec{\tilde{w}}_k·\vec{\tilde{x}})},\vec{\tilde{x}}\in R^{n+1},\vec{\tilde{w}}_k\in R^{n+1}\]</span></p>
 <p>其参数估计方法类似二类分类逻辑回归模型。</p>
 <h3 id="线性判别分析">线性判别分析</h3>
-<p>线性判别分析(Linear Discriminant Analysis, LDA)的思想： * 训练时：设法将训练样本投影到一条直线上，使得同类样本的投影点尽可能地接近、异类样本的投影点尽可能地远离。要学习的就是这样一条直线。 * 预测时：将待预测样本投影到学习到直线上，根据它的投影点的位置来判定它的类别。</p>
+<p>线性判别分析(Linear Discriminant Analysis, LDA)的思想：</p>
+<ul>
+<li>训练时：设法将训练样本投影到一条直线上，使得同类样本的投影点尽可能地接近、异类样本的投影点尽可能地远离。要学习的就是这样一条直线。</li>
+<li>预测时：将待预测样本投影到学习到直线上，根据它的投影点的位置来判定它的类别。</li>
+</ul>
 <p>考虑二类分类问题，给定数据集<span class="math inline">\(T=\{(\stackrel{\rightarrow}{x}_1,y_1),(\stackrel{\rightarrow}{x}_2,y_2),…,(\stackrel{\rightarrow}{x}_N,y_N)\}\)</span>, <span class="math inline">\(\stackrel{\rightarrow}{x}_i\in X\subseteq R^n\)</span>, <span class="math inline">\(\stackrel{\rightarrow}{y}_i\in Y=\{0,1\}\)</span>, <span class="math inline">\(i=1,2,…,N\)</span>，其中<span class="math inline">\(\stackrel{\rightarrow}{x}_i={(x_i^{(1)},x_i^{(2)},…,x_i^{(n)})}^{T}\)</span>。</p>
 <ul>
 <li>设<span class="math inline">\(T_0\)</span>表示类别为0的样例的集合，这些样例的均值向量为<span class="math inline">\(\stackrel{\rightarrow}{\mu}_0={(\mu_0^{(1)},\mu_0^{(2)},…,\mu_0^{(n)})}^{T}\)</span>，这些样例的特征之间协方差矩阵为<span class="math inline">\(\sum_0\)</span>（协方差矩阵大小为<span class="math inline">\(n\times n\)</span>）。</li>
