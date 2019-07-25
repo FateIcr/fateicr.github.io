@@ -109,7 +109,12 @@
 <meta property="og:description" content="线性模型 概述 对于样本\(\stackrel{\rightarrow}{x}\)，用列向量表示该样本\(\stackrel{\rightarrow}{x}={(x^{(1)},x^{(2)},…,x^{(n)})}^{T}\)。样本有\(n\)种特征，用\(x^{(i)}\)来表示样本的第\(i\)个特征。 线性模型(linear model)的形式为： \[f(\stackrel{\right">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/images/20190724_ML_Ridge.png">
-<meta property="og:updated_time" content="2019-07-24T15:20:18.636Z">
+<meta property="og:image" content="http://yoursite.com/images/20190725_ML_Lasso.png">
+<meta property="og:image" content="http://yoursite.com/images/20190725_ML_ElasticNet.png">
+<meta property="og:image" content="http://yoursite.com/images/20190725_ML_Logistic.png">
+<meta property="og:image" content="http://yoursite.com/images/20190725_LinearDiscriminantAnalysis_LDA.png">
+<meta property="og:image" content="http://yoursite.com/images/20190725_LinearDiscriminantAnalysis_shrinkage.png">
+<meta property="og:updated_time" content="2019-07-25T07:03:24.013Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MachineLearning Chapter-1 Linear Model">
 <meta name="twitter:description" content="线性模型 概述 对于样本\(\stackrel{\rightarrow}{x}\)，用列向量表示该样本\(\stackrel{\rightarrow}{x}={(x^{(1)},x^{(2)},…,x^{(n)})}^{T}\)。样本有\(n\)种特征，用\(x^{(i)}\)来表示样本的第\(i\)个特征。 线性模型(linear model)的形式为： \[f(\stackrel{\right">
@@ -436,13 +441,23 @@
                 
               
 
-              <time title="Created: 2019-07-24 16:02:02 / Modified: 23:20:18" itemprop="dateCreated datePublished" datetime="2019-07-24T16:02:02+08:00">2019-07-24</time>
+              <time title="Created: 2019-07-24 16:02:02" itemprop="dateCreated datePublished" datetime="2019-07-24T16:02:02+08:00">2019-07-24</time>
             </span>
           
 
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-07-25 15:03:24" itemprop="dateModified" datetime="2019-07-25T15:03:24+08:00">2019-07-25</time>
+              </span>
             
           
 
@@ -716,6 +731,242 @@
 <p>输出结果如下图所示： <img src="/images/20190724_ML_Ridge.png"></p>
 <p>可以看到，当<span class="math inline">\(\alpha\)</span>超过1之后，随着<span class="math inline">\(\alpha\)</span>的增长，预测性能急剧下降。这是因为<span class="math inline">\(\alpha\)</span>较大时，正则化项影响较大，模型趋于简单。</p>
 <h4 id="lasso回归">Lasso回归</h4>
+<p>Lasso回归和岭回归的区别就在于它的惩罚项是基于L1范数，因此它可以将系数控制收缩到0，从而达到变量选择的效果。Lasso类实现了Lasso回归模型： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class sklearn.linear_model.Lasso(alpha=1.0, fit_intercept=True, normalize=False,</span><br><span class="line">                 precompute=False, copy_X=True, max_iter=1000,</span><br><span class="line">                 tol=1e-4, warm_start=False, positive=False,</span><br><span class="line">                 random_state=None, selection=&apos;cyclic&apos;)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>参数
+<ul>
+<li>alpha: <span class="math inline">\(\alpha\)</span>值，其值越大则正则化项的占比越大。</li>
+<li>fit_intercept: boolean，指定是否需要计算b值。</li>
+<li>max_iter: 一个整数，指定最大迭代次数。如果为None则为默认值，不同solver的默认值不同。</li>
+<li>normalize: boolean，如果为True，那么训练样本会在回归之前被归一化。</li>
+<li>copy_X: boolean，如果为True，则会复制X。</li>
+<li>precompute: boolean/序列。决定是否提前计算Gram矩阵来加速计算。</li>
+<li>tol: 一个浮点数，指定判断迭代收敛与否的阈值。</li>
+<li>warm_start: boolean，如果为True，那么使用前一次训练结果继续训练。否则从头开始训练。</li>
+<li>positive: boolean，如果为True，那么强制要求权重向量的分量都为正数。</li>
+<li>selection: 一个字符串，指定了每轮迭代时选择权重向量的哪个分量来更新。
+<ul>
+<li>random: 随机选择权重向量的一个分量来更新</li>
+<li>cyclic: 从前向后依次选择权重向量的一个分量来更新</li>
+</ul></li>
+<li>random_state: 一个整数或者一个RandomState实例，或者None；在solver=sag时使用
+<ul>
+<li>如果为整数，则它指定了随机数生成器的种子</li>
+<li>如果为RandomState实例，则指定例随机数生成器</li>
+<li>如果为None，则使用默认的随机数生成器</li>
+</ul></li>
+</ul></li>
+<li>属性
+<ul>
+<li>coef_: 权重向量</li>
+<li>intercept_: b值</li>
+<li>n_iter_: 实际迭代次数</li>
+</ul></li>
+<li>方法
+<ul>
+<li>fit(X, y[, sample_weight]): 训练模型</li>
+<li>predict(X): 用模型进行预测，返回预测值</li>
+<li>score(X, y[, sample_weight]): 返回预测性能得分
+<ul>
+<li>设预测集为<span class="math inline">\(T_{test}\)</span>，真实值为<span class="math inline">\(y_i\)</span>，真实值的均值为<span class="math inline">\(\overline{y}\)</span>，预测值为<span class="math inline">\(\hat{y}_i\)</span>，则：<span class="math display">\[score=1-\frac{\sum_{T_{test}}(y_i-\hat{y}_i)^2}{(y_i-\overline{y})^2}\]</span>
+<ul>
+<li>score不超过1，但是可能为负值（预测效果太差）。</li>
+<li>score越大，预测性能越好。</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">def demo_Lasso(*data):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    使用Lasso函数</span><br><span class="line">    :param data: 训练样本集、测试样本集、训练样本集对应的标签值、测试样本集对应的标签值</span><br><span class="line">    :return: 权重向量、b值，预测结果的均方误差，预测性能得分</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    regr = linear_model.Lasso()</span><br><span class="line">    regr.fit(X_train, y_train)</span><br><span class="line">    print(&apos;Coefficients: %s&apos; % regr.coef_)</span><br><span class="line">    print(&apos;Intercept: %.2f&apos; % regr.intercept_)</span><br><span class="line">    print(&apos;Residual sum of squares: %.2f&apos; % np.mean((regr.predict(X_test) - y_test) ** 2))</span><br><span class="line">    print(&apos;Score: %.2f&apos; % regr.score(X_test, y_test))</span><br></pre></td></tr></table></figure>
+<p>调用该函数： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X_train, X_test, y_train, y_test = load_data()</span><br><span class="line">demo_Lasso(X_train, X_test, y_train, y_test)</span><br></pre></td></tr></table></figure></p>
+<p>输出结果： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Coefficients: [  0.          -0.         442.67992538   0.           0.</span><br><span class="line">   0.          -0.           0.         330.76014648   0.        ]</span><br><span class="line">Intercept: 152.52</span><br><span class="line">Residual sum of squares: 3583.42</span><br><span class="line">Score: 0.28</span><br></pre></td></tr></table></figure></p>
+<p>下面检验不同的<span class="math inline">\(\alpha\)</span>值对于预测性能的影响： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">def demo_Lasso_alpha(*data):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    alphas = [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000]</span><br><span class="line">    scores = []</span><br><span class="line">    for i, alpha in enumerate(alphas):</span><br><span class="line">        regr = linear_model.Lasso(alpha=alpha)</span><br><span class="line">        regr.fit(X_train, y_train)</span><br><span class="line">        scores.append(regr.score(X_test, y_test))</span><br><span class="line">    ## 绘图</span><br><span class="line">    fig = plt.figure()</span><br><span class="line">    ax = fig.add_subplot(1, 1, 1)</span><br><span class="line">    ax.plot(alphas, scores)</span><br><span class="line">    ax.set_xlabel(r&quot;$\alpha$&quot;)</span><br><span class="line">    ax.set_ylabel(r&quot;score&quot;)</span><br><span class="line">    ax.set_xscale(&apos;log&apos;)</span><br><span class="line">    ax.set_title(&quot;Lasso&quot;)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></p>
+<p>调用该函数： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X_train, X_test, y_train, y_test = load_data()</span><br><span class="line">demo_Lasso_alpha(X_train, X_test, y_train, y_test)</span><br></pre></td></tr></table></figure></p>
+<p>输出结果如下： <img src="/images/20190725_ML_Lasso.png"></p>
+<p>可以看出，当<span class="math inline">\(\alpha\)</span>超过1之后，随着<span class="math inline">\(\alpha\)</span>的增长，预测性能急剧下降。</p>
+<h4 id="elasticnet回归">ElasticNet回归</h4>
+<p>ElasticNet回归是对Lasso回归和岭回归的融合，其惩罚项是L1范数和L2范数的一个权衡。ElasticNet类实现了ElasticNet回归：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class sklearn.linear_model.ElasticNet(alpha=1.0, l1_ratio=0.5, fit_intercept=True,</span><br><span class="line">                 normalize=False, precompute=False, max_iter=1000,</span><br><span class="line">                 copy_X=True, tol=1e-4, warm_start=False, positive=False,</span><br><span class="line">                 random_state=None, selection=&apos;cyclic&apos;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>参数
+<ul>
+<li>alpha: <span class="math inline">\(\alpha\)</span>值。</li>
+<li>l1_ratio: <span class="math inline">\(\rho\)</span>值。</li>
+<li>fit_intercept: boolean，指定是否需要计算b值。</li>
+<li>max_iter: 一个整数，指定最大迭代次数。如果为None则为默认值，不同solver的默认值不同。</li>
+<li>normalize: boolean，如果为True，那么训练样本会在回归之前被归一化。</li>
+<li>copy_X: boolean，如果为True，则会复制X。</li>
+<li>precompute: boolean/序列。决定是否提前计算Gram矩阵来加速计算。</li>
+<li>tol: 一个浮点数，指定判断迭代收敛与否的阈值。</li>
+<li>warm_start: boolean，如果为True，那么使用前一次训练结果继续训练。否则从头开始训练。</li>
+<li>positive: boolean，如果为True，那么强制要求权重向量的分量都为正数。</li>
+<li>selection: 一个字符串，指定了每轮迭代时选择权重向量的哪个分量来更新。
+<ul>
+<li>random: 随机选择权重向量的一个分量来更新</li>
+<li>cyclic: 从前向后依次选择权重向量的一个分量来更新</li>
+</ul></li>
+<li>random_state: 一个整数或者一个RandomState实例，或者None；在solver=sag时使用
+<ul>
+<li>如果为整数，则它指定了随机数生成器的种子</li>
+<li>如果为RandomState实例，则指定例随机数生成器</li>
+<li>如果为None，则使用默认的随机数生成器</li>
+</ul></li>
+</ul></li>
+<li>属性
+<ul>
+<li>coef_: 权重向量</li>
+<li>intercept_: b值</li>
+<li>n_iter_: 实际迭代次数</li>
+</ul></li>
+<li>方法
+<ul>
+<li>fit(X, y[, sample_weight]): 训练模型</li>
+<li>predict(X): 用模型进行预测，返回预测值</li>
+<li>score(X, y[, sample_weight]): 返回预测性能得分
+<ul>
+<li>设预测集为<span class="math inline">\(T_{test}\)</span>，真实值为<span class="math inline">\(y_i\)</span>，真实值的均值为<span class="math inline">\(\overline{y}\)</span>，预测值为<span class="math inline">\(\hat{y}_i\)</span>，则：<span class="math display">\[score=1-\frac{\sum_{T_{test}}(y_i-\hat{y}_i)^2}{(y_i-\overline{y})^2}\]</span>
+<ul>
+<li>score不超过1，但是可能为负值（预测效果太差）。</li>
+<li>score越大，预测性能越好。</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">def demo_ElasticNet(*data):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    使用ElasticNet函数</span><br><span class="line">    :param data: 训练样本集、测试样本集、训练样本集对应的标签值、测试样本集对应的标签值</span><br><span class="line">    :return: 权重向量、b值，预测结果的均方误差，预测性能得分</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    regr = linear_model.ElasticNet()</span><br><span class="line">    regr.fit(X_train, y_train)</span><br><span class="line">    print(&apos;Coefficients: %s&apos; % regr.coef_)</span><br><span class="line">    print(&apos;Intercept: %.2f&apos; % regr.intercept_)</span><br><span class="line">    print(&apos;Residual sum of squares: %.2f&apos; % np.mean((regr.predict(X_test) - y_test) ** 2))</span><br><span class="line">    print(&apos;Score: %.2f&apos; % regr.score(X_test, y_test))</span><br></pre></td></tr></table></figure>
+<p>调用该函数： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X_train, X_test, y_train, y_test = load_data()</span><br><span class="line">demo_ElasticNet(X_train, X_test, y_train, y_test)</span><br></pre></td></tr></table></figure></p>
+<p>输出结果如下： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Coefficients: [ 0.40560736  0.          3.76542456  2.38531508  0.58677945  0.22891647</span><br><span class="line"> -2.15858149  2.33867566  3.49846121  1.98299707]</span><br><span class="line">Intercept: 151.93</span><br><span class="line">Residual sum of squares: 4922.36</span><br><span class="line">Score: 0.01</span><br></pre></td></tr></table></figure></p>
+<p>下面检验不同$,$值对预测性能的影响： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from mpl_toolkits.mplot3d import Axes3D</span><br><span class="line">from matplotlib import cm</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">def demo_ElasticNet_alpha_rho(*data):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    alphas = np.logspace(-2, 2)</span><br><span class="line">    rhos = np.linspace(0.01, 1)</span><br><span class="line">    scores = []</span><br><span class="line">    for alpha in alphas:</span><br><span class="line">        for rho in rhos:</span><br><span class="line">            regr = linear_model.ElasticNet(alpha=alpha, l1_ratio=rho)</span><br><span class="line">            regr.fit(X_train, y_train)</span><br><span class="line">            scores.append(regr.score(X_test, y_test))</span><br><span class="line">    ## 绘图</span><br><span class="line">    alphas, rhos = np.meshgrid(alphas, rhos)</span><br><span class="line">    scores = np.array(scores).reshape(alphas.shape)</span><br><span class="line">    fig = plt.figure()</span><br><span class="line">    ax = Axes3D(fig)</span><br><span class="line">    surf = ax.plot_surface(alphas, rhos, scores, rstride=1, cstride=1, cmap=cm.jet, linewidth=0, antialiased=False)</span><br><span class="line">    fig.colorbar(surf, shrink=0.5, aspect=5)</span><br><span class="line">    ax.set_xlabel(r&quot;$\alpha$&quot;)</span><br><span class="line">    ax.set_ylabel(r&quot;$\rho$&quot;)</span><br><span class="line">    ax.set_zlabel(&quot;score&quot;)</span><br><span class="line">    ax.set_title(&quot;ElasticNet&quot;)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<p>调用该函数： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X_train, X_test, y_train, y_test = load_data()</span><br><span class="line">demo_ElasticNet_alpha_rho(X_train, X_test, y_train, y_test)</span><br></pre></td></tr></table></figure></p>
+<p>输出结果如下： <img src="/images/20190725_ML_ElasticNet.png"></p>
+<p>可以看到随着<span class="math inline">\(\alpha\)</span>的增大，预测性能下降，而<span class="math inline">\(\rho\)</span>影响的是性能下降的速度。</p>
+<h3 id="逻辑回归-1">逻辑回归</h3>
+<p>在scikit-learn中，LogisticRegression实现了逻辑回归功能： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class sklearn.linear_model.LogisticRegression(penalty=&apos;l2&apos;, dual=False, tol=0.0001, C=1.0,</span><br><span class="line">                 fit_intercept=True, intercept_scaling=1, class_weight=None,</span><br><span class="line">                 random_state=None, solver=&apos;warn&apos;, max_iter=100,</span><br><span class="line">                 multi_class=&apos;warn&apos;, verbose=0, warm_start=False, n_jobs=None,</span><br><span class="line">                 l1_ratio=None)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>参数
+<ul>
+<li>penalty: 一个字符串，指定了正则化策略
+<ul>
+<li>l2: 则优化目标函数为：<span class="math inline">\(\frac{1}{2}||\vec{w}||_2^2+CL(\vec{w}),C&gt;0\)</span>，<span class="math inline">\(L(\vec{w})\)</span>为极大似然函数</li>
+<li>l1: 则优化目标函数为：<span class="math inline">\(||\vec{w}||_1 +CL(\vec{w}),C&gt;0\)</span>，<span class="math inline">\(L(\vec{w})\)</span>为极大似然函数</li>
+</ul></li>
+<li>dual: boolean，如果为True，则求解对偶形式（只在penalty='l2'且solver='liblinear'有对偶形式）；如果为False，则求解原始形式。</li>
+<li>C: 一个浮点数，指定了罚项系数的倒数，值越小正则化项越大。</li>
+<li>fit_intercept: boolean，指定是否需要计算b值。</li>
+<li>intercept_scaling: 一个浮点数，只当solver='liblinear'时有意义。当采用fit_intercept时，相当于人造一个特征出来，该特征恒为1，其权重为b。在计算正则化项时，该人造特征也被考虑了，因此为了降低这个人造特征的影响，需要提供intercept_scaling。</li>
+<li>class_weight: 一个字典或者字符串
+<ul>
+<li>字典：字典给出每个分类的权重，如{class_label: weight}</li>
+<li>‘balanced'：每个分类的权重与该分类在样本集中出现的频率成反比</li>
+<li>未指定：每个分类的权重都为1</li>
+</ul></li>
+<li>max_iter: 一个整数，指定最大迭代次数。</li>
+<li>random_state: 一个整数或者一个RandomState实例，或者None；在solver=sag时使用
+<ul>
+<li>如果为整数，则它指定了随机数生成器的种子</li>
+<li>如果为RandomState实例，则指定例随机数生成器</li>
+<li>如果为None，则使用默认的随机数生成器</li>
+</ul></li>
+<li>solver: 一个字符串，指定了求解最优化问题的算法
+<ul>
+<li>newton-cg: 使用牛顿法，只处理penalty='l2'的情况</li>
+<li>lbfgs: 使用L-BFGS拟牛顿法，只处理penalty='l2'的情况</li>
+<li>liblinear: 使用liblinear，适用规模小的数据集</li>
+<li>sag: 使用Stochastic Average Gradient descent算法，适用规模大的数据集，只处理penalty='l2'的情况</li>
+</ul></li>
+<li>tol: 一个浮点数，指定判断迭代收敛与否的阈值。</li>
+<li>multi_class: 一个字符串，指定对于多分类问题的策略
+<ul>
+<li>ovr: 采用one-vs-rest策略</li>
+<li>multinomial: 直接采用多分类逻辑回归策略</li>
+</ul></li>
+<li>verbose: 一个正数，用于开启/关闭迭代中间输出日志功能。</li>
+<li>warm_start: boolean，如果为True，那么使用前一次训练结果继续训练。否则从头开始训练。</li>
+<li>n_jobs: 一个正数，指定任务并行时的CPU数量。如果为-1则使用所有可用的CPU。</li>
+</ul></li>
+<li>属性
+<ul>
+<li>coef_: 权重向量</li>
+<li>intercept_: b值</li>
+<li>n_iter_: 实际迭代次数</li>
+</ul></li>
+<li>方法
+<ul>
+<li>fit(X, y[, sample_weight]): 训练模型</li>
+<li>predict(X): 用模型进行预测，返回预测值</li>
+<li>predict_log_proba(X): 返回一个数组，数组的元素依次是X预测为各个类别的概率的对数值</li>
+<li>predict_proba(X): 返回一个数组，数组的元素依次是X预测为各个类别的概率值</li>
+<li>score(X, y[, sample_weight]): 返回在(X, y)上预测的准确率</li>
+</ul></li>
+</ul>
+<p>为了使用逻辑回归模型，我们对鸢尾花进行分类。该数据集一共有150个数据，这些数据分为3类(setosa, versicolor, virginica)，每类50个数据。每个数据包含4个属性：sepal长度、sepal宽度、petal长度、petal宽度</p>
+<p>首先加载数据： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def load_data():</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    采用分层采样</span><br><span class="line">    :return: </span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    iris = datasets.load_iris()</span><br><span class="line">    X_train = iris.data</span><br><span class="line">    y_train = iris.target</span><br><span class="line">    return model_selection.train_test_split(X_train, y_train, test_size=0.25, random_state=0, stratify=y_train)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">def demo_LogisticRegression(*data):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    使用LogisticRegression函数</span><br><span class="line">    :param data: 训练样本集、测试样本集、训练样本集对应的标签值、测试样本集对应的标签值</span><br><span class="line">    :return: 权重向量、b值，预测性能得分</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    regr = linear_model.LogisticRegression()</span><br><span class="line">    regr.fit(X_train, y_train)</span><br><span class="line">    print(&apos;Coefficients: %s&apos; % regr.coef_)</span><br><span class="line">    print(&apos;Intercept: %s&apos; % regr.intercept_)</span><br><span class="line">    print(&apos;Score: %.2f&apos; % regr.score(X_test, y_test))</span><br></pre></td></tr></table></figure>
+<p>调用该函数： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X_train, X_test, y_train, y_test = load_data()</span><br><span class="line">demo_LogisticRegression(X_train, X_test, y_train, y_test)</span><br></pre></td></tr></table></figure></p>
+<p>输出结果： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Coefficients: [[ 0.38705175  1.35839989 -2.12059692 -0.95444452]</span><br><span class="line"> [ 0.23787852 -1.36235758  0.5982662  -1.26506299]</span><br><span class="line"> [-1.50915807 -1.29436243  2.14148142  2.29611791]]</span><br><span class="line">Intercept: [ 0.23950369  1.14559506 -1.0941717 ]</span><br><span class="line">Score: 0.97</span><br></pre></td></tr></table></figure></p>
+<p>可以看到测试集中的预测结果性能得分为0.97（即预测准确率为97%）。</p>
+<p>下面考察multi_class参数对分类结果的影响。默认采用的是one-vs-rest策略，但是逻辑回归模型原生就支持多类分类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def demo_LogisticRegression_multinomial(*data):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    regr = linear_model.LogisticRegression(multi_class=&apos;multinomial&apos;, solver=&apos;lbfgs&apos;)</span><br><span class="line">    regr.fit(X_train, y_train)</span><br><span class="line">    print(&apos;Coefficients: %s&apos; % regr.coef_)</span><br><span class="line">    print(&apos;Intercept: %s&apos; % regr.intercept_)</span><br><span class="line">    print(&apos;Score: %.2f&apos; % regr.score(X_test, y_test))</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>只有solver为牛顿法或者拟牛顿法才能配合<code>multi_class='multinomial'</code></p>
+</blockquote>
+<p>调用该函数： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X_train, X_test, y_train, y_test = load_data()</span><br><span class="line">demo_LogisticRegression_multinomial(X_train, X_test, y_train, y_test)</span><br></pre></td></tr></table></figure></p>
+<p>结果如下： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Coefficients: [[-0.38350833  0.86199769 -2.26970401 -0.97473472]</span><br><span class="line"> [ 0.34381965 -0.37903699 -0.03117965 -0.86837866]</span><br><span class="line"> [ 0.03968868 -0.4829607   2.30088366  1.84311338]]</span><br><span class="line">Intercept: [  8.75772577   2.49369071 -11.25141648]</span><br><span class="line">Score: 1.00</span><br></pre></td></tr></table></figure></p>
+<p>可以看到在这个问题中，多分类策略进一步提升了预测准确率。</p>
+<p>最后，考察参数C对分类模型的预测性能的影响： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">def demo_LogisticRegression_C(*data):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    Cs = np.logspace(-2, 4, num=100)</span><br><span class="line">    scores = []</span><br><span class="line">    for C in Cs:</span><br><span class="line">        regr = linear_model.LogisticRegression(C=C)</span><br><span class="line">        regr.fit(X_train, y_train)</span><br><span class="line">        scores.append(regr.score(X_test, y_test))</span><br><span class="line">    # 绘图</span><br><span class="line">    fig = plt.figure()</span><br><span class="line">    ax = fig.add_subplot(1, 1, 1)</span><br><span class="line">    ax.plot(Cs, scores)</span><br><span class="line">    ax.set_xlabel(r&quot;C&quot;)</span><br><span class="line">    ax.set_ylabel(r&quot;score&quot;)</span><br><span class="line">    ax.set_xscale(&apos;log&apos;)</span><br><span class="line">    ax.set_title(&quot;LogisticRegression&quot;)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></p>
+<p>测试结果如下图： <img src="/images/20190725_ML_Logistic.png"></p>
+<p>可以看到随着C的增大（即正则化项的减小），预测准确率上升。当C增大到一定程度，预测准确率维持在较高的水准不变。</p>
+<h3 id="线性判别分析-1">线性判别分析</h3>
+<p>在scikit-learn中，LinearDiscriminantAnalysis实现了线性判别分析模型： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class sklearn.discriminant_analysis.LinearDiscriminantAnalysis(</span><br><span class="line">                 solver=&apos;svd&apos;, shrinkage=None, priors=None,</span><br><span class="line">                 n_components=None, store_covariance=False, tol=0.0001)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>参数
+<ul>
+<li>solver: 一个字符串，指定求解最优化问题的算法
+<ul>
+<li>svd: 奇异值分解，对于有大规模特征的数据，推荐使用</li>
+<li>lsqr: 最小平方差算法，可以结合shrinkage参数</li>
+<li>eigen: 特征值分解算法，可以结合shrinkage参数</li>
+</ul></li>
+<li>shrinkage: 通常在训练样本数量小于特征数量场合下使用，只有在solver=lsqr或者eigen下有意义
+<ul>
+<li>'auto': 根据Ledoit-Wolf引理来自动决定shrinkage参数大小</li>
+<li>None: 不使用该参数</li>
+<li>浮点数(0~1): 指定参数</li>
+</ul></li>
+<li>priors: 一个数组，数组中元素依次指定了每个类别的先验概率。如果为None，则认为每个类的先验概率都是等可能的。</li>
+<li>n_components: 一个整数，指定了数据降维后的维度(必须小于n_classes-1)。</li>
+<li>store_covariance: boolean，如果为True，则需要额外计算每个类别的协方差矩阵<span class="math inline">\(\sum_i\)</span>。</li>
+<li>tol: 一个浮点数，指定了用于SVD算法中判断迭代收敛的阈值。</li>
+</ul></li>
+<li>属性
+<ul>
+<li>coef_: 权重向量</li>
+<li>intercept_: b值</li>
+<li>covariance_: 一个数组，依次给出了每个类别的协方差矩阵</li>
+<li>means_: 一个数组，依次给出了每个类别的均值向量</li>
+<li>xbar_: 给出整体样本的均值向量</li>
+<li>n_iter_: 实际迭代次数</li>
+</ul></li>
+<li>方法
+<ul>
+<li>fit(X, y): 训练模型</li>
+<li>predict(X): 用模型进行预测，返回预测值</li>
+<li>predict_log_proba(X): 返回一个数组，数组的元素依次是X预测为各个类别的概率的对数值</li>
+<li>predict_proba(X): 返回一个数组，数组的元素依次是X预测为各个类别的概率值</li>
+<li>score(X, y[, sample_weight]): 返回在(X, y)上预测的准确率</li>
+</ul></li>
+</ul>
+<p>依旧使用鸢尾花数据集： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def demo_LinearDiscriminantAnalysis(*data):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    lda = discriminant_analysis.LinearDiscriminantAnalysis()</span><br><span class="line">    lda.fit(X_train, y_train)</span><br><span class="line">    print(&apos;Coefficients: %s&apos; % lda.coef_)</span><br><span class="line">    print(&apos;Intercept: %s&apos; % lda.intercept_)</span><br><span class="line">    print(&apos;Score: %.2f&apos; % lda.score(X_test, y_test))</span><br></pre></td></tr></table></figure></p>
+<p>结果如下： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Coefficients: [[  6.66775427   9.63817442 -14.4828516  -20.9501241 ]</span><br><span class="line"> [ -2.00416487  -3.51569814   4.27687513   2.44146469]</span><br><span class="line"> [ -4.54086336  -5.96135848   9.93739814  18.02158943]]</span><br><span class="line">Intercept: [-15.46769144   0.60345075 -30.41543234]</span><br><span class="line">Score: 1.00</span><br></pre></td></tr></table></figure></p>
+<p>现在来检查一下原始数据集在经过线性判别分析LDA之后的数据集情况，绘制LDA降维之后的数据集： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">def plot_LDA(converted_X, y):</span><br><span class="line">    fig = plt.figure()</span><br><span class="line">    ax = Axes3D(fig)</span><br><span class="line">    colors = &apos;rgb&apos;</span><br><span class="line">    markers = &apos;o*s&apos;</span><br><span class="line">    for target, color, marker in zip([0, 1, 2], colors, markers):</span><br><span class="line">        pos = (y == target).ravel()</span><br><span class="line">        X = converted_X[pos, :]</span><br><span class="line">        ax.scatter(X[:, 0], X[:, 1], X[:, 2], color=color, marker=marker, label=&quot;Label %d&quot; % target)</span><br><span class="line">    ax.legend(loc=&quot;best&quot;)</span><br><span class="line">    fig.suptitle(&quot;Iris After LDA&quot;)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></p>
+<p>调用： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">X_train, X_test, y_train, y_test = load_data()</span><br><span class="line">X = np.vstack((X_train, X_test))</span><br><span class="line">Y = np.vstack((y_train.reshape(y_train.size, 1), y_test.reshape(y_test.size, 1)))</span><br><span class="line">lda = discriminant_analysis.LinearDiscriminantAnalysis()</span><br><span class="line">lda.fit(X, Y)</span><br><span class="line">converted_X = np.dot(X, np.transpose(lda.coef_)) + lda.intercept_</span><br><span class="line">plot_LDA(converted_X, Y)</span><br></pre></td></tr></table></figure></p>
+<p>结果如下： <img src="/images/20190725_LinearDiscriminantAnalysis_LDA.png"></p>
+<p>可以看到经过线性判别分析后，不同种类的鸢尾花之间的间隔较远，相同种类的鸢尾花之间已经相互聚集。</p>
+<p>接下来考察不同的solver对预测性能的影响： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">def demo_LinearDiscriminantAnalysis_solver(*data):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    solvers = [&apos;svd&apos;, &apos;lsqr&apos;, &apos;eigen&apos;]</span><br><span class="line">    for solver in solvers:</span><br><span class="line">        if solver == &apos;svd&apos;:</span><br><span class="line">            lda = discriminant_analysis.LinearDiscriminantAnalysis(solver=solver)</span><br><span class="line">        else:</span><br><span class="line">            lda = discriminant_analysis.LinearDiscriminantAnalysis(solver=solver, shrinkage=None)</span><br><span class="line">        lda.fit(X_train, y_train)</span><br><span class="line">        print(&apos;Score at solver = %s: %.2f&apos; % (solver, lda.score(X_test, y_test)))</span><br></pre></td></tr></table></figure></p>
+<p>结果如下，可以看出三者没有差别： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">runfile(&apos;/Users/rian/Evil/LEARN/AI/blog/linear model/LinearDiscriminantAnalysis.py&apos;, wdir=&apos;/Users/rian/Evil/LEARN/AI/blog/linear model&apos;)</span><br><span class="line">Score at solver = svd: 1.00</span><br><span class="line">Score at solver = lsqr: 1.00</span><br><span class="line">Score at solver = eigen: 1.00</span><br></pre></td></tr></table></figure></p>
+<p>最后考察中solver=lsqr中引入抖动(相当于引入正则化项)： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">def demo_LinearDiscriminantAnalysis_shrinkage(*data):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    shrinkages = np.linspace(0.0, 1.0, num=20)</span><br><span class="line">    scores = []</span><br><span class="line">    for shrinkage in shrinkages:</span><br><span class="line">        lda = discriminant_analysis.LinearDiscriminantAnalysis(solver=&apos;lsqr&apos;, shrinkage=shrinkage)</span><br><span class="line">        lda.fit(X_train, y_train)</span><br><span class="line">        scores.append(lda.score(X_test, y_test))</span><br><span class="line">    # 绘图</span><br><span class="line">    fig = plt.figure()</span><br><span class="line">    ax = fig.add_subplot(1, 1, 1)</span><br><span class="line">    ax.plot(shrinkages, scores)</span><br><span class="line">    ax.set_xlabel(r&quot;shrinkage&quot;)</span><br><span class="line">    ax.set_ylabel(r&quot;score&quot;)</span><br><span class="line">    ax.set_ylim(0, 1.05)</span><br><span class="line">    ax.set_title(&quot;LinearDiscriminantAnalysis&quot;)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></p>
+<p>结果：</p>
+<p><img src="/images/20190725_LinearDiscriminantAnalysis_shrinkage.png"></p>
+<p>可以发现随着shrinkage的增大，模型的准确率会随之下降</p>
 
       
     </div>
@@ -978,7 +1229,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线性模型"><span class="nav-number">1.</span> <span class="nav-text">线性模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法"><span class="nav-number">1.2.</span> <span class="nav-text">算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#普通线性回归"><span class="nav-number">1.2.1.</span> <span class="nav-text">普通线性回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广义线性模型"><span class="nav-number">1.2.2.</span> <span class="nav-text">广义线性模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑回归"><span class="nav-number">1.2.3.</span> <span class="nav-text">逻辑回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线性判别分析"><span class="nav-number">1.2.4.</span> <span class="nav-text">线性判别分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python实战"><span class="nav-number">1.3.</span> <span class="nav-text">Python实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线性回归模型"><span class="nav-number">1.3.1.</span> <span class="nav-text">线性回归模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线性回归模型的正则化"><span class="nav-number">1.3.2.</span> <span class="nav-text">线性回归模型的正则化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#岭回归"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">岭回归</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lasso回归"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">Lasso回归</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线性模型"><span class="nav-number">1.</span> <span class="nav-text">线性模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法"><span class="nav-number">1.2.</span> <span class="nav-text">算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#普通线性回归"><span class="nav-number">1.2.1.</span> <span class="nav-text">普通线性回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广义线性模型"><span class="nav-number">1.2.2.</span> <span class="nav-text">广义线性模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑回归"><span class="nav-number">1.2.3.</span> <span class="nav-text">逻辑回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线性判别分析"><span class="nav-number">1.2.4.</span> <span class="nav-text">线性判别分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python实战"><span class="nav-number">1.3.</span> <span class="nav-text">Python实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线性回归模型"><span class="nav-number">1.3.1.</span> <span class="nav-text">线性回归模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线性回归模型的正则化"><span class="nav-number">1.3.2.</span> <span class="nav-text">线性回归模型的正则化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#岭回归"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">岭回归</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lasso回归"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">Lasso回归</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#elasticnet回归"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">ElasticNet回归</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑回归-1"><span class="nav-number">1.3.3.</span> <span class="nav-text">逻辑回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线性判别分析-1"><span class="nav-number">1.3.4.</span> <span class="nav-text">线性判别分析</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

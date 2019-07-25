@@ -108,7 +108,7 @@
 <meta property="og:site_name" content="Rian Ng">
 <meta property="og:description" content="It&apos;s my first time to build a blog, maybe my experience can help the green hands. Operation System: macOS 2019.7.19 update, Github+hexo">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-24T13:49:31.320Z">
+<meta property="og:updated_time" content="2019-07-25T07:10:10.344Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="My blog building experience">
 <meta name="twitter:description" content="It&apos;s my first time to build a blog, maybe my experience can help the green hands. Operation System: macOS 2019.7.19 update, Github+hexo">
@@ -449,7 +449,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-07-24 21:49:31" itemprop="dateModified" datetime="2019-07-24T21:49:31+08:00">2019-07-24</time>
+                <time title="Modified: 2019-07-25 15:10:10" itemprop="dateModified" datetime="2019-07-25T15:10:10+08:00">2019-07-25</time>
               </span>
             
           
@@ -523,9 +523,13 @@
       
 
       
-        <p>It's my first time to build a blog, maybe my experience can help the green hands. Operation System: macOS 2019.7.19 update, Github+hexo <a id="more"></a> # preparatory work</p>
+        <p>It's my first time to build a blog, maybe my experience can help the green hands.</p>
+<p>Operation System: macOS</p>
+<p>2019.7.19 update, Github+hexo <a id="more"></a></p>
+<h1 id="preparatory-work">preparatory work</h1>
 <h2 id="install-git">install git</h2>
-<p>download URL: https://git-scm.com/download After installing git successfully, we need to bind git and our Github account.</p>
+<p>download URL: https://git-scm.com/download</p>
+<p>After installing git successfully, we need to bind git and our Github account.</p>
 <ul>
 <li><p>open iTerm</p></li>
 <li><p>set the configuration information</p>
@@ -539,7 +543,8 @@
 <h2 id="install-node.js">install node.js</h2>
 <p>download url: https://nodejs.org/en/download/</p>
 <h2 id="install-hexo">install hexo</h2>
-<p>Hexo is the framework of our blog site. <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure></p>
+<p>Hexo is the framework of our blog site.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
 <h1 id="build-a-blog">build a blog</h1>
 <h2 id="build-locally">build locally</h2>
 <ul>
@@ -554,8 +559,11 @@
 <li><p>open _config.yml, update deploy</p>
 <p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">    type: git</span><br><span class="line">    repository: https://github.com/github_name/github_name.github.io.git</span><br><span class="line">    branch: master</span><br></pre></td></tr></table></figure></p></li>
 <li><p>install plugin</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">    npm install hexo-deployer-git --save</span><br><span class="line">    ```  </span><br><span class="line">* generate static files locally</span><br></pre></td></tr></table></figure></p>
-<p>hexo g <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">* push to Github</span><br><span class="line"></span><br><span class="line">    ``` </span><br><span class="line">    hexo d</span><br></pre></td></tr></table></figure></p></li>
+<p><code>npm install hexo-deployer-git --save</code></p></li>
+<li><p>generate static files locally</p>
+<p><code>hexo g</code></p></li>
+<li><p>push to Github</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure></p></li>
 <li><p>now we can visit https://github_name.github.io</p></li>
 </ul>
 <h1 id="update-blog-content">update blog content</h1>
@@ -835,7 +843,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#install-git"><span class="nav-number">1.</span> <span class="nav-text">install git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#install-node.js"><span class="nav-number">2.</span> <span class="nav-text">install node.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#install-hexo"><span class="nav-number">3.</span> <span class="nav-text">install hexo</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#build-a-blog"><span class="nav-number"></span> <span class="nav-text">build a blog</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#build-locally"><span class="nav-number">1.</span> <span class="nav-text">build locally</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#link-blog-to-github"><span class="nav-number">2.</span> <span class="nav-text">link blog to Github</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#update-blog-content"><span class="nav-number"></span> <span class="nav-text">update blog content</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#update-article"><span class="nav-number">1.</span> <span class="nav-text">update article</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#add-menu"><span class="nav-number">2.</span> <span class="nav-text">add menu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#add-pictures-in-the-article"><span class="nav-number">3.</span> <span class="nav-text">add pictures in the article</span></a></li></ol></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#preparatory-work"><span class="nav-number">1.</span> <span class="nav-text">preparatory work</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#install-git"><span class="nav-number">1.1.</span> <span class="nav-text">install git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#install-node.js"><span class="nav-number">1.2.</span> <span class="nav-text">install node.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#install-hexo"><span class="nav-number">1.3.</span> <span class="nav-text">install hexo</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#build-a-blog"><span class="nav-number">2.</span> <span class="nav-text">build a blog</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#build-locally"><span class="nav-number">2.1.</span> <span class="nav-text">build locally</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#link-blog-to-github"><span class="nav-number">2.2.</span> <span class="nav-text">link blog to Github</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#update-blog-content"><span class="nav-number">3.</span> <span class="nav-text">update blog content</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#update-article"><span class="nav-number">3.1.</span> <span class="nav-text">update article</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#add-menu"><span class="nav-number">3.2.</span> <span class="nav-text">add menu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#add-pictures-in-the-article"><span class="nav-number">3.3.</span> <span class="nav-text">add pictures in the article</span></a></li></ol></li></ol></div>
             
 
           </div>
