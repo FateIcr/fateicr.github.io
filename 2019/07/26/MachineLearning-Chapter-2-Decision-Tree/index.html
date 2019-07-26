@@ -1,0 +1,1915 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    }
+  };
+</script>
+
+  <meta name="description" content="概述 决策树(decision tree)是功能强大而且很受欢迎的分类和预测方法，它是一种有监督的学习算法，以树状图为基础，其输出结果为一系列简单实用的规则。决策树就是一系列的if-then于语句，可以用于分类问题，也可以用于回归问题。 决策树模型基于特征对实例进行分类，它是一种树状结构。优点是可读性强，分类速度快。学习决策树时，通常采用损失函数最小化原则。  本章中，训练集用D表示，T表示一棵决">
+<meta name="keywords" content="machine learning,notes,python,decision tree">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MachineLearning Chapter-2 Decision Tree">
+<meta property="og:url" content="http://yoursite.com/2019/07/26/MachineLearning-Chapter-2-Decision-Tree/index.html">
+<meta property="og:site_name" content="Rian Ng">
+<meta property="og:description" content="概述 决策树(decision tree)是功能强大而且很受欢迎的分类和预测方法，它是一种有监督的学习算法，以树状图为基础，其输出结果为一系列简单实用的规则。决策树就是一系列的if-then于语句，可以用于分类问题，也可以用于回归问题。 决策树模型基于特征对实例进行分类，它是一种树状结构。优点是可读性强，分类速度快。学习决策树时，通常采用损失函数最小化原则。  本章中，训练集用D表示，T表示一棵决">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/MachineLearning/DecisionTree/20190726_ML_DecisionTreeRegressor.png">
+<meta property="og:image" content="http://yoursite.com/images/MachineLearning/DecisionTree/20190726_ML_DecisionTreeRegressor_Depth.png">
+<meta property="og:image" content="http://yoursite.com/images/MachineLearning/DecisionTree/20190726_ML_DecisionTreeRegressor_Depth_Plot.png">
+<meta property="og:image" content="http://yoursite.com/images/MachineLearning/DecisionTree/20190726_ML_DecisionTreeClassifier_Depth.png">
+<meta property="og:image" content="http://yoursite.com/images/MachineLearning/DecisionTree/20190726_ML_ExportGraphviz.png">
+<meta property="og:updated_time" content="2019-07-26T10:45:00.928Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MachineLearning Chapter-2 Decision Tree">
+<meta name="twitter:description" content="概述 决策树(decision tree)是功能强大而且很受欢迎的分类和预测方法，它是一种有监督的学习算法，以树状图为基础，其输出结果为一系列简单实用的规则。决策树就是一系列的if-then于语句，可以用于分类问题，也可以用于回归问题。 决策树模型基于特征对实例进行分类，它是一种树状结构。优点是可读性强，分类速度快。学习决策树时，通常采用损失函数最小化原则。  本章中，训练集用D表示，T表示一棵决">
+<meta name="twitter:image" content="http://yoursite.com/images/MachineLearning/DecisionTree/20190726_ML_DecisionTreeRegressor.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Rian Ng" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/07/26/MachineLearning-Chapter-2-Decision-Tree/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  
+  <title>MachineLearning Chapter-2 Decision Tree | Rian Ng</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Rian Ng</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>Commonweal 404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <a href="https://github.com/fateicr" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/26/MachineLearning-Chapter-2-Decision-Tree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rian Ng">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rian Ng">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MachineLearning Chapter-2 Decision Tree
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-26 12:28:44 / Modified: 18:45:00" itemprop="dateCreated datePublished" datetime="2019-07-26T12:28:44+08:00">2019-07-26</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/2019/07/26/MachineLearning-Chapter-2-Decision-Tree/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/26/MachineLearning-Chapter-2-Decision-Tree/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+                 Views:  
+                <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+            </span>
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="概述">概述</h1>
+<p>决策树(decision tree)是功能强大而且很受欢迎的分类和预测方法，它是一种有监督的学习算法，以树状图为基础，其输出结果为一系列简单实用的规则。决策树就是一系列的if-then于语句，可以用于分类问题，也可以用于回归问题。</p>
+<p>决策树模型基于特征对实例进行分类，它是一种树状结构。优点是可读性强，分类速度快。学习决策树时，通常采用损失函数最小化原则。</p>
+<blockquote>
+<p>本章中，训练集用D表示，T表示一棵决策树。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="算法">算法</h1>
+<h2 id="决策树原理">决策树原理</h2>
+<p>决策树是一个贪心算法，即在特征空间上执行递归的二元分割，决策树由节点和有向边组成。内部节点表示一个特征或者属性，叶子结点表示一个分类。使用决策树进行分类时，将实例分配到叶节点的类中，该叶节点所属的类就是该节点的分类。</p>
+<p>决策树可以表示给定特征条件下，类别的条件概率分布。将特征空间划分为互不相交的单元<span class="math inline">\(S_1,S_2,…,S_m\)</span>。设某个单元<span class="math inline">\(S_i\)</span>内部有<span class="math inline">\(N_i\)</span>个样本点，则它定义了一个条件概率分布<span class="math inline">\(P(y=c_k/X)\)</span>, <span class="math inline">\(X\in S_i\)</span>; <span class="math inline">\(c_k,k=1,2,…,K\)</span>为第<span class="math inline">\(k\)</span>个分类。</p>
+<ul>
+<li>每个单元对应于决策树的一条路径</li>
+<li>所有单元的条件概率分布构成了决策树所代表的条件概率分布</li>
+<li>在单元<span class="math inline">\(S_i\)</span>内部有<span class="math inline">\(N_i\)</span>个样本点，但是整个单元都属于类<span class="math inline">\(\hat{c}_k\)</span>。其中，<span class="math inline">\(\hat{c}_k=\arg_{c_k}\max P(y=c_k/X)\)</span>, <span class="math inline">\(X\in S_i\)</span>。即单元<span class="math inline">\(S_i\)</span>内部的<span class="math inline">\(N_i\)</span>个样本点，哪个分类占优，则整个单元都属于该类。</li>
+</ul>
+<h2 id="构建决策树的步骤">构建决策树的步骤</h2>
+<p>构建决策树通常包括三个步骤：</p>
+<ol type="1">
+<li>特征选择</li>
+<li>决策树生成</li>
+<li>决策树剪枝</li>
+</ol>
+<p>假设给定训练集<span class="math inline">\(D=\{(\vec{x}_1,y_1),(\vec{x}_2,y_2),…,(\vec{x}_N,y_1N,\}\)</span>，其中<span class="math inline">\(\vec{x}_i=(x_i^{(1)},x_i^{(2)},…,x_i^{(n)})\)</span>为输入实例，<span class="math inline">\(n\)</span>为特征个数；<span class="math inline">\(y_i\in \{1,2,…,K\}\)</span>为类标记，<span class="math inline">\(i=1,2,…,N\)</span>；<span class="math inline">\(N\)</span>为样本容量。构建决策树的目标是，根据给定的训练数据集学习一个决策树模型。</p>
+<p>构建决策树通常是将正则化的极大似然函数作为损失函数，其学习目标是损失函数为目标函数的最小化。构建决策树的算法通常是递归地选择最优特征，并根据该特征对训练数据进行分割，其步骤如下：</p>
+<ol type="1">
+<li>构建根节点，所有训练样本都位于根节点</li>
+<li>选择一个最优特征。通过该特征将训练数据分割成子集，确保各个子集有最好的分类，但要考虑下列两种情况：
+<ol type="1">
+<li>若子集已能够被较好地分类，则构建叶节点，并将该子集划分到对应的叶节点去</li>
+<li>若某个子集不能被较好地分类，则对该子集继续划分</li>
+</ol></li>
+<li>递归直至所有训练样本都被较好地分类，或者没有合适的特征为止</li>
+</ol>
+<p>通过该步骤生成的决策树对训练样本有很好的分类能力，但我们需要的是对未知样本的分类能力。因此通常需要对已生成的决策树进行剪枝，从而使得决策树具有更好的泛化能力。剪枝过程是去掉过于细分的叶节点，从而提高泛化能力。</p>
+<h3 id="特征选择">特征选择</h3>
+<p>特征选择就是选取有较强分类能力的特征。分类能力通过信息增益或者信息增益比来刻画。选择特征的标准就是找出局部最优的特征作为判断进行切分，取决于切分后节点数据集合中类别的有序程度(纯度)，划分后的分区数据越纯，切分规则越合适。衡量节点数据集合的纯度有：熵、基尼系数和方差。熵和基尼系数是针对分类的，方差是针对回归的。</p>
+<h4 id="熵">熵</h4>
+<p>先给出熵(entropy)的定义，设X是一个离散型随机变量，其概率分布为</p>
+<p><span class="math display">\[P(X=\vec{x}_i)=p_i,i=1,2,…,n\]</span></p>
+<p>则随机变量<span class="math inline">\(X\)</span>的熵为：</p>
+<p><span class="math display">\[H(X)=-\sum_{i=1}^n p_i \log p_i\]</span></p>
+<p>其中，定义<span class="math inline">\(0\log 0=0\)</span>。</p>
+<p>当随机变量<span class="math inline">\(X\)</span>只取两个值时，<span class="math inline">\(X\)</span>的分布为：</p>
+<p><span class="math display">\[P(X=1)=p \\ P(X=0)=1-p,0≤p≤1\]</span></p>
+<p>此时熵为：<span class="math inline">\(H(P)=-p\log p-(1-p)\log (1-p), 0≤p≤1\)</span></p>
+<ul>
+<li>当<span class="math inline">\(p=0\)</span>或者<span class="math inline">\(p=1\)</span>时，熵最小(为0)，此时随机变量不确定性最小</li>
+<li>当<span class="math inline">\(p=0.5\)</span>时，熵最大(为1)，此时随机变量不确定性最大</li>
+</ul>
+<p>设随机变量<span class="math inline">\((X,Y)\)</span>，其联合概率分布为：<span class="math inline">\(P(X=\vec{x}_i,Y=y_j)=p_{ij}\)</span>, <span class="math inline">\(i=1,2,…,n\)</span>; <span class="math inline">\(j=1,2,…,m\)</span>。则条件熵<span class="math inline">\(H(Y/X)\)</span>定义为：</p>
+<p><span class="math display">\[H(Y/X)=\sum_{i=1}^n P_X(X=\vec{x}_i)H(Y/X=\vec{x}_i)\]</span></p>
+<p>其中，<span class="math inline">\(P_X(X=\vec{x}_i)=\sum_YP(X=\vec{x}_i,Y)\)</span></p>
+<ul>
+<li>当熵中的概率由数据估计得到时，称之为经验熵</li>
+<li>当条件熵中的概率由数据估计得到时，称之为经验条件熵</li>
+</ul>
+<h4 id="信息增益">信息增益</h4>
+<p>对于数据集<span class="math inline">\(D\)</span>，我们通过<span class="math inline">\(H(Y)\)</span>来刻画数据集<span class="math inline">\(D\)</span>的不确定程度。当数据集<span class="math inline">\(D\)</span>中的所有样本都是同一类别时，<span class="math inline">\(H(Y)=0\)</span>。也将<span class="math inline">\(H(Y)\)</span>记作<span class="math inline">\(H(D)\)</span>。给定特征<span class="math inline">\(A\)</span>和训练数据集<span class="math inline">\(D\)</span>，定义信息增益<span class="math inline">\(g(D,A)\)</span>为：<span class="math inline">\(g(D,A)=H(D)-H(D/A)\)</span>。</p>
+<p>信息增益刻画的是由于特征<span class="math inline">\(A\)</span>而使得对数据集<span class="math inline">\(D\)</span>的分类的不确定性减少的程度。构建决策树选择信息增益大的特征来划分数据集。</p>
+<p>这里给出计算信息增益的算法。假设训练数据集为<span class="math inline">\(D\)</span>，<span class="math inline">\(N\)</span>为其训练数据集容量。假设有<span class="math inline">\(K\)</span>个类别依次为<span class="math inline">\(c_k,k=1,2,…,K\)</span>。设<span class="math inline">\(|C_k|\)</span>为属于类<span class="math inline">\(c_k\)</span>的样本个数。</p>
+<p>设特征<span class="math inline">\(A\)</span>是离散的，且有<span class="math inline">\(n\)</span>个不同的取值：<span class="math inline">\(\{a_1,a_2,…,a_n\}\)</span>，根据特征<span class="math inline">\(A\)</span>的取值将<span class="math inline">\(D\)</span>划分出<span class="math inline">\(n\)</span>个子集：<span class="math inline">\(D_1,D_2,…,D_n\)</span>，<span class="math inline">\(N_i\)</span>为对应的<span class="math inline">\(D_i\)</span>中的样本个数。</p>
+<p>设集合<span class="math inline">\(D_i\)</span>中属于类<span class="math inline">\(c_k\)</span>的样本集合为<span class="math inline">\(D_{ik}\)</span>，其容量为<span class="math inline">\(N_{ik}\)</span>，信息增益算法如下：</p>
+<ul>
+<li>输入：
+<ul>
+<li>训练数据集<span class="math inline">\(D\)</span></li>
+<li>特征<span class="math inline">\(A\)</span></li>
+</ul></li>
+<li>输出：信息增益<span class="math inline">\(g(D,A)\)</span></li>
+<li>算法步骤
+<ul>
+<li>计算数据集<span class="math inline">\(D\)</span>的经验熵<span class="math inline">\(H(D)\)</span>。它就是训练数据集<span class="math inline">\(D\)</span>中，分类<span class="math inline">\(Y\)</span>的概率估计<span class="math inline">\(\hat{P}(Y=c_k)=\frac{|C_k|}{N}\)</span>计算得到的经验熵。<span class="math display">\[H(D)=-\sum_{k=1}^K\frac{|C_k|}{N}\log \frac{|C_k|}{N}\]</span></li>
+<li>计算特征<span class="math inline">\(A\)</span>对于数据集<span class="math inline">\(D\)</span>的经验条件熵<span class="math inline">\(H(D/A)\)</span>。它使用了特征<span class="math inline">\(A\)</span>的概率估计：<span class="math inline">\(\hat{P}(X^{(A)}=a_i)=\frac{N_i}{N}\)</span>，以及经验条件熵：<span class="math inline">\(\hat{H}(D/X^{(A)}=a_i)=\sum_{k=1}^K-(\frac{N_{ik}}{N_i}\log \frac{N_{ik}}{N_i})\)</span>（其中使用了条件概率估计<span class="math inline">\(\hat{P}(Y=c_k/X^{(A)}=a_i)=\frac{N_{ik}}{N_i}\)</span>，意义是：在子集<span class="math inline">\(D_i\)</span>中<span class="math inline">\(Y\)</span>的分布）<span class="math display">\[H(D/A)=\sum_{i=1}^n\frac{N_i}{N}\sum_{k=1}^K-(\frac{N_{ik}}{N_i}\log \frac{N_{ik}}{N_i})\]</span></li>
+<li>计算信息增益<span class="math display">\[g(D,A)=H(D)-H(D/A)\]</span></li>
+</ul></li>
+</ul>
+<p>熵越大，则表示越混乱；熵越小，则表示越有序。因此信息增益表示混乱的减少程度（有序的增加程度）。</p>
+<p>以信息增益作为划分训练集的特征选取方案，存在偏向于选取值较多的特征的问题。公式：</p>
+<p><span class="math display">\[g(D,A)=H(D)-H(D/A)=H(D)-\sum_{i=1}^n\frac{N_i}{N}\sum_{k=1}^K-(\frac{N_{ik}}{N_i}\log \frac{N_{ik}}{N_i})\]</span></p>
+<h4 id="信息增益比">信息增益比</h4>
+<p>在极限情况下，特征<span class="math inline">\(A\)</span>将每一个样本一一对应到对应的节点当中去的时候(每个节点中有且仅有一个样本)，此时<span class="math inline">\(\frac{N_{ik}}{N_i}=1,i=1,2,…,n\)</span>，条件熵部分为0。而条件熵的最小值为0，这意味着该情况下的信息增益达到了最大值。然而，我们知道这个特征<span class="math inline">\(A\)</span>显然不是最佳的选择。</p>
+<p>可以通过定义信息增益比来解决。特征<span class="math inline">\(A\)</span>对训练集<span class="math inline">\(D\)</span>对信息增益比<span class="math inline">\(g_R(D,A)\)</span>定义为：<span class="math display">\[g_R(D,A)=\frac{g(D,A)}{H_A(D)}\\ H_A(D)=-\sum_{i=1}^n\frac{N_i}{N} \log \frac{N_i}{N}\]</span></p>
+<p><span class="math inline">\(H_A(D)\)</span>刻画了特征<span class="math inline">\(A\)</span>对训练集<span class="math inline">\(D\)</span>对分辨能力。但是这不表征它对类别的分辨能力。比如<span class="math inline">\(A\)</span>将<span class="math inline">\(D\)</span>切分成了2块<span class="math inline">\(D_1\)</span>和<span class="math inline">\(D_2\)</span>，那么很有可能<span class="math inline">\(H(D)=H(D_1)=H(D_2)\)</span>（如每个子集<span class="math inline">\(D_i\)</span>中各类别样本的比例与<span class="math inline">\(D\)</span>中各类别样本的比例相同）。</p>
+<h3 id="决策树生成">决策树生成</h3>
+<p>基础的决策树生成算法中，典型的有ID3生成算法和C4.5生成算法，它们生成树的过程大致相似。ID3是采用的信息增益作为特征选择的度量，而C4.5则采用信息增益比。</p>
+<h4 id="id3生成算法">ID3生成算法</h4>
+<p>ID3生成算法应用信息增益准则选择特征，其算法描述如下：</p>
+<ul>
+<li>输入：
+<ul>
+<li>训练数据集<span class="math inline">\(D\)</span></li>
+<li>特征集<span class="math inline">\(A\)</span></li>
+<li>特征信息增益阈值<span class="math inline">\(\varepsilon &gt;0\)</span></li>
+</ul></li>
+<li>输出：决策树<span class="math inline">\(T\)</span></li>
+<li>算法步骤
+<ul>
+<li>若<span class="math inline">\({D}\)</span>中所有实例均属于同一类<span class="math inline">\({c_k}\)</span>，则<span class="math inline">\({T}\)</span>为单节点树，并将<span class="math inline">\(c_k\)</span>作为该节点的坐标记，返回<span class="math inline">\(T\)</span>。这是一种特殊情况：<span class="math inline">\(D\)</span>的分类集合只有一个分类。</li>
+<li>若<span class="math inline">\(A=\phi\)</span>，则<span class="math inline">\(T\)</span>为单节点树，将<span class="math inline">\(D\)</span>中实例数最大的类<span class="math inline">\(c_k\)</span>作为该节点的类标记，返回<span class="math inline">\(T\)</span>（即多数表决）。这也是一种特殊情况：<span class="math inline">\(D\)</span>的特征集合为空。</li>
+<li>否则计算<span class="math inline">\(g(D,A_i)\)</span>，其中<span class="math inline">\(A_i \in A\)</span>为特征集合中的各个特征，选择信息增益最大的特征$ A_g $。</li>
+<li>判断<span class="math inline">\({A_g}\)</span>的信息增益
+<ul>
+<li>若<span class="math inline">\({g(D,A_g)&lt; \varepsilon}\)</span>，则置<span class="math inline">\({T}\)</span>为单节点树，将<span class="math inline">\({D}\)</span>中实例数最大的类<span class="math inline">\({c_k}\)</span>作为该节点的类标记，返回<span class="math inline">\({T}\)</span>。
+<ul>
+<li>如果不设置特征信息增益的下限，则可能会使每个叶子都只有一个样本点，从而划分得太细</li>
+</ul></li>
+<li>若<span class="math inline">\({g(D,A_g)≥ \varepsilon}\)</span>，则对<span class="math inline">\({A_g}\)</span>特征对每个可能取值<span class="math inline">\({a_i}\)</span>，根据<span class="math inline">\({A_g=a_i}\)</span>将<span class="math inline">\({D}\)</span>划分为若干个非空子集<span class="math inline">\({D_i}\)</span>，将<span class="math inline">\({D_i}\)</span>中实例数最大的类作为标记，构建子节点，由子节点及其子节点构成树<span class="math inline">\({T}\)</span>，返回<span class="math inline">\({T}\)</span>。</li>
+</ul></li>
+<li>对第<span class="math inline">\(i\)</span>个子节点，以<span class="math inline">\(D_i\)</span>为训练集，以<span class="math inline">\(A-\{A_g\}\)</span>为特征集，递归地调用前面的步骤，得到子树<span class="math inline">\(T_i\)</span>，返回<span class="math inline">\(T_i\)</span>。</li>
+</ul></li>
+</ul>
+<h4 id="c4.5生成算法">C4.5生成算法</h4>
+<p>C4.5生成算法应用信息增益比来选择特征，其算法描述如下：</p>
+<ul>
+<li>输入
+<ul>
+<li>训练数据集<span class="math inline">\(D\)</span></li>
+<li>特征集<span class="math inline">\(A\)</span></li>
+<li>特征信息增益比的阈值<span class="math inline">\(\varepsilon &gt;0\)</span></li>
+</ul></li>
+<li>输出：决策树<span class="math inline">\(T\)</span></li>
+<li>算法步骤
+<ul>
+<li>若<span class="math inline">\(D\)</span>中所有实例均属于同一类<span class="math inline">\(c_k\)</span>，则<span class="math inline">\(T\)</span>为单节点树，并将<span class="math inline">\(c_k\)</span>作为该节点的坐标记，返回<span class="math inline">\(T\)</span>。这是一种特殊情况：<span class="math inline">\(D\)</span>的分类集合只有一个分类。</li>
+<li>若<span class="math inline">\({A=\phi }\)</span>，则<span class="math inline">\(T\)</span>为单节点树，将<span class="math inline">\(D\)</span>中实例数最大的类<span class="math inline">\(c_k\)</span>作为该节点的类标记，返回<span class="math inline">\(T\)</span>（即多数表决）。这也是一种特殊情况：<span class="math inline">\(D\)</span>的特征集合为空。</li>
+<li>否则计算<span class="math inline">\(g_R(D,A_i)\)</span>，其中<span class="math inline">\(A_i \in A\)</span>为特征集合中的各个特征，选择信息增益比最大的特征<span class="math inline">\(A_g\)</span>。</li>
+<li>判断<span class="math inline">\(A_g\)</span>的信息增益比
+<ul>
+<li>若<span class="math inline">\({g_R(D,A_g)&lt;\varepsilon }\)</span>，则置<span class="math inline">\(T\)</span>为单节点树，将<span class="math inline">\(D\)</span>中实例数最大的类<span class="math inline">\(c_k\)</span>作为该节点的类标记(多数表决)，返回<span class="math inline">\(T\)</span>。</li>
+<li>若<span class="math inline">\({g_R(D,A_g)≥\varepsilon }\)</span>，则对<span class="math inline">\(A_g\)</span>特征对每个可能取值<span class="math inline">\(a_i\)</span>，根据<span class="math inline">\(A_g=a_i\)</span>将<span class="math inline">\(D\)</span>划分为若干个非空子集<span class="math inline">\(D_i\)</span>，将<span class="math inline">\(D_i\)</span>中实例数最大的类作为标记(多数表决)，构建子节点，由子节点及其子节点构成树<span class="math inline">\(T\)</span>，返回<span class="math inline">\(T\)</span>。</li>
+</ul></li>
+<li>对第<span class="math inline">\(i\)</span>个子节点，以<span class="math inline">\(D_i\)</span>为训练集，以<span class="math inline">\(A-\{A_g\}\)</span>为特征集，递归地调用前面的步骤，得到子树<span class="math inline">\(T_i\)</span>，返回<span class="math inline">\(T_i\)</span>。</li>
+</ul></li>
+</ul>
+<h4 id="说明">说明</h4>
+<ul>
+<li>C4.5算法继承了ID3算法的优点，并在以下几方面对ID3算法进行了改进：
+<ul>
+<li>用信息增益率来选择属性，克服了用信息增益选择属性时偏向选择取值多的属性的不足</li>
+<li>在树构造过程中进行剪枝</li>
+<li>能够完成对连续属性的离散化处理</li>
+<li>能够对不完整数据进行处理</li>
+</ul></li>
+<li>C4.5算法优点：产生的分类规则易于理解，准确率较高。缺点：在构造树过程中，需要对数据集进行多次对顺序扫描和排序，因而导致了算法的低效。此外，C4.5只适合于能够驻留于内存的数据集，当训练集大得无法在内存容纳时程序无法运行。</li>
+<li>决策树可能只是用到特征集中的部分特征</li>
+<li>C4.5和ID3两个算法只有树的生成算法，生成的树容易产生过拟合。即对训练集匹配很好，但是预测测试集效果较差。</li>
+</ul>
+<h3 id="决策树剪枝">决策树剪枝</h3>
+<p>决策树需要剪枝的原因：决策树生成算法生成的树对训练数据的预测很准确，但是对于未知的数据分类却很差，这就产生过拟合的现象。发生过拟合是由于决策树太复杂，解决过拟合的方法就是控制模型的复杂度，对于决策树来说就是简化模型，称为剪枝。</p>
+<p>决策树剪枝过程是从已生成的决策树上裁掉一些子树或者叶节点。剪枝的目标是通过极小化决策树的整体损失函数或代价函数来实现的。</p>
+<p>决策树剪枝的目的是通过剪枝来提高泛化能力。剪枝的思路就是中决策树对训练数据的预测误差和数据复杂度之间找到一个平衡。</p>
+<p>设树<span class="math inline">\(T\)</span>的叶节点个数为<span class="math inline">\(|T_f|\)</span>，<span class="math inline">\(t\)</span>为树的叶节点，该叶节点有<span class="math inline">\(N_t\)</span>个样本点，其中属于<span class="math inline">\(c_k\)</span>类的样本点有<span class="math inline">\(N_tk\)</span>，<span class="math inline">\(k=1,2,…,K\)</span>个。则有：<span class="math inline">\(\sum_{k=1}^KN_{tk}=N_t\)</span>。</p>
+<p>令<span class="math inline">\(H(t)\)</span>为叶节点<span class="math inline">\(t\)</span>上的经验熵，<span class="math inline">\(\alpha ≥0\)</span>为参数，则决策树<span class="math inline">\(T\)</span>的损失函数定义为：</p>
+<p><span class="math display">\[C_{\alpha }(T)=\sum_{t=1}^{|T_f|}N_tH(t)+\alpha |T_f|H(t)=-\sum_{k=1}^K\frac{N_{tk}}{N_t}\log \frac{N_{tk}}{N_t}\]</span></p>
+<p>令：</p>
+<p><span class="math display">\[C(T)=\sum_{t=1}^{|T_f|}N_tH(t)=-\sum_{t=1}^{|T_f|}\sum_{k=1}^KN_{tk}\log \frac{N_{tk}}{N_t}\]</span></p>
+<p>则：<span class="math inline">\(C_{\alpha }(T)=C(T)+\alpha |T_f|\)</span>，其中<span class="math inline">\(\alpha |T_f|\)</span>为正则化项，<span class="math inline">\(C(T)\)</span>表示预测误差。</p>
+<ul>
+<li><span class="math inline">\(C(T)=0\)</span>意味着<span class="math inline">\(N_{tk}=N_t\)</span>，即每个节点<span class="math inline">\(t\)</span>内的样本都是纯的（单一的分类）。</li>
+<li>决策树划分得越细致，则<span class="math inline">\(T\)</span>的叶子节点越多，<span class="math inline">\(|T_f|\)</span>越大；<span class="math inline">\(|T_f|\)</span>小于等于样本集的数量，当取等号时，树<span class="math inline">\(T\)</span>的每个叶子节点只有一个样本点。</li>
+<li>参数<span class="math inline">\(\alpha\)</span>控制预测误差与模型复杂度之间的关系
+<ul>
+<li>较大的<span class="math inline">\(\alpha\)</span>会选择较简单的模型</li>
+<li>较小的<span class="math inline">\(\alpha\)</span>会选择较复杂的模型</li>
+<li><span class="math inline">\(\alpha =0\)</span>只考虑训练数据与模型的拟合程度，不考虑模型复杂度</li>
+</ul></li>
+</ul>
+<p>剪枝算法描述如下：</p>
+<ul>
+<li>输入：
+<ul>
+<li>生成树<span class="math inline">\(T\)</span></li>
+<li>参数<span class="math inline">\({\alpha}\)</span></li>
+</ul></li>
+<li>输出：剪枝树<span class="math inline">\(T_{\alpha}\)</span></li>
+<li>算法步骤如下
+<ul>
+<li>计算每个节点的经验熵</li>
+<li>递归地从树的叶节点向上回退
+<ul>
+<li>设一组叶节点回退到父节点之前与之后的整棵树分别为<span class="math inline">\(T_t\)</span>与<span class="math inline">\(T_t&#39;\)</span>，对应的损失函数值分别为<span class="math inline">\(C_{\alpha }(T_t)\)</span>与<span class="math inline">\(C_{\alpha }(T_t&#39;)\)</span>。若<span class="math inline">\(C_{\alpha }(T_t&#39;)≤C_{\alpha }(T_t)\)</span>，则进行剪枝并将父节点变成新的叶节点。</li>
+</ul></li>
+<li>递归进行上一步，直到不能继续为止，得到损失函数最小的子树<span class="math inline">\(T_{\alpha}\)</span></li>
+</ul></li>
+</ul>
+<h2 id="cart算法">CART算法</h2>
+<p>分类与回归树(Classfification And Regression Tree, CART)模型也是一种决策树模型，它即可用于分类，也可用于回归。其学习算法分为两步：</p>
+<ol type="1">
+<li>决策树生成：用训练模型生成决策树，生成树尽可能地大</li>
+<li>决策树剪枝：基于损失函数最小化的标准，用验证数据对生成的决策树剪枝</li>
+</ol>
+<p>分类与回归树模型采用不同的最优化策略。CART回归生成树用平方误差最小化策略，CART分类生成树采用基尼指数最小化策略。</p>
+<h3 id="cart回归树">CART回归树</h3>
+<p>给定训练数据集<span class="math inline">\(D=\{(\vec{x}_1,y_1),(\vec{x}_2,y_2),…,(\vec{x}_N,y_N)\}\)</span>, <span class="math inline">\(y_i\in R\)</span>。设已经将输入空间划分为<span class="math inline">\(M\)</span>个单元<span class="math inline">\(R_1,R_2,…,R_M\)</span>，且在单元<span class="math inline">\(R_m\)</span>上输出值为<span class="math inline">\(c_m\)</span>, <span class="math inline">\(m=1,2,…,M\)</span>。则回归树模型为：</p>
+<p><span class="math display">\[f(\vec{x})=\sum_{m=1}^Mc_mI(\vec{x}\in R_m)\]</span></p>
+<p>其中，<span class="math inline">\(I(·)\)</span>为示性函数。</p>
+<p>如果给定输入空间的一个划分，则回归树在训练数据集上的误差（平方误差）为：</p>
+<p><span class="math display">\[\sum_{\vec{x}_i\in R_m}(y_i-f(\vec{x}))^2\]</span></p>
+<p>基于平方误差最小的准则，可以求解出每个单元上的最优输出值<span class="math inline">\(\hat{c}_m\)</span>：<span class="math inline">\(\hat{c}_m=ave(y_i | \vec{x}_i \in R_m)\)</span>。它就是<span class="math inline">\(R_m\)</span>上所有输入样本对应的输出<span class="math inline">\(y_i\)</span>的平均值。</p>
+<p>现在需要找到最佳的划分，使得该划分对应的回归树的平方误差在所有划分中最小。设<span class="math inline">\(\vec{x}_i=(,x_i^{(1)},x_i^{(2)},…,x_i^{(k)})\)</span>，即输入为<span class="math inline">\(k\)</span>维。选择第<span class="math inline">\(j\)</span>维<span class="math inline">\(x_i^{(j)}\)</span>，它的取值<span class="math inline">\(s\)</span>作为切分变量和切分点。定义两个区域：</p>
+<p><span class="math display">\[R_1(j,s)=\{\vec{x}|x^{(j)}≤s\} \\ R_2(j,s)=\{\vec{x}|x^{(j)}&gt;s\}\]</span></p>
+<p>然后寻求最优切分变量<span class="math inline">\(j\)</span>和最优切分点<span class="math inline">\(s\)</span>。即求解：</p>
+<p><span class="math display">\[\min_{j,s}[\min_{c_1}\sum_{x_i\in R_1(j,s)}(y_i-c_1)^2+\min_{c_2}\sum_{x_i\in R_2(j,s)}(y_i-c_2)^2]\]</span></p>
+<p>对于给定的维度<span class="math inline">\(j\)</span>可以找到最优切分点<span class="math inline">\(s\)</span>。同时:</p>
+<p><span class="math display">\[\hat{c}_1=ave(y_i|\vec{x}_i\in R_1(j,s)) \\ \hat{c}_2=ave(y_i|\vec{x}_i\in R_2(j,s))\]</span></p>
+<p>问题是如何求解<span class="math inline">\(j\)</span>：首先遍历所有维度，找到最优切分维度<span class="math inline">\(j\)</span>；然后对该维度找到最优切分点<span class="math inline">\(s\)</span>构成一个<span class="math inline">\((j,s)\)</span>对，并将输入空间划分为两个区域。然后在子区域中重复划分过程，直到满足停止条件为止。这样的回归树称为最小二乘回归树。</p>
+<p>最小二乘回归树生成算法描述如下：</p>
+<ul>
+<li>输入
+<ul>
+<li>训练数据集<span class="math inline">\(D\)</span></li>
+<li>停止计算条件</li>
+</ul></li>
+<li>输出：CART回归树<span class="math inline">\(f(\vec{x})\)</span></li>
+<li>算法步骤
+<ul>
+<li>选择数据集<span class="math inline">\(D\)</span>的最优切分维度<span class="math inline">\(j\)</span>和切分点<span class="math inline">\(s\)</span>，即求解：<span class="math display">\[\min_{j,s}[\min_{c_1}\sum_{x_i\in R_1(j,s)}(y_i-c_1)^2+\min_{c_2}\sum_{x_i\in R_2(j,s)}(y_i-c_2)^2]\]</span>
+<ul>
+<li>求解方法：遍历<span class="math inline">\(j,s\)</span>找到使上式最小的<span class="math inline">\((j,s)\)</span>对</li>
+</ul></li>
+<li>用选定的<span class="math inline">\((j,s)\)</span>划分区域并决定相应的输出值：<span class="math display">\[R_1(j,s)=\{\vec{x}|x^{(j)}≤s\} \\ R_2(j,s)=\{\vec{x}|x^{(j)}&gt;s\} \\ \hat{c}_1=ave(y_i|\vec{x}_i\in R_1(j,s)) \\ \hat{c}_2=ave(y_i|\vec{x}_i\in R_2(j,s))\]</span></li>
+<li>对子区域<span class="math inline">\(R_1,R_2\)</span>递归地调用上面两步，直到满足停止条件为止</li>
+<li>将输入空间划分为<span class="math inline">\(M\)</span>个区域<span class="math inline">\(R_1,R_2,…,R_m\)</span>，生成决策树：<span class="math display">\[f(\vec{x})=\sum_{m=1}^M\hat{c_m}I(\vec{x}\in R_m)\]</span></li>
+</ul></li>
+</ul>
+<p>通常的停止条件为下列条件之一：</p>
+<ul>
+<li>节点中样本个数小于预定值</li>
+<li>样本集的平方误差小于预定值</li>
+<li>没有更多的特征</li>
+</ul>
+<h3 id="cart分类树">CART分类树</h3>
+<p>假设有<span class="math inline">\(K\)</span>个分类，样本点属于第<span class="math inline">\(k\)</span>类的概率为<span class="math inline">\(p_k=P(Y=c_k)\)</span>。定义概率分布的基尼指数为：</p>
+<p><span class="math display">\[Gini(p)=\sum_{k=1}^Kp_k(1-p_k)=1-\sum_{k=1}^Kp_k^2\]</span></p>
+<p>对于给定的样本集合<span class="math inline">\(D\)</span>，设属于类<span class="math inline">\(c_k\)</span>的样本子集为<span class="math inline">\(C_k\)</span>，则基尼指数为：</p>
+<p><span class="math display">\[Gini(D)=1-\sum_{k=1}^K(\frac{|C_k|}{|D|})^2\]</span></p>
+<p>给定特征<span class="math inline">\(A\)</span>,根据其是否取某一个可能值<span class="math inline">\(a\)</span>，样本集<span class="math inline">\(D\)</span>被分为两个子集<span class="math inline">\(D_1\)</span>和<span class="math inline">\(D_2\)</span>，其中：</p>
+<p><span class="math display">\[D_1=\{(\vec{x},y)\in D|\vec{x}^{(A)}=a\}\\D_2=\{(\vec{x},y)\in D|\vec{x}^{(A)}≠a\}=D-D_1\]</span></p>
+<p>定义<span class="math inline">\(Gini(D,A)\)</span>：</p>
+<p><span class="math display">\[Gini(D,A)=\frac{|D_1|}{|D|}Gini(D_1)+\frac{|D_2|}{|D|}Gini(D_2)\]</span></p>
+<p>它表示在特征<span class="math inline">\(A\)</span>的条件下，集合<span class="math inline">\(D\)</span>的基尼指数。</p>
+<p>对于最简单的二项分布，设<span class="math inline">\(P(X=1)=p,P(X=0)=1-p\)</span>，其基尼系数和熵一样，也是用于度量不确定性。对于样本集<span class="math inline">\(D\)</span>，<span class="math inline">\(Gini(D)\)</span>越小说明样本越属于同一类。</p>
+<p>CART分类树采用基尼指数选择最优特征，CART分类树的生成算法如下：</p>
+<ul>
+<li>输入
+<ul>
+<li>训练数据集<span class="math inline">\(D\)</span></li>
+<li>停止计算条件</li>
+</ul></li>
+<li>输出：CART决策树</li>
+<li>算法步骤
+<ul>
+<li>对每个特征<span class="math inline">\(A\)</span>，以及它可能的每个值<span class="math inline">\(a\)</span>，计算<span class="math inline">\(Gini(D,A)\)</span>。</li>
+<li>选取最优特征和最优切分点：在所有特征<span class="math inline">\(A\)</span>以及所有的切分点<span class="math inline">\(a\)</span>中，基尼指数最小的<span class="math inline">\(A\)</span>和<span class="math inline">\(a\)</span>就是最优特征和最优切分点。根据最优特征和最优切分点将训练集<span class="math inline">\(D\)</span>切分成两个子节点。</li>
+<li>对两个子节点递归调用上面两步，直到满足停止条件为止。</li>
+<li>最终生成CART决策树。</li>
+</ul></li>
+</ul>
+<p>通常的停止条件为下列条件之一：</p>
+<ul>
+<li>节点中样本个数小于预定值</li>
+<li>样本集的基尼指数小于预定值</li>
+<li>没有更多的特征</li>
+</ul>
+<h3 id="cart剪枝">CART剪枝</h3>
+<p>CART剪枝是从生成树开始剪掉一些子树，使得决策树变小。剪枝过程由两步组成（假设初始的生成树为<span class="math inline">\(T_0\)</span>）：</p>
+<ol type="1">
+<li>从<span class="math inline">\(T_0\)</span>开始不断剪枝，知道剪成一棵单节点的树。这些剪枝树形成一个剪枝树序列<span class="math inline">\(\{T_0,T_1,…,T_n\}\)</span>。</li>
+<li>从这个剪枝树序列中挑选出最优剪枝树。方法：通过交叉验证法使用验证数据集对剪枝树序列进行测试。</li>
+</ol>
+<p>给出决策树的损失函数为：<span class="math inline">\({C_{\alpha }(T)=C(T)+\alpha |T|}\)</span>。其中<span class="math inline">\({C(T)}\)</span>为决策树对训练数据的预测误差；<span class="math inline">\({|T|}\)</span>为决策树的叶节点个数。</p>
+<p>对固定的<span class="math inline">\(\alpha\)</span>，存在使<span class="math inline">\(C_{\alpha }(T)\)</span>最小的树。令其为<span class="math inline">\(T_{\alpha}\)</span>，可以证明<span class="math inline">\(T_{\alpha}\)</span>是唯一的。</p>
+<ul>
+<li>当<span class="math inline">\(\alpha\)</span>大时，<span class="math inline">\(C_{\alpha }(T)\)</span>偏小（即决策树比较简单）。</li>
+<li>当<span class="math inline">\(\alpha\)</span>小时，<span class="math inline">\(C_{\alpha }(T)\)</span>偏大（即决策树比较复杂）。</li>
+<li>当<span class="math inline">\(\alpha =0\)</span>时，生成树就是最优的。</li>
+<li>当<span class="math inline">\(\alpha = ∞\)</span>时，根组成的一个单节点树就是最优的。</li>
+</ul>
+<p>考虑生成树<span class="math inline">\(T_0\)</span>。对<span class="math inline">\(T_0\)</span>内任意节点<span class="math inline">\(t\)</span>，以<span class="math inline">\(t\)</span>为单节点树(记作<span class="math inline">\(\tilde{t}\)</span>)的损失函数为：<span class="math inline">\(C_{\alpha}(\tilde{t})=C(\tilde{t})+\alpha\)</span>，以<span class="math inline">\(t\)</span>为根的子树<span class="math inline">\(T_t\)</span>的损失函数为：<span class="math inline">\(C_{\alpha }(T_t)=C(T_t)+\alpha |T_t|\)</span>。可以证明：</p>
+<ul>
+<li>当<span class="math inline">\(\alpha =0\)</span>及充分小时，有<span class="math inline">\(C_{\alpha }(T_t)&lt;C_{\alpha}(\tilde{t})\)</span></li>
+<li>当<span class="math inline">\(\alpha\)</span>增大到某个值时，有<span class="math inline">\(C_{\alpha }(T_t)=C_{\alpha}(\tilde{t})\)</span></li>
+<li>当<span class="math inline">\(\alpha\)</span>再增大时，有<span class="math inline">\(C_{\alpha }(T_t)&gt;C_{\alpha}(\tilde{t})\)</span></li>
+</ul>
+<p>因此令<span class="math inline">\(\alpha =\frac{C(\tilde{t})-C(T_t)}{|T_t|-1}\)</span>，此时<span class="math inline">\(T_t\)</span>与<span class="math inline">\(\tilde{t}\)</span>有相同的损失函数值，但是<span class="math inline">\(\tilde{t}\)</span>的叶节点更少。于是对<span class="math inline">\(T_t\)</span>进行剪枝成一棵单节点树<span class="math inline">\(\tilde{t}\)</span>了。</p>
+<p>对<span class="math inline">\(T_0\)</span>内部对每一个节点<span class="math inline">\(t\)</span>，定义<span class="math inline">\(g(t)=\frac{C(t)-C(T_t)}{|T_t|-1}\)</span>。设<span class="math inline">\(T_0\)</span>内<span class="math inline">\(g(t)\)</span>最小的子树为<span class="math inline">\(T_t^*\)</span>，令该最小值的<span class="math inline">\(g(t)\)</span>为<span class="math inline">\(\tilde{\alpha}_1\)</span>。从<span class="math inline">\(T_0\)</span>剪去<span class="math inline">\(T_t^*\)</span>，即得到剪枝树<span class="math inline">\(T_1\)</span>。重复这种过程，直到根节点即完成剪枝过程。在此过程中不断增加<span class="math inline">\(\tilde{\alpha}_i\)</span>的值，从而生成剪枝树序列。</p>
+<p>CART剪枝交叉验证过程是通过验证数据集来测试剪枝树序列<span class="math inline">\(\{T_0,T_1,…,T_n\}\)</span>中各剪枝树的。对于CART回归树，是考察剪枝树的平方误差，平方误差最小的决策树被认为是最优决策树。对应CART分类树，是考察剪枝树的基尼指数，基尼指数最小的决策树被认为是最优决策树。</p>
+<p>CART剪枝算法的描述如下：</p>
+<ul>
+<li>输入：CART生成树<span class="math inline">\(T_0\)</span></li>
+<li>输出：CART剪枝树<span class="math inline">\(T_{\alpha}\)</span></li>
+<li>算法步骤
+<ul>
+<li>令<span class="math inline">\(k=0,T=T_0,\alpha =∞\)</span></li>
+<li>自下而上地对树<span class="math inline">\(T\)</span>各内部节点<span class="math inline">\(t\)</span>计算<span class="math inline">\(g(t)=\frac{C(t)-C(T_t)}{|T_t|-1}\)</span></li>
+<li>对所有的内部节点，<span class="math inline">\(\tilde{\alpha}_{k+1}=\min_t(g(t))\)</span>，令<span class="math inline">\(t^*=\arg \min_t(g(t))\)</span>。对内部节点<span class="math inline">\(t^*\)</span>进行剪枝得到树<span class="math inline">\(T_{k+1}\)</span></li>
+<li>令<span class="math inline">\(T=T_{k+1},k=k+1\)</span></li>
+<li>若<span class="math inline">\(T\)</span>不是由根节点单独构成的树，则继续前面的步骤</li>
+<li>采用交叉验证法在剪枝树序列<span class="math inline">\(T_0,T_1,…,T_n\)</span>中选取最优剪枝树<span class="math inline">\(T_{\alpha}\)</span></li>
+</ul></li>
+</ul>
+<h2 id="连续值和缺失值的处理">连续值和缺失值的处理</h2>
+<h3 id="连续值">连续值</h3>
+<p>学习任务中常常会遇到连续特征，如个人身高、体重等特征取值就是连续值。可以通过二分法(bi-partition)对连续特征进行离散化处理。</p>
+<p>给定样本集<span class="math inline">\(D\)</span>和连续特征<span class="math inline">\(A\)</span>，假设该特征在<span class="math inline">\(D\)</span>上对取值从小到大进行排列为<span class="math inline">\(a_1,a_2,…,a_M\)</span>。可以选取<span class="math inline">\(M-1\)</span>个划分点，依次为：<span class="math inline">\(\frac{a_1+a_2}{2},\frac{a_2+a_3}{2},…,\frac{a_{M-1}+a_M}{2}\)</span>。然后就可以像离散特征一样来考察这些划分点，选取最优的划分点进行样本集合的划分。这也是C4.5算法采取的方案。</p>
+<h3 id="缺失值">缺失值</h3>
+<p>学习任务中遇到不完整样本，即某些样本的某些特征的取值缺失。如果简单地丢掉这些不完整的样本可能会浪费大量有效的信息。</p>
+<p>给定训练集<span class="math inline">\(D\)</span>和特征<span class="math inline">\(A\)</span>，令<span class="math inline">\(\tilde{D}\)</span>表示<span class="math inline">\(D\)</span>中在特征<span class="math inline">\(A\)</span>上没有缺失的样本子集。假定特征<span class="math inline">\(A\)</span>有<span class="math inline">\(M\)</span>个可取值<span class="math inline">\(a_1,a_2,…,a_M\)</span>，令<span class="math inline">\(\tilde{D}^i\)</span>表示<span class="math inline">\(\tilde{D}\)</span>中最特征<span class="math inline">\(A\)</span>上取值为<span class="math inline">\(a_i\)</span>的样本的子集，<span class="math inline">\(\tilde{D}_k\)</span>表示<span class="math inline">\(\tilde{D}\)</span>中属于第<span class="math inline">\(k\)</span>类的样本子集（一共有<span class="math inline">\(K\)</span>个分类），则有：</p>
+<p><span class="math display">\[\tilde{D}=\bigcup_{k=1}^K\tilde{D}_k=\bigcup_{i=1}^M\tilde{D}^i\]</span></p>
+<p>假定为每个样本<span class="math inline">\(\vec{x}\)</span>赋予一个权重<span class="math inline">\(w_{\vec{x}}\)</span>，定义：</p>
+<p><span class="math display">\[\rho =\frac{\sum_{\vec{x}\in \hat{D}}w_{\vec{x}}}{\sum_{\vec{x}\in D}w_{\vec{x}}} \\ \tilde{p}_k=\frac{\sum_{\vec{x}\in \tilde{D}_k}w_{\vec{x}}}{\sum_{\vec{x}\in \tilde{D}}w_{\vec{x}}},k=1,2,…,K \\ \tilde{r}_i=\frac{\sum_{\vec{x}\in \tilde{D}^i}w_{\vec{x}}}{\sum_{\vec{x}\in \tilde{D}}w_{\vec{x}}},i=1,2,…,M\]</span></p>
+<p>其物理意义如下：</p>
+<ul>
+<li><span class="math inline">\(\rho\)</span>：表示无缺失值样本占总体样本的比例</li>
+<li><span class="math inline">\(\tilde{p}_k\)</span>：表示无缺失值样本中，第<span class="math inline">\(k\)</span>类所占的比例</li>
+<li><span class="math inline">\(\tilde{r}_i\)</span>：表示无缺失值样本中，在特征<span class="math inline">\(A\)</span>上取值为<span class="math inline">\(a_i\)</span>的样本所占的比例</li>
+</ul>
+<p>于是可以将信息增益的计算公式修正为：</p>
+<p><span class="math display">\[g(D,A)=\rho \times g(\tilde{D},A)=\rho \times \lgroup H(\tilde{D})-\sum_{i=1}^M\tilde{r}_iH(\tilde{D}^i)\rgroup\]</span></p>
+<p>其中，<span class="math inline">\(H(\tilde{D})=-\sum_{k=1}^K\tilde{p}_k\log \tilde{p}_k\)</span>。</p>
+<p>在通过特征<span class="math inline">\(A\)</span>划分样本<span class="math inline">\(\vec{x}\)</span>时，让它以不同的概率分散到不同的子节点中去：</p>
+<ul>
+<li>如果样本在划分特征上的取值已知，则将它划入与其对应的子节点，且权值在子节点中保持为<span class="math inline">\(w_{\vec{x}}\)</span></li>
+<li>如果样本在划分特征上的取值缺失，则将它同时划入所有的子节点，且在子节点中该样本的权值进行调整：在特征取值为<span class="math inline">\(a_i\)</span>对应的子节点中，该样本的权值调整为<span class="math inline">\(\tilde{r}_i \times w_{\vec{x}}\)</span></li>
+</ul>
+<h1 id="python实战">Python实战</h1>
+<p>scikit-learn中有两类决策树，均采用优化的CART决策树算法。</p>
+<h2 id="回归决策树decisiontreeregressor">回归决策树(DecisionTreeRegressor)</h2>
+<p>DecisionTreeRegressor实现了回归决策树，用于回归问题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class.sklearn.tree.DecisionTreeRegressor(criterion=&quot;mse&quot;,</span><br><span class="line">                 splitter=&quot;best&quot;,</span><br><span class="line">                 max_depth=None,</span><br><span class="line">                 min_samples_split=2,</span><br><span class="line">                 min_samples_leaf=1,</span><br><span class="line">                 min_weight_fraction_leaf=0.,</span><br><span class="line">                 max_features=None,</span><br><span class="line">                 random_state=None,</span><br><span class="line">                 max_leaf_nodes=None,</span><br><span class="line">                 min_impurity_decrease=0.,</span><br><span class="line">                 min_impurity_split=None,</span><br><span class="line">                 presort=False)</span><br></pre></td></tr></table></figure>
+<p>参数</p>
+<ul>
+<li>criterion：字符串，指定切分质量的评价准则。默认为'mse'，且只支持该字符串，表示均方误差。</li>
+<li>splitter：字符串，指定切分原则
+<ul>
+<li>'best'：选择最优的切分</li>
+<li>'random'：随机切分</li>
+</ul></li>
+<li>max_depth：指定树的最大深度
+<ul>
+<li>None：表示树的深度不限，直到每个叶子都是纯的，即叶节点中所有样本点都属于一个类，或者叶子中包含小于min_samples_split个样本点</li>
+</ul></li>
+<li>min_samples_split：整数，指定每个内部节点（非叶节点）包含的最少的样本数</li>
+<li>min_samples_leaf：整数，指定每个叶节点包含的最少样本数</li>
+<li>min_weight_fraction_leaf：浮点数，叶节点中样本的最小权重系数</li>
+<li>max_features：指定寻找best split时考虑的特征数量。如果已经考虑了max_features个特征，但是还没有找到一个有效的切分，那么还会继续寻找下一特征，直到找到一个有效的切分为止。
+<ul>
+<li>整数：每次切分只考虑max_features个特征</li>
+<li>浮点数：每次切分只考虑max_features * n_features个特征（max_features指定了百分比）</li>
+<li>'auto' 或者 'sqrt'：max_features = n_features</li>
+<li>'log2'：max_features = log2(n_features)</li>
+<li>None：max_features = n_features</li>
+</ul></li>
+<li>random_state: 一个整数或者一个RandomState实例，或者None
+<ul>
+<li>如果为整数，则它指定了随机数生成器的种子</li>
+<li>如果为RandomState实例，则指定例随机数生成器</li>
+<li>如果为None，则使用默认的随机数生成器</li>
+</ul></li>
+<li>max_leaf_nodes：指定叶节点的最大数量
+<ul>
+<li>None：此时叶节点数量不限</li>
+<li>整数：则max_depth被忽略</li>
+</ul></li>
+<li>presort：boolean，指定是否要提前排序数据从而加速寻找最优切分的过程。设置为True时，对于大数据集会减慢总体的训练过程，但是对于一个小数据集或者设定了最大深度的情况下，则会加速训练过程</li>
+<li>class_weight：一个字典、字典的列表、'balance'或者None，指定了分类的权重。形式：{class_label: weight}。如果提供了sample_weight参数（fit方法提供），则这些权重都会乘以sample_weight。
+<ul>
+<li>None：每个分类权重都为1</li>
+<li>'balance'：分类的权重是样本中各分类出现的频率的反比</li>
+</ul></li>
+</ul>
+<p>属性</p>
+<ul>
+<li>feature_importances_：给出特征的重要程度。该值越高，则该特征越重要。（Gini importance）</li>
+<li>max_features_：max_features的推断值</li>
+<li>n_features_：当执行fit之后，特征的数量</li>
+<li>n_outputs_：当执行fit之后，输出的数量</li>
+<li>tree_：一个Tree对象，即底层的决策树</li>
+</ul>
+<p>方法</p>
+<ul>
+<li>fit(X, y[, sample_weight, check_input, …]): 训练模型</li>
+<li>predict(X[, check_input]): 用模型进行预测，返回预测值</li>
+<li>score(X, y[, sample_weight]): 返回预测性能得分
+<ul>
+<li>设预测集为<span class="math inline">\(T_{test}\)</span>，真实值为<span class="math inline">\(y_i\)</span>，真实值的均值为<span class="math inline">\(\overline{y}\)</span>，预测值为<span class="math inline">\(\hat{y}_i\)</span>，则：<span class="math display">\[score=1-\frac{\sum_{T_{test}}(y_i-\hat{y}_i)^2}{(y_i-\overline{y})^2}\]</span>
+<ul>
+<li>score不超过1，但是可能为负值（预测效果太差）。</li>
+<li>score越大，预测性能越好。</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>首先导入包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">import numpy as np</span><br><span class="line">from sklearn.tree import DecisionTreeRegressor</span><br><span class="line">from sklearn import model_selection</span><br></pre></td></tr></table></figure>
+<p>给出一个随机产生的数据集</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">def create_data(n):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    随机产生数据集</span><br><span class="line">    :param n: 数据集容量</span><br><span class="line">    :return: 一个元组：训练样本集、测试样本集、训练样本集对应的值、测试样本集对应的值</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    np.random.seed(0)</span><br><span class="line">    X = 5 * np.random.rand(n, 1)</span><br><span class="line">    y = np.sin(X).ravel()</span><br><span class="line">    noise_num = int(n / 5)</span><br><span class="line">    y[::5] += 3 * (0.5 - np.random.rand(noise_num))</span><br><span class="line">    return model_selection.train_test_split(X, y, test_size=0.25, random_state=1)</span><br></pre></td></tr></table></figure>
+<p>create_data函数产生的数据集是在sin(x)函数基础上添加了若干个随机噪声产生的。x是随机在0～1之间产生的，y是sin(x)，其中y每隔5个点添加一个随机噪声。然后将数据集随机切分成训练集和测试集。指定测试集样本大小为原样本点0.25倍。</p>
+<p>然后给出测试函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">def demo_DecisionTreeRegressor(*data):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    regr = DecisionTreeRegressor()</span><br><span class="line">    regr.fit(X_train, y_train)</span><br><span class="line">    print(&quot;Training score: %f&quot; % regr.score(X_train, y_train))</span><br><span class="line">    print(&quot;Testing score: %f&quot; % regr.score(X_test, y_test))</span><br><span class="line">    # 绘图</span><br><span class="line">    fig = plt.figure()</span><br><span class="line">    ax = fig.add_subplot(1, 1, 1)</span><br><span class="line">    X = np.arange(0.0, 5.0, 0.01)[:, np.newaxis]</span><br><span class="line">    Y = regr.predict(X)</span><br><span class="line">    ax.scatter(X_train, y_train, label=&quot;train sample&quot;, c=&apos;g&apos;)</span><br><span class="line">    ax.scatter(X_test, y_test, label=&quot;test sample&quot;, c=&apos;r&apos;)</span><br><span class="line">    ax.plot(X, Y, label=&quot;predict_value&quot;, linewidth=2, alpha=0.5)</span><br><span class="line">    ax.set_xlabel(&quot;data&quot;)</span><br><span class="line">    ax.set_ylabel(&quot;target&quot;)</span><br><span class="line">    ax.set_title(&quot;Decision Tree Regression&quot;)</span><br><span class="line">    ax.legend(framealpha=0.5)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<p>在demo_DecisionTreeRegressor中，给出了对x上每个点的预测值（考虑到连续值有无穷多，采取的方式是[0, 5]之间，步长为0.01）。调用该函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X_train, X_test, y_train, y_test = create_data(100)</span><br><span class="line">demo_DecisionTreeRegressor(X_train, X_test, y_train, y_test)</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Training score: 1.000000</span><br><span class="line">Testing score: 0.789107</span><br></pre></td></tr></table></figure>
+<p><img src="/images/MachineLearning/DecisionTree/20190726_ML_DecisionTreeRegressor.png"></p>
+<p>可以看到对于训练样本的拟合相当好，但是对于测试样本的拟合就差强人意。</p>
+<p>接下来，检验随机划分与最优划分的影响：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def demo_DecisionTreeRegressor_splitter(*data):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    splitters = [&apos;best&apos;, &apos;random&apos;]</span><br><span class="line">    for splitter in splitters:</span><br><span class="line">        regr = DecisionTreeRegressor(splitter=splitter)</span><br><span class="line">        regr.fit(X_train, y_train)</span><br><span class="line">        print(&quot;Splitter %s&quot; % splitter)</span><br><span class="line">        print(&quot;Training score: %f&quot; % regr.score(X_train, y_train))</span><br><span class="line">        print(&quot;Testing score: %f&quot; % regr.score(X_test, y_test))</span><br></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Splitter best</span><br><span class="line">Training score: 1.000000</span><br><span class="line">Testing score: 0.789107</span><br><span class="line">Splitter random</span><br><span class="line">Training score: 1.000000</span><br><span class="line">Testing score: 0.778989</span><br></pre></td></tr></table></figure>
+<p>可以看到对于本问题，最优划分预测性能较强，但是相差不大。而对于训练集的拟合，二者都拟合得相当好。</p>
+<p>最后考察决策树深度的影响。决策树的深度对应着树的复杂度。决策树越深，则模型越复杂。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">def demo_DecisionTreeRegressor_depth(*data, maxdepth):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    depths = np.arange(1, maxdepth)</span><br><span class="line">    training_scores = []</span><br><span class="line">    testing_scores = []</span><br><span class="line">    for depth in depths:</span><br><span class="line">        regr = DecisionTreeRegressor(max_depth=depth)</span><br><span class="line">        regr.fit(X_train, y_train)</span><br><span class="line">        training_scores.append(regr.score(X_train, y_train))</span><br><span class="line">        testing_scores.append(regr.score(X_test, y_test))</span><br><span class="line">    # 绘图</span><br><span class="line">    fig = plt.figure()</span><br><span class="line">    ax = fig.add_subplot(1, 1, 1)</span><br><span class="line">    ax.plot(depths, training_scores, label=&quot;training score&quot;)</span><br><span class="line">    ax.plot(depths, testing_scores, label=&quot;testing score&quot;)</span><br><span class="line">    ax.set_xlabel(&quot;maxdepth&quot;)</span><br><span class="line">    ax.set_ylabel(&quot;score&quot;)</span><br><span class="line">    ax.set_title(&quot;Decision Tree Regression&quot;)</span><br><span class="line">    ax.legend(framealpha=0.5)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<p>调用该函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X_train, X_test, y_train, y_test = create_data(100)</span><br><span class="line">demo_DecisionTreeRegressor_depth(X_train, X_test, y_train, y_test, maxdepth=20)</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/images/MachineLearning/DecisionTree/20190726_ML_DecisionTreeRegressor_Depth.png"></p>
+<p>可以看到随着树深度的加深，模型对训练集和预测集的拟合都在提高。由于样本只有100个，因此理论上二叉树最深为<span class="math inline">\(\log_2(100)=6.65\)</span>。即树深度为7之后，再也无法划分了（每个子节点都只有一个节点）。</p>
+<p>绘制不同深度的决策树：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">def demo_DecisionTreeRegressor_depth_plot(*data):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    depths = [1, 3, 7]</span><br><span class="line">    fig = plt.figure()</span><br><span class="line">    ax = fig.add_subplot(1, 1, 1)</span><br><span class="line">    for depth in depths:</span><br><span class="line">        regr = DecisionTreeRegressor(max_depth=depth)</span><br><span class="line">        regr.fit(X_train, y_train)</span><br><span class="line">        print(&quot;Training score: %f&quot; % regr.score(X_train, y_train))</span><br><span class="line">        print(&quot;Testing score: %f&quot; % regr.score(X_test, y_test))</span><br><span class="line">        X = np.arange(0.0, 5.0, 0.01)[:, np.newaxis]</span><br><span class="line">        Y = regr.predict(X)</span><br><span class="line">        ax.plot(X, Y, label=&quot;predict_value_max_depth=%d&quot; % depth, linewidth=2, alpha=0.5)</span><br><span class="line">    ax.scatter(X_train, y_train, label=&quot;train sample&quot;, c=&apos;g&apos;)</span><br><span class="line">    ax.scatter(X_test, y_test, label=&quot;test sample&quot;, c=&apos;r&apos;)</span><br><span class="line">    ax.set_xlabel(&quot;data&quot;)</span><br><span class="line">    ax.set_ylabel(&quot;target&quot;)</span><br><span class="line">    ax.set_title(&quot;Decision Tree Regression&quot;)</span><br><span class="line">    ax.legend(framealpha=0.5)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<p><img src="/images/MachineLearning/DecisionTree/20190726_ML_DecisionTreeRegressor_Depth_Plot.png"></p>
+<p>可以看到，深度越小的决策树越简单，它将特征空间划分的折线越少。深度越深的决策树越复杂，它将特征空间划分的折线越多（越曲折）。</p>
+<h2 id="分类决策树decisiontreeclassifier">分类决策树(DecisionTreeClassifier)</h2>
+<p>DecisionTreeClassifier实现了分类决策树，用于分类问题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class sklearn.tree.DecisionTreeClassifier(criterion=&quot;gini&quot;,</span><br><span class="line">                 splitter=&quot;best&quot;,</span><br><span class="line">                 max_depth=None,</span><br><span class="line">                 min_samples_split=2,</span><br><span class="line">                 min_samples_leaf=1,</span><br><span class="line">                 min_weight_fraction_leaf=0.,</span><br><span class="line">                 max_features=None,</span><br><span class="line">                 random_state=None,</span><br><span class="line">                 max_leaf_nodes=None,</span><br><span class="line">                 min_impurity_decrease=0.,</span><br><span class="line">                 min_impurity_split=None,</span><br><span class="line">                 class_weight=None,</span><br><span class="line">                 presort=False)</span><br></pre></td></tr></table></figure>
+<p>参数</p>
+<ul>
+<li>criterion：字符串，指定切分质量的评价准则。
+<ul>
+<li>'gini'：切分时评价准则是Gini系数</li>
+<li>'entropy'：切分时评价准则是熵</li>
+</ul></li>
+<li>splitter：字符串，指定切分原则
+<ul>
+<li>'best'：选择最优的切分</li>
+<li>'random'：随机切分</li>
+</ul></li>
+<li>max_depth：指定树的最大深度
+<ul>
+<li>None：表示树的深度不限，直到每个叶子都是纯的，即叶节点中所有样本点都属于一个类，或者叶子中包含小于min_samples_split个样本点</li>
+</ul></li>
+<li>min_samples_split：整数，指定每个内部节点（非叶节点）包含的最少的样本数</li>
+<li>min_samples_leaf：整数，指定每个叶节点包含的最少样本数</li>
+<li>min_weight_fraction_leaf：浮点数，叶节点中样本的最小权重系数</li>
+<li>max_features：指定寻找best split时考虑的特征数量。如果已经考虑了max_features个特征，但是还没有找到一个有效的切分，那么还会继续寻找下一特征，直到找到一个有效的切分为止。
+<ul>
+<li>整数：每次切分只考虑max_features个特征</li>
+<li>浮点数：每次切分只考虑max_features * n_features个特征（max_features指定了百分比）</li>
+<li>'auto' 或者 'sqrt'：max_features = sqrt(n_features)</li>
+<li>'log2'：max_features = log2(n_features)</li>
+<li>None：max_features = n_features</li>
+</ul></li>
+<li>random_state: 一个整数或者一个RandomState实例，或者None
+<ul>
+<li>如果为整数，则它指定了随机数生成器的种子</li>
+<li>如果为RandomState实例，则指定例随机数生成器</li>
+<li>如果为None，则使用默认的随机数生成器</li>
+</ul></li>
+<li>max_leaf_nodes：指定叶节点的最大数量
+<ul>
+<li>None：此时叶节点数量不限</li>
+<li>整数：则max_depth被忽略</li>
+</ul></li>
+<li>presort：boolean，指定是否要提前排序数据从而加速寻找最优切分的过程。设置为True时，对于大数据集会减慢总体的训练过程，但是对于一个小数据集或者设定了最大深度的情况下，则会加速训练过程</li>
+<li>class_weight：一个字典、字典的列表、'balance'或者None，指定了分类的权重。形式：{class_label: weight}。如果提供了sample_weight参数（fit方法提供），则这些权重都会乘以sample_weight。
+<ul>
+<li>None：每个分类权重都为1</li>
+<li>'balance'：分类的权重是样本中各分类出现的频率的反比</li>
+</ul></li>
+</ul>
+<p>属性</p>
+<ul>
+<li>classes_：分类的标签值</li>
+<li>feature_importances_：给出特征的重要程度。该值越高，则该特征越重要。（Gini importance）</li>
+<li>max_features_：max_features的推断值</li>
+<li>n_classes_：给出分类的数量</li>
+<li>n_features_：当执行fit之后，特征的数量</li>
+<li>n_outputs_：当执行fit之后，输出的数量</li>
+<li>tree_：一个Tree对象，即底层的决策树</li>
+</ul>
+<p>方法</p>
+<ul>
+<li>fit(X, y[, sample_weight, check_input, …]): 训练模型</li>
+<li>predict(X[, check_input]): 用模型进行预测，返回预测值</li>
+<li>predict_log_proba(X): 返回一个数组，数组的元素依次是X预测为各个类别的概率的对数值</li>
+<li>predict_proba(X): 返回一个数组，数组的元素依次是X预测为各个类别的概率值</li>
+<li>score(X, y[, sample_weight]): 返回在(X, y)上预测的准确率</li>
+</ul>
+<p>首先导入包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">import numpy as np</span><br><span class="line">from sklearn.tree import DecisionTreeClassifier</span><br><span class="line">from sklearn import model_selection</span><br><span class="line">from sklearn import datasets</span><br></pre></td></tr></table></figure>
+<p>采用鸢尾花数据集。该数据集一共有150个数据，这些数据分为3类(setosa, versicolor, virginica)，每类50个数据。每个数据包含4个属性：sepal长度、sepal宽度、petal长度、petal宽度。</p>
+<p>首先加载数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def load_data():</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    采用分层采样</span><br><span class="line">    :return: </span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    iris = datasets.load_iris()</span><br><span class="line">    X_train = iris.data</span><br><span class="line">    y_train = iris.target</span><br><span class="line">    return model_selection.train_test_split(X_train, y_train, test_size=0.25, random_state=0, stratify=y_train)</span><br></pre></td></tr></table></figure>
+<p>然后，给出使用DecisionTreeClassifier进行分类的函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def demo_DecisionTreeClassifier(*data):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    clf = DecisionTreeClassifier()</span><br><span class="line">    clf.fit(X_train, y_train)</span><br><span class="line">    print(&quot;Training score: %f&quot; % clf.score(X_train, y_train))</span><br><span class="line">    print(&quot;Testing score: %f&quot; % clf.score(X_test, y_test))</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Training score: 1.000000</span><br><span class="line">Testing score: 0.973684</span><br></pre></td></tr></table></figure>
+<p>可以看到对训练数据集完全拟合，对测试数据集拟合精度高达97.3684%。</p>
+<p>现在考察评价切分质量的评价准则criterion对于分类性能的影响：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def demo_DecisionTreeClassifier_criterion(*data):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    criterions = [&apos;gini&apos;, &apos;entropy&apos;]</span><br><span class="line">    for criterion in criterions:</span><br><span class="line">        clf = DecisionTreeClassifier(criterion=criterion)</span><br><span class="line">        clf.fit(X_train, y_train)</span><br><span class="line">        print(&quot;criterion: %s&quot; % criterion)</span><br><span class="line">        print(&quot;Training score: %f&quot; % clf.score(X_train, y_train))</span><br><span class="line">        print(&quot;Testing score: %f&quot; % clf.score(X_test, y_test))</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">criterion: gini</span><br><span class="line">Training score: 1.000000</span><br><span class="line">Testing score: 0.973684</span><br><span class="line">criterion: entropy</span><br><span class="line">Training score: 1.000000</span><br><span class="line">Testing score: 0.921053</span><br></pre></td></tr></table></figure>
+<p>可以看到对于本问题二者对于训练集的拟合都非常完美，对应测试集的预测都较高，但是稍有不同，使用Gini系数的策略预测性能高。</p>
+<p>接下来，检验随机划分与最优划分的影响：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def demo_DecisionTreeClassifier_splitter(*data):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    splitters = [&apos;best&apos;, &apos;random&apos;]</span><br><span class="line">    for splitter in splitters:</span><br><span class="line">        clf = DecisionTreeClassifier(splitter=splitter)</span><br><span class="line">        clf.fit(X_train, y_train)</span><br><span class="line">        print(&quot;splitter: %s&quot; % splitter)</span><br><span class="line">        print(&quot;Training score: %f&quot; % clf.score(X_train, y_train))</span><br><span class="line">        print(&quot;Testing score: %f&quot; % clf.score(X_test, y_test))</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">splitter: best</span><br><span class="line">Training score: 1.000000</span><br><span class="line">Testing score: 0.947368</span><br><span class="line">splitter: random</span><br><span class="line">Training score: 1.000000</span><br><span class="line">Testing score: 0.973684</span><br></pre></td></tr></table></figure>
+<p>最后考察决策树深度的影响：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">def demo_DecisionTreeClassifier_depth(*data, maxdepth):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    depths = np.arange(1, maxdepth)</span><br><span class="line">    training_scores = []</span><br><span class="line">    testing_scores = []</span><br><span class="line">    for depth in depths:</span><br><span class="line">        clf = DecisionTreeClassifier(max_depth=depth)</span><br><span class="line">        clf.fit(X_train, y_train)</span><br><span class="line">        training_scores.append(clf.score(X_train, y_train))</span><br><span class="line">        testing_scores.append(clf.score(X_test, y_test))</span><br><span class="line">    # 绘图</span><br><span class="line">    fig = plt.figure()</span><br><span class="line">    ax = fig.add_subplot(1, 1, 1)</span><br><span class="line">    ax.plot(depths, training_scores, label=&quot;training score&quot;, marker=&apos;o&apos;)</span><br><span class="line">    ax.plot(depths, testing_scores, label=&quot;testing score&quot;, marker=&apos;*&apos;)</span><br><span class="line">    ax.set_xlabel(&quot;maxdepth&quot;)</span><br><span class="line">    ax.set_ylabel(&quot;score&quot;)</span><br><span class="line">    ax.set_title(&quot;Decision Tree Classification&quot;)</span><br><span class="line">    ax.legend(framealpha=0.5, loc=&apos;best&apos;)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<p>调用该函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X_train, X_test, y_train, y_test = load_data()</span><br><span class="line">demo_DecisionTreeClassifier_depth(X_train, X_test, y_train, y_test, maxdepth=100)</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/images/MachineLearning/DecisionTree/20190726_ML_DecisionTreeClassifier_Depth.png"></p>
+<p>可以看到随着树深度的增加，模型对训练集和预测集的拟合都在提高。这里训练数据集大小仅为150，不考虑任务条件，只需要一棵深度为<span class="math inline">\(\log_2150 ≤8\)</span>的二叉树就能够完全拟合数据，使得每个叶子结点最多只有一个样本。考虑到决策树算法中的提前终止条件，则树的深度小于8。</p>
+<h2 id="决策图">决策图</h2>
+<p>当训练完一棵决策树时，可以通过sklearn.tree.export_graphviz(classifier, out_file)来将决策树转化成Graphviz格式的文件。对上面DecisionTreeClassifier例子，使用export_graphviz函数如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def demo_export_graphviz(*data, filename):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    clf = DecisionTreeClassifier()</span><br><span class="line">    clf.fit(X_train, y_train)</span><br><span class="line">    export_graphviz(clf, filename)</span><br></pre></td></tr></table></figure>
+<p>调用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X_train, X_test, y_train, y_test = load_data()</span><br><span class="line">demo_export_graphviz(X_train, X_test, y_train, y_test, filename=&quot;out_DecisionTreeClassifier&quot;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里需要安装Graphviz程序。Graphviz是贝尔实验室开发的一个开源工具包，用于绘制结构化的图形网络。通过<code>brew install graphviz</code>安装。</p>
+</blockquote>
+<p>然后通过Graphviz的dot工具，在终端中进入文件存放文件夹，然后运行命令<code>dot -Tpng out_DecisionTreeClassifier -o out_DecisionTreeClassifier.png</code>来生成png格式的决策图。其中-T指定了输出文件的格式，-o指定了输出文件名。</p>
+<p><img src="/images/MachineLearning/DecisionTree/20190726_ML_ExportGraphviz.png"></p>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------Thank you for your reading-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/machine-learning/" rel="tag"># machine learning</a>
+          
+            <a href="/tags/notes/" rel="tag"># notes</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/decision-tree/" rel="tag"># decision tree</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/24/MachineLearning-Chapter-1-Linear-Model/" rel="next" title="MachineLearning Chapter-1 Linear Model">
+                <i class="fa fa-chevron-left"></i> MachineLearning Chapter-1 Linear Model
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  
+    <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Rian Ng">
+  
+  <p class="site-author-name" itemprop="name">Rian Ng</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+
+
+  <nav class="site-state motion-element">
+    
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+
+
+  <div class="links-of-author motion-element">
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/fateicr" title="GitHub &rarr; https://github.com/fateicr" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:rian.ng@icloud.com" title="E-Mail &rarr; mailto:rian.ng@icloud.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+
+
+
+
+          
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法"><span class="nav-number">2.</span> <span class="nav-text">算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#决策树原理"><span class="nav-number">2.1.</span> <span class="nav-text">决策树原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建决策树的步骤"><span class="nav-number">2.2.</span> <span class="nav-text">构建决策树的步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特征选择"><span class="nav-number">2.2.1.</span> <span class="nav-text">特征选择</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#熵"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">熵</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#信息增益"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">信息增益</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#信息增益比"><span class="nav-number">2.2.1.3.</span> <span class="nav-text">信息增益比</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#决策树生成"><span class="nav-number">2.2.2.</span> <span class="nav-text">决策树生成</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#id3生成算法"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">ID3生成算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c4.5生成算法"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">C4.5生成算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#说明"><span class="nav-number">2.2.2.3.</span> <span class="nav-text">说明</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#决策树剪枝"><span class="nav-number">2.2.3.</span> <span class="nav-text">决策树剪枝</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cart算法"><span class="nav-number">2.3.</span> <span class="nav-text">CART算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cart回归树"><span class="nav-number">2.3.1.</span> <span class="nav-text">CART回归树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cart分类树"><span class="nav-number">2.3.2.</span> <span class="nav-text">CART分类树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cart剪枝"><span class="nav-number">2.3.3.</span> <span class="nav-text">CART剪枝</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连续值和缺失值的处理"><span class="nav-number">2.4.</span> <span class="nav-text">连续值和缺失值的处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#连续值"><span class="nav-number">2.4.1.</span> <span class="nav-text">连续值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺失值"><span class="nav-number">2.4.2.</span> <span class="nav-text">缺失值</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#python实战"><span class="nav-number">3.</span> <span class="nav-text">Python实战</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#回归决策树decisiontreeregressor"><span class="nav-number">3.1.</span> <span class="nav-text">回归决策树(DecisionTreeRegressor)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分类决策树decisiontreeclassifier"><span class="nav-number">3.2.</span> <span class="nav-text">分类决策树(DecisionTreeClassifier)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#决策图"><span class="nav-number">3.3.</span> <span class="nav-text">决策图</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rian Ng</span>
+
+  
+
+  
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'avPCijx9DDWA8iHwVkFjgCwV-gzGzoHsz',
+    appKey: 'jagyRS4e9VYKtc0i3gJU5i7E',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: 'en' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
