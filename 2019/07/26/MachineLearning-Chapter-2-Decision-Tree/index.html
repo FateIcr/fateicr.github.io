@@ -111,9 +111,9 @@
 <meta property="og:image" content="http://yoursite.com/images/MachineLearning/DecisionTree/20190726_ML_DecisionTreeRegressor.png">
 <meta property="og:image" content="http://yoursite.com/images/MachineLearning/DecisionTree/20190726_ML_DecisionTreeRegressor_Depth.png">
 <meta property="og:image" content="http://yoursite.com/images/MachineLearning/DecisionTree/20190726_ML_DecisionTreeRegressor_Depth_Plot.png">
-<meta property="og:image" content="http://yoursite.com/images/MachineLearning/DecisionTree/20190726_ML_DecisionTreeClassifier_Depth.png">
+<meta property="og:image" content="http://yoursite.com/images/MachineLearning/DecisionTree/20190727_ML_DecisionTreeClassifier_Depth.png">
 <meta property="og:image" content="http://yoursite.com/images/MachineLearning/DecisionTree/20190726_ML_ExportGraphviz.png">
-<meta property="og:updated_time" content="2019-07-26T10:45:00.928Z">
+<meta property="og:updated_time" content="2019-07-27T06:57:27.159Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MachineLearning Chapter-2 Decision Tree">
 <meta name="twitter:description" content="概述 决策树(decision tree)是功能强大而且很受欢迎的分类和预测方法，它是一种有监督的学习算法，以树状图为基础，其输出结果为一系列简单实用的规则。决策树就是一系列的if-then于语句，可以用于分类问题，也可以用于回归问题。 决策树模型基于特征对实例进行分类，它是一种树状结构。优点是可读性强，分类速度快。学习决策树时，通常采用损失函数最小化原则。  本章中，训练集用D表示，T表示一棵决">
@@ -440,13 +440,23 @@
                 
               
 
-              <time title="Created: 2019-07-26 12:28:44 / Modified: 18:45:00" itemprop="dateCreated datePublished" datetime="2019-07-26T12:28:44+08:00">2019-07-26</time>
+              <time title="Created: 2019-07-26 12:28:44" itemprop="dateCreated datePublished" datetime="2019-07-26T12:28:44+08:00">2019-07-26</time>
             </span>
           
 
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-07-27 14:57:27" itemprop="dateModified" datetime="2019-07-27T14:57:27+08:00">2019-07-27</time>
+              </span>
             
           
 
@@ -1032,7 +1042,7 @@
 <p>调用该函数：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X_train, X_test, y_train, y_test = load_data()</span><br><span class="line">demo_DecisionTreeClassifier_depth(X_train, X_test, y_train, y_test, maxdepth=100)</span><br></pre></td></tr></table></figure>
 <p>运行结果：</p>
-<p><img src="/images/MachineLearning/DecisionTree/20190726_ML_DecisionTreeClassifier_Depth.png"></p>
+<p><img src="/images/MachineLearning/DecisionTree/20190727_ML_DecisionTreeClassifier_Depth.png"></p>
 <p>可以看到随着树深度的增加，模型对训练集和预测集的拟合都在提高。这里训练数据集大小仅为150，不考虑任务条件，只需要一棵深度为<span class="math inline">\(\log_2150 ≤8\)</span>的二叉树就能够完全拟合数据，使得每个叶子结点最多只有一个样本。考虑到决策树算法中的提前终止条件，则树的深度小于8。</p>
 <h2 id="决策图">决策图</h2>
 <p>当训练完一棵决策树时，可以通过sklearn.tree.export_graphviz(classifier, out_file)来将决策树转化成Graphviz格式的文件。对上面DecisionTreeClassifier例子，使用export_graphviz函数如下：</p>
@@ -1113,6 +1123,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/07/27/MachineLearning-Chapter-3-Bayes-Classifier/" rel="prev" title="MachineLearning Chapter-3 Bayes Classifier">
+                MachineLearning Chapter-3 Bayes Classifier <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -1187,7 +1201,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1241,7 +1255,9 @@
         
           
         
-        <span class="site-state-item-count">8</span>
+          
+        
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">tags</span>
         </a>
       </div>

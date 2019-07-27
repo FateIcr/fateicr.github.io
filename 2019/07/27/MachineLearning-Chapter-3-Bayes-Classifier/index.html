@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    }
+  };
+</script>
+
+  <meta name="description" content="概述 贝叶斯分类是一种分类算法的总称，这种算法均以贝叶斯定理为基础，所以统称为贝叶斯分类。 贝叶斯分类器的分类原理是通过某对象的先验概率，利用贝叶斯公式计算出其后验概率，即该对象属于某一类的概率，选择具有最大后验概率的类作为该对象所属的类。 贝叶斯分类器的主要特点：  属性可以离散，也可以连续 数学基础扎实，分类效率稳定 对缺失和噪声数据不太敏感 属性如果不相关，分类效果很好；如果相关，则不低于决">
+<meta name="keywords" content="machine learning,notes,python,bayes classifier">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MachineLearning Chapter-3 Bayes Classifier">
+<meta property="og:url" content="http://yoursite.com/2019/07/27/MachineLearning-Chapter-3-Bayes-Classifier/index.html">
+<meta property="og:site_name" content="Rian Ng">
+<meta property="og:description" content="概述 贝叶斯分类是一种分类算法的总称，这种算法均以贝叶斯定理为基础，所以统称为贝叶斯分类。 贝叶斯分类器的分类原理是通过某对象的先验概率，利用贝叶斯公式计算出其后验概率，即该对象属于某一类的概率，选择具有最大后验概率的类作为该对象所属的类。 贝叶斯分类器的主要特点：  属性可以离散，也可以连续 数学基础扎实，分类效率稳定 对缺失和噪声数据不太敏感 属性如果不相关，分类效果很好；如果相关，则不低于决">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/MachineLearning/BayesClassifier/20190727_ML_Digit.png">
+<meta property="og:image" content="http://yoursite.com/images/MachineLearning/BayesClassifier/20190727_ML_MultinomialNB_Alpha.png">
+<meta property="og:image" content="http://yoursite.com/images/MachineLearning/BayesClassifier/20190727_ML_BernoulliNB_Alpha.png">
+<meta property="og:image" content="http://yoursite.com/images/MachineLearning/BayesClassifier/20190727_ML_BernoulliNB_Binarize.png">
+<meta property="og:updated_time" content="2019-07-27T06:57:28.535Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MachineLearning Chapter-3 Bayes Classifier">
+<meta name="twitter:description" content="概述 贝叶斯分类是一种分类算法的总称，这种算法均以贝叶斯定理为基础，所以统称为贝叶斯分类。 贝叶斯分类器的分类原理是通过某对象的先验概率，利用贝叶斯公式计算出其后验概率，即该对象属于某一类的概率，选择具有最大后验概率的类作为该对象所属的类。 贝叶斯分类器的主要特点：  属性可以离散，也可以连续 数学基础扎实，分类效率稳定 对缺失和噪声数据不太敏感 属性如果不相关，分类效果很好；如果相关，则不低于决">
+<meta name="twitter:image" content="http://yoursite.com/images/MachineLearning/BayesClassifier/20190727_ML_Digit.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Rian Ng" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/07/27/MachineLearning-Chapter-3-Bayes-Classifier/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  
+  <title>MachineLearning Chapter-3 Bayes Classifier | Rian Ng</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Rian Ng</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>Commonweal 404</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <a href="https://github.com/fateicr" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/27/MachineLearning-Chapter-3-Bayes-Classifier/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rian Ng">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rian Ng">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MachineLearning Chapter-3 Bayes Classifier
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-27 12:20:01 / Modified: 14:57:28" itemprop="dateCreated datePublished" datetime="2019-07-27T12:20:01+08:00">2019-07-27</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/2019/07/27/MachineLearning-Chapter-3-Bayes-Classifier/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/27/MachineLearning-Chapter-3-Bayes-Classifier/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+                 Views:  
+                <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+            </span>
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="概述">概述</h1>
+<p>贝叶斯分类是一种分类算法的总称，这种算法均以贝叶斯定理为基础，所以统称为贝叶斯分类。</p>
+<p>贝叶斯分类器的分类原理是通过某对象的先验概率，利用贝叶斯公式计算出其后验概率，即该对象属于某一类的概率，选择具有最大后验概率的类作为该对象所属的类。</p>
+<p>贝叶斯分类器的主要特点：</p>
+<ul>
+<li>属性可以离散，也可以连续</li>
+<li>数学基础扎实，分类效率稳定</li>
+<li>对缺失和噪声数据不太敏感</li>
+<li>属性如果不相关，分类效果很好；如果相关，则不低于决策树</li>
+</ul>
+<a id="more"></a>
+<h1 id="算法">算法</h1>
+<h2 id="贝叶斯定理">贝叶斯定理</h2>
+<p>贝叶斯定理是用数学的方法来解释生活中大家都知道的常识，而机器学习使用的各种算法中，最常见的就是贝叶斯定理。</p>
+<p>先验概率是根据以往经验和分析得到的概率。比如：你在山洞门口，觉得山洞中有熊出现的事件为<span class="math inline">\(Y\)</span>，然后听到山洞中传来一阵熊吼的事件为<span class="math inline">\(X\)</span>。一开始你以为山洞中有熊的概率为<span class="math inline">\(P(Y)\)</span>，听到熊吼之后认为有熊的概率为<span class="math inline">\(P(Y/X)\)</span>。很明显<span class="math inline">\(P(Y/X)&gt;P(Y)\)</span>。这里：</p>
+<ul>
+<li><span class="math inline">\(P(Y)\)</span>为先验概率，是根据以往的数据分析或者经验得到的概率</li>
+<li><span class="math inline">\(P(Y/X)\)</span>为后验概率，是得到本次试验的信息从而重新修正的概率</li>
+</ul>
+<p>设<span class="math inline">\(S\)</span>为试验<span class="math inline">\(E\)</span>的样本空间。<span class="math inline">\(B_1,B_2,…,B_n\)</span>为<span class="math inline">\(E\)</span>的一组事件。若：</p>
+<ul>
+<li><span class="math inline">\(B_i\cap B_j=\phi ,i≠j,i,j=1,2,…,n\)</span></li>
+<li><span class="math inline">\(B_1\cup B_2\cup …\cup B_n=S\)</span></li>
+</ul>
+<p>则称<span class="math inline">\(B_1,B_2,…,B_n\)</span>为样本空间<span class="math inline">\(S\)</span>的一个划分。如果<span class="math inline">\(B_1,B_2,…,B_n\)</span>为样本空间<span class="math inline">\(S\)</span>的一个划分，则对于每次试验，事件<span class="math inline">\(B_1,B_2,…,B_n\)</span>中有且仅有一个事件发生。</p>
+<p>全概率公式：设试验<span class="math inline">\(E\)</span>的样本空间为<span class="math inline">\(S\)</span>，<span class="math inline">\(A\)</span>为<span class="math inline">\(E\)</span>的事件，<span class="math inline">\(B_1,B_2,…,B_n\)</span>为样本空间<span class="math inline">\(S\)</span>的一个划分，且<span class="math inline">\(P(B_i)≥0(i=1,2,…,n)\)</span>，则有：</p>
+<p><span class="math display">\[P(A)=P(A/B_1)P(B_1)+P(A/B_2)P(B_2)+…+P(A/B_n)P(B_n)=\sum_{j=1}^nP(A/B_j)P(B_j)\]</span></p>
+<p>贝叶斯定理：设试验<span class="math inline">\(E\)</span>的样本空间为<span class="math inline">\(S\)</span>，<span class="math inline">\(A\)</span>为<span class="math inline">\(E\)</span>的事件，<span class="math inline">\(B_1,B_2,…,B_n\)</span>为样本空间<span class="math inline">\(S\)</span>的一个划分，且<span class="math inline">\(P(A)&gt;0\)</span>，<span class="math inline">\(P(B_i)≥0(i=1,2,…,n)\)</span>，则有：</p>
+<p><span class="math display">\[P(B_i/A)=\frac{P(A/B_i)P(B_i)}{\sum_{j=1}^nP(A/B_j)P(B_j)}\]</span></p>
+<h2 id="朴素贝叶斯法">朴素贝叶斯法</h2>
+<h3 id="原理">原理</h3>
+<p>设样本<span class="math inline">\(\vec{x}=(x^{(1)},x^{(2)},…,x^{(n)})^T \in 𝒳 \subseteq R^n\)</span>，设标记<span class="math inline">\(y\in 𝒴=\{c_1,c_2,…,c_K\}\)</span>。令<span class="math inline">\(X\)</span>为𝒳上的随机向量，<span class="math inline">\(Y\)</span>为𝒴上的随机变量，<span class="math inline">\(P(X,Y)\)</span>为<span class="math inline">\(X\)</span>和<span class="math inline">\(Y\)</span>的联合概率分布。假定训练数据集<span class="math inline">\(T=\{(\vec{x}_1,y_1),(\vec{x}_2,y_2),…,(\vec{x}_N,y_N)\}\)</span>由<span class="math inline">\(P(X,Y)\)</span>独立同分布产生，那么朴素贝叶斯法可从训练数据集中学习联合概率分布<span class="math inline">\(P(X,Y)\)</span>，也就是学习下列概率分布：</p>
+<ul>
+<li>先验概率分布：<span class="math inline">\(P(Y=c_k),k=1,2,…,K\)</span></li>
+<li>条件概率分布：<span class="math inline">\(P(X=\vec{x}/Y=c_k),k=1,2,…,K\)</span></li>
+</ul>
+<p>朴素贝叶斯法假设：在分类确定的条件下，用于分类的特征是条件独立的。即：</p>
+<p><span class="math display">\[P(X=\vec{x}/Y=c_k)=P(X^{(1)}=x^{(1)},X^{(2)}=x^{(2)},…,X^{(n)}=x^{(n)}/Y=c_k) \\ =\prod_{j=1}^nP(X^{(j)}=x^{(j)}/Y=c_k),k=1,2,…,K\]</span></p>
+<p>根据贝叶斯定理：</p>
+<p><span class="math display">\[P(Y=c_k/X=\vec{x})=\frac{P(X=\vec{x}/Y=c_k)P(Y=c_k)}{\sum_{j=1}^KP(X=\vec{x}/Y=c_j)P(Y=c_j)}\]</span></p>
+<p>考虑分类特征的条件独立假设有：</p>
+<p><span class="math display">\[P(Y=c_k/X=\vec{x})=\frac{P(Y=c_k)\prod_{i=1}^nP(X^{(i)}=x^{(i)}/Y=c_k)}{\sum_{j=1}^KP(X=\vec{x}/Y=c_j)P(Y=c_j)},k=1,2,…,K\]</span></p>
+<p>于是朴素贝叶斯分类器表示为：</p>
+<p><span class="math display">\[y=f(\vec{x})=\arg \max_{c_k}\frac{P(Y=c_k)\prod_{i=1}^nP(X^{(i)}=x^{(i)}/Y=c_k)}{\sum_{j=1}^KP(X=\vec{x}/Y=c_j)P(Y=c_j)}\]</span></p>
+<p>由于对所有的<span class="math inline">\(c_k,k=1,2,…,K\)</span>，上式的分母都相同，因此上式可重写为：</p>
+<p><span class="math display">\[y=f(\vec{x})=\arg \max_{c_k}P(Y=c_k)\prod_{i=1}^nP(X^{(i)}=x^{(i)}/Y=c_k)\]</span></p>
+<h3 id="朴素贝叶斯法的学习">朴素贝叶斯法的学习</h3>
+<p>在朴素贝叶斯法中，要学习的参数就是以下两种概率：</p>
+<ul>
+<li>先验概率<span class="math inline">\(P(Y=c_k)\)</span></li>
+<li>条件概率<span class="math inline">\(P(X^{(j)}=x^{(j)}/Y=c_k)\)</span></li>
+</ul>
+<p>通常采用极大似然估计这两种概率。</p>
+<ul>
+<li>先验概率<span class="math inline">\(P(Y=c_k)\)</span>的极大似然估计为：<span class="math display">\[P(Y=c_k)=\frac{1}{N}\sum_{i=1}^NI(y_i=c_k),k=1,2,…,K\]</span></li>
+<li>条件概率<span class="math inline">\(P(X^{(j)}=a_{jl}/Y=c_k)\)</span>的极大似然估计为：<span class="math display">\[P(X^{(j)}=a_{jl}/Y=c_k)=\frac{\sum_{i=1}^NI(x_i^{(j)}=a_{jl},y_i=c_k)}{\sum_{i=1}^NI(y_i=c_k)}\\j=1,2,…,n ;l=1,2,…,s_j ; k=1,2,…,K\]</span>其中，<span class="math inline">\(a_{j1},a_{j2},…,a_{js_j}\)</span>为第<span class="math inline">\(j\)</span>个特征<span class="math inline">\(x^{(j)}\)</span>可能的取值。</li>
+</ul>
+<h3 id="朴素贝叶斯法算法">朴素贝叶斯法算法</h3>
+<p>输入：</p>
+<ul>
+<li>训练集<span class="math inline">\(T=\{(\vec{x}_1,y_1),(\vec{x}_2,y_2),…,(\vec{x}_N,y_N)\}\)</span>, <span class="math inline">\(\vec{x}_i=(x^{(1)}_i,x^{(2)}_i,…,x^{(n)}_i)^T\)</span>，<span class="math inline">\(x^{(j)}_i\)</span>为第<span class="math inline">\(i\)</span>个样本的第<span class="math inline">\(j\)</span>个特征，其中<span class="math inline">\(x^{(j)}_i\in \{a_{j1},a_{j2},…,a_{js_j}\}\)</span>，<span class="math inline">\(a_{jl}\)</span>为第<span class="math inline">\(j\)</span>个特征可能取到的第<span class="math inline">\(l\)</span>个值，<span class="math inline">\(j=1,2,…,n\)</span>，<span class="math inline">\(l=1,2,…,s_j\)</span>，<span class="math inline">\(y_i\in \{c_1,c_2,…,c_K\}\)</span>。</li>
+<li>实例<span class="math inline">\(\vec{x}\)</span></li>
+</ul>
+<p>输出：实例<span class="math inline">\(\vec{x}\)</span>的分类</p>
+<p>算法步骤：</p>
+<ul>
+<li>计算先验概率的估计值以及条件概率的估计值：<span class="math display">\[P(Y=c_k)=\frac{\sum_{i=1}^NI(y_i=c_k)}{N},k=1,2,…,K \\ P(X^{(j)}=a_{jl}/Y=c_k)=\frac{\sum_{i=1}^NI(x_i^{(j)}=a_{jl},y_i=c_k)}{\sum_{i=1}^NI(y_i=c_k)} \\ j=1,2,…,n; l=1,2,…,s_j; k=1,2,…,K\]</span></li>
+<li>对于给定的实例<span class="math inline">\(\vec{x}=(x^{(1)},x^{(2)},…,x^{(n)})^T\)</span>，计算：<span class="math display">\[P(Y=c_k)\prod_{j=1}^nP(X^{(j)}=x^{(j)}/Y=c_k),k=1,2,…,K\]</span></li>
+<li>计算并返回实例<span class="math inline">\(\vec{x}\)</span>的分类<span class="math inline">\(y\)</span>：<span class="math display">\[y=\arg \max_{c_k}P(Y=c_k)\prod_{j=1}^nP(X^{(j)}=x^{(j)}/Y=c_k)\]</span></li>
+</ul>
+<h3 id="贝叶斯估计">贝叶斯估计</h3>
+<p>设第<span class="math inline">\(j\)</span>个特征<span class="math inline">\(x^{(j)}\)</span>可能的取值为<span class="math inline">\(a_{j1},a_{j2},…,a_{js_j}\)</span>，则条件概率<span class="math inline">\(P(X^{(j)}=a_{jl}/Y=c_k)\)</span>的极大似然估计为：</p>
+<p><span class="math display">\[P(X^{(j)}=a_{jl}/Y=c_k)=\frac{\sum_{i=1}^NI(x_i^{(j)}=a_{jl},y_i=c_k)}{\sum_{i=1}^NI(y_i=c_k)} \\ j=1,2,…,n; l=1,2,…,s_j; k=1,2,…,K\]</span></p>
+<p>用极大似然估计可能会出现分母<span class="math inline">\(\sum_{i=1}^NI(y_i=c_k)\)</span>为0的情况，此时可以采用贝叶斯估计（最大后验估计）：</p>
+<p><span class="math display">\[P_{\lambda}(X^{(j)}=a_{jl}/Y=c_k)=\frac{\sum_{i=1}^NI(x_i^{(j)}=a_{jl},y_i=c_k)+\lambda }{\sum_{i=1}^NI(y_i=c_k)+s_j\lambda } \\ j=1,2,…,n; l=1,2,…,s_j; k=1,2,…,K\]</span></p>
+<blockquote>
+<p>它等价于在<span class="math inline">\(X^{(j)}\)</span>的各个取值的频数上赋予一个正数<span class="math inline">\(\lambda\)</span></p>
+</blockquote>
+<p>它满足概率分布函数的条件：</p>
+<p><span class="math display">\[P_{\lambda}(X^{(j)}=a_{jl}/Y=c_k)&gt;0;l=1,2,…,s_j;k=1,2,…,K \\ \sum_{l=1}^{s_j}P_{\lambda}(X^{(j)}=a_{jl}/Y=c_k)=1 \]</span></p>
+<p>此时<span class="math inline">\(P(Y=c_k)\)</span>的贝叶斯估计调整为：</p>
+<p><span class="math display">\[P_{\lambda}(Y=c_k)=\frac{\sum_{i=1}^NI(y_i=c_k)+\lambda}{N+K\lambda}\]</span></p>
+<ul>
+<li>当<span class="math inline">\(\lambda =0\)</span>时，为极大似然估计</li>
+<li>当<span class="math inline">\(\lambda =1\)</span>时，为拉普拉斯平滑</li>
+</ul>
+<h1 id="python实战">Python实战</h1>
+<p>在scikit中有多种不同的朴素贝叶斯分类器，它们的区别就在于假设了不同的<span class="math inline">\(P(X^{(j)}/y=c_k)\)</span>分布，下面介绍三种常用的朴素贝叶斯分类器：</p>
+<ul>
+<li>GaussianNB是高斯贝叶斯分类器。它假设特征的条件概率分布满足高斯分布：<span class="math display">\[P(X^{(j)}/y=c_k)=\frac{1}{\sqrt{2\pi \sigma_k^2}}\exp (-\frac{(X^{(j)}-\mu_k)^2}{2\sigma_k^2})\]</span></li>
+<li>MultinomialNB是多项式贝叶斯分类器。它假设特征的条件概率分布满足多项式分布：<span class="math display">\[P(X^{(j)}=a_{sj}/y=c_k)=\frac{N_{kj}+\alpha }{N_k+\alpha n}\]</span>其中，<span class="math inline">\(a_{sj}\)</span>表示特征<span class="math inline">\(X^{(j)}\)</span>的取值，其取值个数为<span class="math inline">\(s_j\)</span>个；<span class="math inline">\(N_k=\sum_{i=1}^NI(y_i=c_k)\)</span>，表示属于类别<span class="math inline">\(c_k\)</span>的样本的数量；<span class="math inline">\(N_{kj}=\sum_{i=1}^NI(y_i=c_k,X^{(j)}=a_{sj})\)</span>，表示属于类别<span class="math inline">\(c_k\)</span>且特征<span class="math inline">\(X^{(j)}=a_{sj}\)</span>的样本的数量。<span class="math inline">\(\alpha\)</span>就是前述贝叶斯估计中的<span class="math inline">\(\lambda\)</span>。</li>
+<li>BernoulliNB是伯努利贝叶斯分类器。它假设特征的条件概率分布满足二项分布：<span class="math display">\[P(X^{(j)}/y=c_k)=pX^{(j)}+(1-p)(1-X^{(j)})\]</span>其中，要求特征的取值为<span class="math inline">\(X^{(j)}\in \{0,1\}\)</span>，且<span class="math inline">\(P(X^{(j)}=1/y=c_k)=p\)</span>。</li>
+</ul>
+<p>与多项式模型一样，伯努利模型适用于离散特征的情况，所不同的是，伯努利模型中每个特征的取值只能是1和0。</p>
+<p>首先导入包：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from sklearn import datasets, model_selection, naive_bayes</span><br><span class="line">import numpy as np</span><br><span class="line">import matplotlib.pyplot as plt</span><br></pre></td></tr></table></figure>
+<p>这里使用的是scikit-learn自带的手写识别数据集Digit Dataset。该数据集由1791张样本图片组成，每张图片都是一个<span class="math inline">\(8\times 8\)</span>大小的手写数字位图。为了便于处理，scikit-learn将样本图片转换成64维的向量。我们通过下面的函数来观察Digit Dataset数据集：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def show_digits():</span><br><span class="line">    digits = datasets.load_digits()</span><br><span class="line">    fig = plt.figure()</span><br><span class="line">    print(&quot;vector from images 0:&quot;, digits.data[0])</span><br><span class="line">    for i in range(25):</span><br><span class="line">        ax = fig.add_subplot(5, 5, i+1)</span><br><span class="line">        ax.imshow(digits.images[i], cmap=plt.cm.gray_r, interpolation=&apos;nearest&apos;)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<p>调用该函数，结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vector from images 0: </span><br><span class="line">[ 0.  0.  5. 13.  9.  1.  0.  0.  0.  0. 13. 15. 10. 15.  5.  0.  0.  3.</span><br><span class="line">  1.  2.  0. 11.  8.  0.  0.  4. 12.  0.  0.  8.  8.  0.  0.  5.  8.  0.</span><br><span class="line">  1.  9.  8.  0.  0.  4. 11.  0.  1. 12.  7.  0.  0.  2. 14.  5. 10. 12.</span><br><span class="line">  2.  0.  0.  0.  6. 13. 10.  0.  0.  0.]</span><br></pre></td></tr></table></figure>
+<p><img src="/images/MachineLearning/BayesClassifier/20190727_ML_Digit.png"></p>
+<p>加载数据集：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def load_data():</span><br><span class="line">    digits = datasets.load_digits()</span><br><span class="line">    return model_selection.train_test_split(digits.data, digits.target, test_size=0.25, random_state=0)</span><br></pre></td></tr></table></figure>
+<h2 id="高斯贝叶斯分类器gaussiannb">高斯贝叶斯分类器(GaussianNB)</h2>
+<p>其原型为：<code>class sklearn.native_bayes.GaussianNB</code>。GaussianNB没有参数，因此不需要调参。</p>
+<p>属性：</p>
+<ul>
+<li>class_prior_: 一个数组，形状为(n_classes,)，是每个类别的概率<span class="math inline">\(P(y=c_k)\)</span></li>
+<li>class_count_: 一个数组，形状为(n_classes,)，是每个类别包含的训练样本数量</li>
+<li>theta_: 一个数组，形状为(n_classes, n_features)，是每个类别上每个特征值的均值<span class="math inline">\(\mu_k\)</span></li>
+<li>sigma_: 一个数组，形状为(n_classes, n_features)，是每个类别上每个特征的标准差<span class="math inline">\(\sigma_k\)</span></li>
+</ul>
+<p>方法：</p>
+<ul>
+<li>fit(X, y[, sample_weight]): 训练模型</li>
+<li>partial_fit(X, y[, classes, sample_weight]): 追加训练模型。该方法主要用于大规模数据集的训练。此时可以将大数据集划分成若干个小数据集，然后在这些小数据集上连续调用partial_fit方法来训练模型。</li>
+<li>predict(X): 用模型进行预测，返回预测值</li>
+<li>predict_log_proba(X): 返回一个数组，数组的元素依次是X预测为各个类别的概率的对数值</li>
+<li>predict_proba(X): 返回一个数组，数组的元素依次是X预测为各个类别的概率值</li>
+<li>score(X, y[, sample_weight]): 返回在(X, y)上预测的准确率</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def demo_GaussianNB(*data):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    cls = naive_bayes.GaussianNB()</span><br><span class="line">    cls.fit(X_train, y_train)</span><br><span class="line">    print(&quot;Training score: %.2f&quot; % cls.score(X_train, y_train))</span><br><span class="line">    print(&quot;Testing score: %.2f&quot; % cls.score(X_test, y_test))</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Training score: 0.86</span><br><span class="line">Testing score: 0.83</span><br></pre></td></tr></table></figure>
+<p>可以看到高斯贝叶斯分类器对训练数据集的预测准确率为86%，对测试数据集的预测准确率为83%。</p>
+<h2 id="多项式贝叶斯分类器multinomialnb">多项式贝叶斯分类器(MultinomialNB)</h2>
+<p>其原型为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class sklearn.native_bayes.MultinomialNB(alpha=1.0, fit_prior=True, class_prior=None)</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<ul>
+<li>alpha: 一个浮点数，指定<span class="math inline">\(\alpha\)</span>值</li>
+<li>fit_prior: boolean，如果为True，则不去学习<span class="math inline">\(P(y=c_k)\)</span>，替代以均匀分布。</li>
+<li>class_prior: 一个数组，指定了每个分类的先验概率<span class="math inline">\(P(y=c_1),P(y=c_2),…,P(y=c_K)\)</span>。如果指定了该参数，则每个分类的先验概率不再从数据集中学得。</li>
+</ul>
+<p>属性：</p>
+<ul>
+<li>class_log_prior_: 一个数组对象，形状为(n_classes,)。给出每个类别调整后的经验概率分布的对数值</li>
+<li>feature_log_prob_: 一个数组对象，形状为(n_classes, n_features)。给出了<span class="math inline">\(P(X^{(j)}/y=c_k)\)</span>的经验概率分布的对数值</li>
+<li>class_count_: 一个数组，形状为(n_classes,)，是每个类别包含的训练样本数量</li>
+<li>feature_count_: 一个数组，形状为(n_classes, n_features)。训练过程中，每个类别每个特征遇到的样本数。</li>
+</ul>
+<p>方法：</p>
+<ul>
+<li>fit(X, y[, sample_weight]): 训练模型</li>
+<li>partial_fit(X, y[, classes, sample_weight]): 追加训练模型。该方法主要用于大规模数据集的训练。此时可以将大数据集划分成若干个小数据集，然后在这些小数据集上连续调用partial_fit方法来训练模型。</li>
+<li>predict(X): 用模型进行预测，返回预测值</li>
+<li>predict_log_proba(X): 返回一个数组，数组的元素依次是X预测为各个类别的概率的对数值</li>
+<li>predict_proba(X): 返回一个数组，数组的元素依次是X预测为各个类别的概率值</li>
+<li>score(X, y[, sample_weight]): 返回在(X, y)上预测的准确率</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def demo_MultinomialNB(*data):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    cls = naive_bayes.MultinomialNB()</span><br><span class="line">    cls.fit(X_train, y_train)</span><br><span class="line">    print(&quot;Training score: %.2f&quot; % cls.score(X_train, y_train))</span><br><span class="line">    print(&quot;Testing score: %.2f&quot; % cls.score(X_test, y_test))</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Training score: 0.91</span><br><span class="line">Testing score: 0.91</span><br></pre></td></tr></table></figure>
+<p>接着检验不同的<span class="math inline">\(\alpha\)</span>对多项式贝叶斯分类器对预测性能的影响：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">def demo_MultinomialNB_alpha(*data):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    alphas = np.logspace(-2, 5, num=200)</span><br><span class="line">    training_scores = []</span><br><span class="line">    testing_scores = []</span><br><span class="line">    for alpha in alphas:</span><br><span class="line">        cls = naive_bayes.MultinomialNB(alpha=alpha)</span><br><span class="line">        cls.fit(X_train, y_train)</span><br><span class="line">        training_scores.append(cls.score(X_train, y_train))</span><br><span class="line">        testing_scores.append(cls.score(X_test, y_test))</span><br><span class="line">    # 绘图</span><br><span class="line">    fig = plt.figure()</span><br><span class="line">    ax = fig.add_subplot(1, 1, 1)</span><br><span class="line">    ax.plot(alphas, training_scores, label=&quot;training score&quot;)</span><br><span class="line">    ax.plot(alphas, testing_scores, label=&quot;testing score&quot;)</span><br><span class="line">    ax.set_xlabel(r&quot;$\alpha$&quot;)</span><br><span class="line">    ax.set_ylabel(&quot;score&quot;)</span><br><span class="line">    ax.set_ylim(0, 1.0)</span><br><span class="line">    ax.set_title(&quot;MultinomialNB&quot;)</span><br><span class="line">    ax.set_xscale(&quot;log&quot;)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/images/MachineLearning/BayesClassifier/20190727_ML_MultinomialNB_Alpha.png"></p>
+<p>为了便于观察我们将<span class="math inline">\(x\)</span>轴设置为对数坐标。可以看到<span class="math inline">\(\alpha &gt;100\)</span>之后，随着<span class="math inline">\(\alpha\)</span>的增长，预测准确率在下降。这是因为多项式贝叶斯估计中，假设特征的条件概率分布满足多项式分布：<span class="math display">\[P(X^{(j)}=a_{sj}/y=c_k)=\frac{N_{kj}+\alpha }{N_k+\alpha n}\]</span></p>
+<p>当<span class="math inline">\(\alpha \to ∞\)</span>时，<span class="math inline">\(\frac{N_{kj}+\alpha }{N_k+\alpha n} \to \frac{1}{n}\)</span>，即对任何类型的特征、该类型特征的任意取值，出现的概率都是<span class="math inline">\(\frac{1}{n}\)</span>。它完全忽略了各个特征之间的差别，也忽略了每个特征内部的分布。在本问题中总的样本数量在<span class="math inline">\(10^3\)</span>，<span class="math inline">\(N_k\)</span>的量级在<span class="math inline">\(10^2\)</span>，因此在<span class="math inline">\(\alpha &gt;100\)</span>之后，预测准确率受影响较大。</p>
+<h2 id="伯努利贝叶斯分类器bernoullinb">伯努利贝叶斯分类器(BernoulliNB)</h2>
+<p>其原型为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">class sklearn.native_bayes.BernoulliNB(alpha=1.0, binarize=.0, fit_prior=True,</span><br><span class="line">                 class_prior=None)</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<ul>
+<li>alpha: 一个浮点数，指定<span class="math inline">\(\alpha\)</span>值，就是前述贝叶斯估计中的<span class="math inline">\(\lambda\)</span></li>
+<li>binarize: 一个浮点数或者None
+<ul>
+<li>None: 假定原始数据已经二元化了</li>
+<li>浮点数: 以该数为界，特征取值大于它的作为1，特征取值小于它的作为0。采取这种策略来二元化</li>
+</ul></li>
+<li>fit_prior: boolean，如果为True，则不去学习<span class="math inline">\(P(y=c_k)\)</span>，替代以均匀分布。</li>
+<li>class_prior: 一个数组，指定了每个分类的先验概率<span class="math inline">\(P(y=c_1),P(y=c_2),…,P(y=c_K)\)</span>。如果指定了该参数，则每个分类的先验概率不再从数据集中学得。</li>
+</ul>
+<p>属性：</p>
+<ul>
+<li>class_log_prior_: 一个数组对象，形状为(n_classes,)。给出每个类别调整后的经验概率分布的对数值</li>
+<li>feature_log_prob_: 一个数组对象，形状为(n_classes, n_features)。给出了<span class="math inline">\(P(X^{(j)}/y=c_k)\)</span>的经验概率分布的对数值</li>
+<li>class_count_: 一个数组，形状为(n_classes,)，是每个类别包含的训练样本数量</li>
+<li>feature_count_: 一个数组，形状为(n_classes, n_features)。训练过程中，每个类别每个特征遇到的样本数。</li>
+</ul>
+<p>方法：</p>
+<ul>
+<li>fit(X, y[, sample_weight]): 训练模型</li>
+<li>partial_fit(X, y[, classes, sample_weight]): 追加训练模型。该方法主要用于大规模数据集的训练。此时可以将大数据集划分成若干个小数据集，然后在这些小数据集上连续调用partial_fit方法来训练模型。</li>
+<li>predict(X): 用模型进行预测，返回预测值</li>
+<li>predict_log_proba(X): 返回一个数组，数组的元素依次是X预测为各个类别的概率的对数值</li>
+<li>predict_proba(X): 返回一个数组，数组的元素依次是X预测为各个类别的概率值</li>
+<li>score(X, y[, sample_weight]): 返回在(X, y)上预测的准确率</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def demo_BernoulliNB(*data):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    cls = naive_bayes.BernoulliNB()</span><br><span class="line">    cls.fit(X_train, y_train)</span><br><span class="line">    print(&quot;Training score: %.2f&quot; % cls.score(X_train, y_train))</span><br><span class="line">    print(&quot;Testing score: %.2f&quot; % cls.score(X_test, y_test))</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Training score: 0.87</span><br><span class="line">Testing score: 0.85</span><br></pre></td></tr></table></figure>
+<p>接着检验不同的<span class="math inline">\(\alpha\)</span>对伯努利贝叶斯分类器预测性能的影响：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">def demo_BernoulliNB_alpha(*data):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    alphas = np.logspace(-2, 5, num=200)</span><br><span class="line">    training_scores = []</span><br><span class="line">    testing_scores = []</span><br><span class="line">    for alpha in alphas:</span><br><span class="line">        cls = naive_bayes.BernoulliNB(alpha=alpha)</span><br><span class="line">        cls.fit(X_train, y_train)</span><br><span class="line">        training_scores.append(cls.score(X_train, y_train))</span><br><span class="line">        testing_scores.append(cls.score(X_test, y_test))</span><br><span class="line">    # 绘图</span><br><span class="line">    fig = plt.figure()</span><br><span class="line">    ax = fig.add_subplot(1, 1, 1)</span><br><span class="line">    ax.plot(alphas, training_scores, label=&quot;training score&quot;)</span><br><span class="line">    ax.plot(alphas, testing_scores, label=&quot;testing score&quot;)</span><br><span class="line">    ax.set_xlabel(r&quot;$\alpha$&quot;)</span><br><span class="line">    ax.set_ylabel(&quot;score&quot;)</span><br><span class="line">    ax.set_ylim(0, 1.0)</span><br><span class="line">    ax.set_title(&quot;BernoullizNB&quot;)</span><br><span class="line">    ax.set_xscale(&quot;log&quot;)</span><br><span class="line">    ax.legend(loc=&quot;best&quot;)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/images/MachineLearning/BayesClassifier/20190727_ML_BernoulliNB_Alpha.png"></p>
+<p>可以看到<span class="math inline">\(\alpha &gt;100\)</span>之后，随着<span class="math inline">\(\alpha\)</span>的增长，预测准确率在下降。原因与多项式贝叶斯分类器的情况相同。</p>
+<p>最后考察binarize的参数对伯努利贝叶斯分类器的预测性能的影响。该参数给定了二元化时，0-1的阈值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">def demo_BernoulliNB_binarize(*data):</span><br><span class="line">    X_train, X_test, y_train, y_test = data</span><br><span class="line">    min_x = min(np.min(X_train.ravel()), np.min(X_test.ravel())) - 0.1</span><br><span class="line">    max_x = max(np.max(X_train.ravel()), np.max(X_test.ravel())) + 0.1</span><br><span class="line">    binarizes = np.linspace(min_x, max_x, endpoint=True, num=100)</span><br><span class="line">    training_scores = []</span><br><span class="line">    testing_scores = []</span><br><span class="line">    for binarize in binarizes:</span><br><span class="line">        cls = naive_bayes.BernoulliNB(binarize=binarize)</span><br><span class="line">        cls.fit(X_train, y_train)</span><br><span class="line">        training_scores.append(cls.score(X_train, y_train))</span><br><span class="line">        testing_scores.append(cls.score(X_test, y_test))</span><br><span class="line">    # 绘图</span><br><span class="line">    fig = plt.figure()</span><br><span class="line">    ax = fig.add_subplot(1, 1, 1)</span><br><span class="line">    ax.plot(binarizes, training_scores, label=&quot;training score&quot;)</span><br><span class="line">    ax.plot(binarizes, testing_scores, label=&quot;testing score&quot;)</span><br><span class="line">    ax.set_xlabel(&quot;binarize&quot;)</span><br><span class="line">    ax.set_ylabel(&quot;score&quot;)</span><br><span class="line">    ax.set_ylim(0, 1.0)</span><br><span class="line">    ax.set_xlim(min_x - 1, max_x + 1)</span><br><span class="line">    ax.set_title(&quot;BernoullizNB&quot;)</span><br><span class="line">    ax.legend(loc=&quot;best&quot;)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/images/MachineLearning/BayesClassifier/20190727_ML_BernoulliNB_Binarize.png"></p>
+<p>当指定的binarize的最小值为样本集（包括测试集）所以特征的所有值中的最小值减去0.1，当binarize取最小值时所有特征的所有值都视为1；指定的binarize的最大值为样本集（包括测试集）所以特征的所有值中的最大值加上0.1，当binarize取最大值时所有特征的所有值都视为0。可以看到当binarize太小时，预测准确率断崖式下降，这是因为此时所有特征的所有值都视为0，此时对于伯努利贝叶斯分类器来讲，所有样本的所有特征之间没有任何区分，所以也无从预测。binarize的取值必须在样本集（包括测试集）所有特征的所有值的最小值和最大值之间，且最好能使得二元化之后的特征分布尽可能近似于原始特征的分布。</p>
+<blockquote>
+<p>可以将binarize取“（所有特征的所有值的最小值+所有特征所有值的最大值）/2”</p>
+</blockquote>
+<h2 id="递增式学习partial_fit方法">递增式学习partial_fit方法</h2>
+<p>朴素贝叶斯模型可以用来解决大规模的分类问题，其完整的训练集可能不适合放在内存中。为解决这个问题，上述三个分类器都有一个partial_fit方法，可以动态地增加数据来使用(online classifier)，能够用于递增式学习。</p>
+<p>partial_fit的原型为<code>partial_fit(X, y, classes=None, sample_weight=None)</code></p>
+<ul>
+<li>X: 样本数据</li>
+<li>y: 样本标记</li>
+<li>classes: 一个数组对象，形状为(n_classes,)，它列出了所有可能的类别。第一次调用partial_fit时，必须传入该参数，后续的调用不必传入。</li>
+<li>sample_weight: 一个数组对象，形状为(n_samples,)。给出每个样本的权重。如果未指定，则全为1.</li>
+</ul>
+<p>使用该方法时，最好每次的数据块都足够大，推荐每次填满整个内存。</p>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------Thank you for your reading-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/machine-learning/" rel="tag"># machine learning</a>
+          
+            <a href="/tags/notes/" rel="tag"># notes</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/bayes-classifier/" rel="tag"># bayes classifier</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/26/MachineLearning-Chapter-2-Decision-Tree/" rel="next" title="MachineLearning Chapter-2 Decision Tree">
+                <i class="fa fa-chevron-left"></i> MachineLearning Chapter-2 Decision Tree
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  
+    <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Rian Ng">
+  
+  <p class="site-author-name" itemprop="name">Rian Ng</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+
+
+  <nav class="site-state motion-element">
+    
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+
+
+  <div class="links-of-author motion-element">
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/fateicr" title="GitHub &rarr; https://github.com/fateicr" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:rian.ng@icloud.com" title="E-Mail &rarr; mailto:rian.ng@icloud.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+
+
+
+
+          
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法"><span class="nav-number">2.</span> <span class="nav-text">算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#贝叶斯定理"><span class="nav-number">2.1.</span> <span class="nav-text">贝叶斯定理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯法"><span class="nav-number">2.2.</span> <span class="nav-text">朴素贝叶斯法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原理"><span class="nav-number">2.2.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#朴素贝叶斯法的学习"><span class="nav-number">2.2.2.</span> <span class="nav-text">朴素贝叶斯法的学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#朴素贝叶斯法算法"><span class="nav-number">2.2.3.</span> <span class="nav-text">朴素贝叶斯法算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#贝叶斯估计"><span class="nav-number">2.2.4.</span> <span class="nav-text">贝叶斯估计</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#python实战"><span class="nav-number">3.</span> <span class="nav-text">Python实战</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#高斯贝叶斯分类器gaussiannb"><span class="nav-number">3.1.</span> <span class="nav-text">高斯贝叶斯分类器(GaussianNB)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多项式贝叶斯分类器multinomialnb"><span class="nav-number">3.2.</span> <span class="nav-text">多项式贝叶斯分类器(MultinomialNB)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#伯努利贝叶斯分类器bernoullinb"><span class="nav-number">3.3.</span> <span class="nav-text">伯努利贝叶斯分类器(BernoulliNB)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#递增式学习partial_fit方法"><span class="nav-number">3.4.</span> <span class="nav-text">递增式学习partial_fit方法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rian Ng</span>
+
+  
+
+  
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+    
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'avPCijx9DDWA8iHwVkFjgCwV-gzGzoHsz',
+    appKey: 'jagyRS4e9VYKtc0i3gJU5i7E',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: 'en' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
