@@ -18,8 +18,8 @@
   
   <entry>
     <title>MachineLearning Chapter-4 K-Nearest Neighbor</title>
-    <link href="http://yoursite.com/2019/07/28/MachineLearning/MachineLearning-Chapter-4-K-Nearest-Neighbor/"/>
-    <id>http://yoursite.com/2019/07/28/MachineLearning/MachineLearning-Chapter-4-K-Nearest-Neighbor/</id>
+    <link href="http://yoursite.com/2019/07/28/MachineLearning-Chapter-4-K-Nearest-Neighbor/"/>
+    <id>http://yoursite.com/2019/07/28/MachineLearning-Chapter-4-K-Nearest-Neighbor/</id>
     <published>2019-07-28T04:12:07.000Z</published>
     <updated>2019-07-28T06:24:59.809Z</updated>
     
@@ -51,8 +51,8 @@
   
   <entry>
     <title>MachineLearning Chapter-3 Bayes Classifier</title>
-    <link href="http://yoursite.com/2019/07/27/MachineLearning/MachineLearning-Chapter-3-Bayes-Classifier/"/>
-    <id>http://yoursite.com/2019/07/27/MachineLearning/MachineLearning-Chapter-3-Bayes-Classifier/</id>
+    <link href="http://yoursite.com/2019/07/27/MachineLearning-Chapter-3-Bayes-Classifier/"/>
+    <id>http://yoursite.com/2019/07/27/MachineLearning-Chapter-3-Bayes-Classifier/</id>
     <published>2019-07-27T04:20:01.000Z</published>
     <updated>2019-07-28T06:25:37.726Z</updated>
     
@@ -78,18 +78,18 @@
     
       <category term="machine learning" scheme="http://yoursite.com/tags/machine-learning/"/>
     
+      <category term="bayes classifier" scheme="http://yoursite.com/tags/bayes-classifier/"/>
+    
       <category term="python" scheme="http://yoursite.com/tags/python/"/>
     
       <category term="sklearn" scheme="http://yoursite.com/tags/sklearn/"/>
-    
-      <category term="bayes classifier" scheme="http://yoursite.com/tags/bayes-classifier/"/>
     
   </entry>
   
   <entry>
     <title>MachineLearning Chapter-2 Decision Tree</title>
-    <link href="http://yoursite.com/2019/07/26/MachineLearning/MachineLearning-Chapter-2-Decision-Tree/"/>
-    <id>http://yoursite.com/2019/07/26/MachineLearning/MachineLearning-Chapter-2-Decision-Tree/</id>
+    <link href="http://yoursite.com/2019/07/26/MachineLearning-Chapter-2-Decision-Tree/"/>
+    <id>http://yoursite.com/2019/07/26/MachineLearning-Chapter-2-Decision-Tree/</id>
     <published>2019-07-26T04:28:44.000Z</published>
     <updated>2019-07-28T06:25:05.357Z</updated>
     
@@ -121,8 +121,8 @@
   
   <entry>
     <title>MachineLearning Chapter-1 Linear Model</title>
-    <link href="http://yoursite.com/2019/07/24/MachineLearning/MachineLearning-Chapter-1-Linear-Model/"/>
-    <id>http://yoursite.com/2019/07/24/MachineLearning/MachineLearning-Chapter-1-Linear-Model/</id>
+    <link href="http://yoursite.com/2019/07/24/MachineLearning-Chapter-1-Linear-Model/"/>
+    <id>http://yoursite.com/2019/07/24/MachineLearning-Chapter-1-Linear-Model/</id>
     <published>2019-07-24T08:02:02.000Z</published>
     <updated>2019-07-28T06:25:03.011Z</updated>
     
@@ -144,18 +144,18 @@
     
       <category term="machine learning" scheme="http://yoursite.com/tags/machine-learning/"/>
     
-      <category term="linear model" scheme="http://yoursite.com/tags/linear-model/"/>
-    
       <category term="python" scheme="http://yoursite.com/tags/python/"/>
     
       <category term="sklearn" scheme="http://yoursite.com/tags/sklearn/"/>
+    
+      <category term="linear model" scheme="http://yoursite.com/tags/linear-model/"/>
     
   </entry>
   
   <entry>
     <title>My blog building experience</title>
-    <link href="http://yoursite.com/2019/07/19/Web/My-blog-building-experience/"/>
-    <id>http://yoursite.com/2019/07/19/Web/My-blog-building-experience/</id>
+    <link href="http://yoursite.com/2019/07/19/My-blog-building-experience/"/>
+    <id>http://yoursite.com/2019/07/19/My-blog-building-experience/</id>
     <published>2019-07-19T10:05:29.000Z</published>
     <updated>2019-07-28T06:27:25.939Z</updated>
     
