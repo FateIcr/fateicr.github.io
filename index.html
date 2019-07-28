@@ -387,6 +387,198 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/28/MachineLearning-Chapter-4-K-Nearest-Neighbor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rian Ng">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rian Ng">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/28/MachineLearning-Chapter-4-K-Nearest-Neighbor/" class="post-title-link" itemprop="url">MachineLearning Chapter-4 K-Nearest Neighbor</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-28 12:12:07 / Modified: 14:24:59" itemprop="dateCreated datePublished" datetime="2019-07-28T12:12:07+08:00">2019-07-28</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/2019/07/28/MachineLearning-Chapter-4-K-Nearest-Neighbor/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/28/MachineLearning-Chapter-4-K-Nearest-Neighbor/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="概述">概述</h1>
+<p>k近邻法(k-Nearest Neighbor, kNN)是机器学习所有算法中理论最简单，最好理解的算法。它是一种基本的分类与回归方法，它的输入为实例的特征向量，通过计算新数据与训练数据特征值之间的距离，然后选取<span class="math inline">\(K(K≥1)\)</span>个距离最近的邻居进行分类判断(投票法)或者回归。如果<span class="math inline">\(K=1\)</span>，那么新数据被简单地分配给其近邻的类。</p>
+<p>对于分类问题：输出为实例的类别。分类时，对于新的实例，根据其<span class="math inline">\(k\)</span>个最近邻的训练实例的类别，通过多数表决等方式进行预测。</p>
+<p>对于回归问题：输出为实例的值。回归时，对于新的实例，取其<span class="math inline">\(k\)</span>个最近邻的训练实例的平均值为预测值。</p>
+<p>k近邻法分类的直观理解：给定一个训练数据集，对于新的输入实例，在训练集中找到与该实例最邻近的<span class="math inline">\(k\)</span>个实例。这<span class="math inline">\(k\)</span>个实例的多数属于某个类别，则该输入实例就划分为这个类别。</p>
+<p>k近邻法不具有显式的学习过程，它是直接预测。实际上它是利用训练数据集对特征向量空间进行划分，并且作为其分类的“模型”。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/07/28/MachineLearning-Chapter-4-K-Nearest-Neighbor/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/27/MachineLearning-Chapter-3-Bayes-Classifier/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -432,13 +624,23 @@
                 
               
 
-              <time title="Created: 2019-07-27 12:20:01 / Modified: 14:57:28" itemprop="dateCreated datePublished" datetime="2019-07-27T12:20:01+08:00">2019-07-27</time>
+              <time title="Created: 2019-07-27 12:20:01" itemprop="dateCreated datePublished" datetime="2019-07-27T12:20:01+08:00">2019-07-27</time>
             </span>
           
 
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-07-28 14:25:37" itemprop="dateModified" datetime="2019-07-28T14:25:37+08:00">2019-07-28</time>
+              </span>
             
           
 
@@ -451,7 +653,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine learning</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a></span>
 
                 
                 
@@ -643,7 +845,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-07-27 14:57:27" itemprop="dateModified" datetime="2019-07-27T14:57:27+08:00">2019-07-27</time>
+                <time title="Modified: 2019-07-28 14:25:05" itemprop="dateModified" datetime="2019-07-28T14:25:05+08:00">2019-07-28</time>
               </span>
             
           
@@ -657,7 +859,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine learning</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a></span>
 
                 
                 
@@ -845,7 +1047,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-07-26 17:51:30" itemprop="dateModified" datetime="2019-07-26T17:51:30+08:00">2019-07-26</time>
+                <time title="Modified: 2019-07-28 14:25:03" itemprop="dateModified" datetime="2019-07-28T14:25:03+08:00">2019-07-28</time>
               </span>
             
           
@@ -859,7 +1061,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine learning</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a></span>
 
                 
                 
@@ -1047,7 +1249,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-07-25 15:10:10" itemprop="dateModified" datetime="2019-07-25T15:10:10+08:00">2019-07-25</time>
+                <time title="Modified: 2019-07-28 14:27:25" itemprop="dateModified" datetime="2019-07-28T14:27:25+08:00">2019-07-28</time>
               </span>
             
           
@@ -1061,7 +1263,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/web/" itemprop="url" rel="index"><span itemprop="name">web</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Web/" itemprop="url" rel="index"><span itemprop="name">Web</span></a></span>
 
                 
                 
@@ -1216,7 +1418,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1272,7 +1474,9 @@
         
           
         
-        <span class="site-state-item-count">9</span>
+          
+        
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">tags</span>
         </a>
       </div>
@@ -1855,6 +2059,8 @@
     
       
         
+      
+    
       
     
       
