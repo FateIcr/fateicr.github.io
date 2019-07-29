@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-07-28T06:24:59.809Z</updated>
+  <updated>2019-07-29T16:22:24.112Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,63 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>CTF Chapter-2 CTF-SSH</title>
+    <link href="http://yoursite.com/2019/07/29/CTF-Chapter-2-CTF-SSH/"/>
+    <id>http://yoursite.com/2019/07/29/CTF-Chapter-2-CTF-SSH/</id>
+    <published>2019-07-29T15:18:43.000Z</published>
+    <updated>2019-07-29T16:22:24.112Z</updated>
+    
+    <content type="html"><![CDATA[<a id="more"></a><h1 id="ctf-ssh-私钥泄漏">CTF-SSH 私钥泄漏</h1><p>实验环境：</p><ul><li>kali linux: 192.168.50.180</li><li>靶场机器: 192.168.50.112</li></ul><p>目的：获取靶场机器的flag值</p><h2 id="信息探测">信息探测</h2><p>对于只是给定一个对应IP地址的靶场机器，我们需要对其进行扫描，探测开放的服务。</p><p>渗透其实是针对服务的漏洞探测，然后进行对应的数据包发送，获取机器的最高权限。</p><p>挖掘开放服务信息：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sV 192.168.50.112</span><br></pre></td></tr></table></figure><p><img src="/images/CTF/CTF-SSH/20190729_CTF_nmap_sV.png"></p><h2 id="分析探测结果">分析探测结果</h2><p>每一个服务对应计算机的一个端口，用来进行通信。常用端口0～1023端口，在扫描结果中查找特征端口。</p><p>针对特殊端口进行探测，尤其对开发大端口的http服务进行排查。</p><h3 id="探测大端口的信息">探测大端口的信息</h3><p>对于开放http服务的大端口，可以采取http://ip:port/的形式访问。</p><p>查看源代码获取对应信息；如果没有flag信息，使用工具探测隐藏页面：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dirb http://ip:port/</span><br></pre></td></tr></table></figure><p><img src="/images/CTF/CTF-SSH/20190729_CTF_dirb.png"></p><h3 id="针对隐藏页面分析">针对隐藏页面分析</h3><ul><li>直接使用浏览器访问，查看效果、对应源代码。可能会获取到flag，或者下一步对应的提示。</li><li>挖掘ssh信息，不断访问获取更多泄漏的ssh秘钥信息。</li></ul><p>发现这里有两个敏感目录robots.txt和.ssh，打开robots.txt看看内容</p><p><img src="/images/CTF/CTF-SSH/20190729_CTF_robots.png"></p><p>这里有三个目录，打开taxes获得第一个flag</p><p><img src="/images/CTF/CTF-SSH/20190729_CTF_taxes.png"></p><p>下面我们看看敏感目录.ssh</p><p><img src="/images/CTF/CTF-SSH/20190729_CTF_ssh.png"></p><p>我们发现访问id_rsa和authorized_keys文件可以进行下载，这里就存在了私钥泄漏。</p><p>对私钥进行赋读写权限<code>chmod 600 文件名</code>，<code>ls -alh</code>查看权限。</p><p>有了私钥，我们就可以尝试使用ssh命令对靶场机器进行远程登陆，用户名可以在认证关键字文件中发现。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -i id_rsa simon@192.168.50.112</span><br></pre></td></tr></table></figure><p>但是在登录时要求我们输入密码。</p><h2 id="解密ssh密钥信息">解密ssh密钥信息</h2><p>使用ssh2john将id_rsa秘钥信息转换为john可以识别的信息。(安装:https://github.com/koboi137/john)</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod 600 id_rsa</span><br><span class="line">/opt/john/ssh2john.py id_rsa &gt; rsacrack</span><br></pre></td></tr></table></figure><p>利用字典解密rsacrack信息。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zcat /usr/share/wordlists/rockyou.txt.gz | john --pipe --rules rsacrack</span><br></pre></td></tr></table></figure><p>得到密码：starwars</p><p>成功远程登录！pwd查看下当前目录，ls查看下当前目录文件，发现并没有我们想要的。这时候我们应该想到去访问root目录。访问之后确实发现了flag.txt，但是我们确没有权限访问，这时候就是如何提权的问题了。</p><h2 id="提升权限">提升权限</h2><p>查找具有root权限的文件：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -perm -4000 2&gt;dev/null</span><br></pre></td></tr></table></figure><p>这条命令是从根目录开始查找，看哪些命令是具有执行权限的。其中<code>2&gt;dev/null</code>用于防止错误信息。</p><p>发现有一条命令是read_message，而我们目录下刚好有个read_message.c文件，查看一下，发现第二个flag和一段c代码。</p><p>从c代码可以看出，大概意思就是输入一段文字和已知字符串simon进行匹配，匹配成功输出一段文字和message目录下的一个文件。我们如果输入一个长度为20的数组，如果溢出会不会执行。</p><p>输入Simon匹配c，再加入十五个字符，最后再接/bin/sh提升权限。</p><p>成功提权，然后我们用提权后的用户去访问之前的flag.txt，拿到第三个flag。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h1 id=&quot;ctf-ssh-私钥泄漏&quot;&gt;CTF-SSH 私钥泄漏&lt;/h1&gt;
+&lt;p&gt;实验环境：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;kali linux: 192.168.50.180&lt;/li&gt;
+&lt;li&gt;靶场机器: 192.168.50.112&lt;/li
+      
+    
+    </summary>
+    
+      <category term="CTF" scheme="http://yoursite.com/categories/CTF/"/>
+    
+    
+      <category term="ctf" scheme="http://yoursite.com/tags/ctf/"/>
+    
+      <category term="ssh" scheme="http://yoursite.com/tags/ssh/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CTF Chapter-1 Introduction</title>
+    <link href="http://yoursite.com/2019/07/29/CTF-Chapter-1-Introduction/"/>
+    <id>http://yoursite.com/2019/07/29/CTF-Chapter-1-Introduction/</id>
+    <published>2019-07-29T14:23:14.000Z</published>
+    <updated>2019-07-29T15:22:56.813Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="介绍">介绍</h1><p>CTF(Capture the Flag)是当下一种流行的信息安全竞赛形式。其大致流程是，参数团队之间通过进行攻防对抗、程序分析等形式，率先从主办方给出的比赛环境中得到一串具有一定格式的字符串或其他内容，并将其提交给主办方，从而夺得分数。我们把这样的内容称之为"Flag"。</p><a id="more"></a><p>实验环境：</p><ul><li>攻击机：kali linux</li><li>靶场机器：linux</li></ul><p>目的：获取靶场机器上的flag值。</p><p>比赛环境的两种方式：</p><ul><li>给予在同一局域网中的攻击机和靶场机器，以web方式可以访问攻击机，通过攻击机来渗透靶场机器，获取对应的flag值。</li><li>给予一个网线接口，直接连接网线，进行渗透靶场机器，获取对应的flag值。</li></ul><h1 id="环境搭建">环境搭建</h1><p>安装软件：VM、Virtual box</p><p>创建靶场机器后，靶场机器要求登陆，可是我们并没有用户名和密码。如果不进行登陆，又如何获得靶场机器的IP地址？</p><p>这里我们在kali中先使用<code>ifconfig</code>命令取到当前IP地址为192.168.50.180，</p><p><img src="/images/CTF/Introduction/20190729_CTF_ifconfig.png"></p><p>然后使用netdiscover命令<code>netdiscover -r ip/netmask</code>来对靶场机器的IP进行探测。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netdiscover -r 192.168.50.1/24</span><br></pre></td></tr></table></figure><p><img src="/images/CTF/Introduction/20190729_CTF_netdiscover.png"></p><p>可以看到靶场机器的IP为：192.168.50.112</p><p>在得到了IP之后，我们还需要测试连通性，使用ping命令进行测试。</p><p><img src="/images/CTF/Introduction/20190729_CTF_ping.png"></p><p>我们可以看到，返回了对应的数据包，表明当前机器和靶场机器是连通的。如果没有返回对应值，那么靶场开启了防火墙。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;介绍&quot;&gt;介绍&lt;/h1&gt;
+&lt;p&gt;CTF(Capture the Flag)是当下一种流行的信息安全竞赛形式。其大致流程是，参数团队之间通过进行攻防对抗、程序分析等形式，率先从主办方给出的比赛环境中得到一串具有一定格式的字符串或其他内容，并将其提交给主办方，从而夺得分数。我们把这样的内容称之为&quot;Flag&quot;。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="CTF" scheme="http://yoursite.com/categories/CTF/"/>
+    
+    
+      <category term="ctf" scheme="http://yoursite.com/tags/ctf/"/>
+    
+      <category term="kali linux" scheme="http://yoursite.com/tags/kali-linux/"/>
+    
+  </entry>
   
   <entry>
     <title>MachineLearning Chapter-4 K-Nearest Neighbor</title>
@@ -78,11 +135,11 @@
     
       <category term="machine learning" scheme="http://yoursite.com/tags/machine-learning/"/>
     
-      <category term="bayes classifier" scheme="http://yoursite.com/tags/bayes-classifier/"/>
-    
       <category term="python" scheme="http://yoursite.com/tags/python/"/>
     
       <category term="sklearn" scheme="http://yoursite.com/tags/sklearn/"/>
+    
+      <category term="bayes classifier" scheme="http://yoursite.com/tags/bayes-classifier/"/>
     
   </entry>
   
@@ -144,11 +201,11 @@
     
       <category term="machine learning" scheme="http://yoursite.com/tags/machine-learning/"/>
     
+      <category term="linear model" scheme="http://yoursite.com/tags/linear-model/"/>
+    
       <category term="python" scheme="http://yoursite.com/tags/python/"/>
     
       <category term="sklearn" scheme="http://yoursite.com/tags/sklearn/"/>
-    
-      <category term="linear model" scheme="http://yoursite.com/tags/linear-model/"/>
     
   </entry>
   

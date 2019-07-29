@@ -100,13 +100,24 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Rian Ng">
-<meta property="og:url" content="http://yoursite.com/tags/knn/index.html">
+  <meta name="description" content="CTF-SSH 私钥泄漏 实验环境：  kali linux: 192.168.50.180 靶场机器: 192.168.50.112  目的：获取靶场机器的flag值 信息探测 对于只是给定一个对应IP地址的靶场机器，我们需要对其进行扫描，探测开放的服务。 渗透其实是针对服务的漏洞探测，然后进行对应的数据包发送，获取机器的最高权限。 挖掘开放服务信息： 1nmap -sV 192.168.50">
+<meta name="keywords" content="ctf,ssh">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CTF Chapter-2 CTF-SSH">
+<meta property="og:url" content="http://yoursite.com/2019/07/29/CTF-Chapter-2-CTF-SSH/index.html">
 <meta property="og:site_name" content="Rian Ng">
+<meta property="og:description" content="CTF-SSH 私钥泄漏 实验环境：  kali linux: 192.168.50.180 靶场机器: 192.168.50.112  目的：获取靶场机器的flag值 信息探测 对于只是给定一个对应IP地址的靶场机器，我们需要对其进行扫描，探测开放的服务。 渗透其实是针对服务的漏洞探测，然后进行对应的数据包发送，获取机器的最高权限。 挖掘开放服务信息： 1nmap -sV 192.168.50">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/CTF/CTF-SSH/20190729_CTF_nmap_sV.png">
+<meta property="og:image" content="http://yoursite.com/images/CTF/CTF-SSH/20190729_CTF_dirb.png">
+<meta property="og:image" content="http://yoursite.com/images/CTF/CTF-SSH/20190729_CTF_robots.png">
+<meta property="og:image" content="http://yoursite.com/images/CTF/CTF-SSH/20190729_CTF_taxes.png">
+<meta property="og:image" content="http://yoursite.com/images/CTF/CTF-SSH/20190729_CTF_ssh.png">
+<meta property="og:updated_time" content="2019-07-29T16:22:24.112Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Rian Ng">
+<meta name="twitter:title" content="CTF Chapter-2 CTF-SSH">
+<meta name="twitter:description" content="CTF-SSH 私钥泄漏 实验环境：  kali linux: 192.168.50.180 靶场机器: 192.168.50.112  目的：获取靶场机器的flag值 信息探测 对于只是给定一个对应IP地址的靶场机器，我们需要对其进行扫描，探测开放的服务。 渗透其实是针对服务的漏洞探测，然后进行对应的数据包发送，获取机器的最高权限。 挖掘开放服务信息： 1nmap -sV 192.168.50">
+<meta name="twitter:image" content="http://yoursite.com/images/CTF/CTF-SSH/20190729_CTF_nmap_sV.png">
 
 
 
@@ -116,7 +127,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/tags/knn/">
+  <link rel="canonical" href="http://yoursite.com/2019/07/29/CTF-Chapter-2-CTF-SSH/">
 
 
 
@@ -127,7 +138,7 @@
 </script>
 
   
-  <title>Tag: knn | Rian Ng</title>
+  <title>CTF Chapter-2 CTF-SSH | Rian Ng</title>
   
 
 
@@ -175,7 +186,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -245,7 +256,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
 
     
     
@@ -366,86 +377,303 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>knn<small>Tag</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/29/CTF-Chapter-2-CTF-SSH/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rian Ng">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rian Ng">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2019/07/28/MachineLearning-Chapter-4-K-Nearest-Neighbor/" itemprop="url">
-            
-              <span itemprop="name">MachineLearning Chapter-4 K-Nearest Neighbor</span>
-            
-          </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">CTF Chapter-2 CTF-SSH
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-28T12:12:07+08:00" content="2019-07-28">
-          07-28
-        </time>
-      </div>
+              
+            
+          </h1>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
 
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-29 23:18:43" itemprop="dateCreated datePublished" datetime="2019-07-29T23:18:43+08:00">2019-07-29</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-07-30 00:22:24" itemprop="dateModified" datetime="2019-07-30T00:22:24+08:00">2019-07-30</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/2019/07/29/CTF-Chapter-2-CTF-SSH/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/29/CTF-Chapter-2-CTF-SSH/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+                 Views:  
+                <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+            </span>
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <a id="more"></a>
+<h1 id="ctf-ssh-私钥泄漏">CTF-SSH 私钥泄漏</h1>
+<p>实验环境：</p>
+<ul>
+<li>kali linux: 192.168.50.180</li>
+<li>靶场机器: 192.168.50.112</li>
+</ul>
+<p>目的：获取靶场机器的flag值</p>
+<h2 id="信息探测">信息探测</h2>
+<p>对于只是给定一个对应IP地址的靶场机器，我们需要对其进行扫描，探测开放的服务。</p>
+<p>渗透其实是针对服务的漏洞探测，然后进行对应的数据包发送，获取机器的最高权限。</p>
+<p>挖掘开放服务信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sV 192.168.50.112</span><br></pre></td></tr></table></figure>
+<p><img src="/images/CTF/CTF-SSH/20190729_CTF_nmap_sV.png"></p>
+<h2 id="分析探测结果">分析探测结果</h2>
+<p>每一个服务对应计算机的一个端口，用来进行通信。常用端口0～1023端口，在扫描结果中查找特征端口。</p>
+<p>针对特殊端口进行探测，尤其对开发大端口的http服务进行排查。</p>
+<h3 id="探测大端口的信息">探测大端口的信息</h3>
+<p>对于开放http服务的大端口，可以采取http://ip:port/的形式访问。</p>
+<p>查看源代码获取对应信息；如果没有flag信息，使用工具探测隐藏页面：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dirb http://ip:port/</span><br></pre></td></tr></table></figure>
+<p><img src="/images/CTF/CTF-SSH/20190729_CTF_dirb.png"></p>
+<h3 id="针对隐藏页面分析">针对隐藏页面分析</h3>
+<ul>
+<li>直接使用浏览器访问，查看效果、对应源代码。可能会获取到flag，或者下一步对应的提示。</li>
+<li>挖掘ssh信息，不断访问获取更多泄漏的ssh秘钥信息。</li>
+</ul>
+<p>发现这里有两个敏感目录robots.txt和.ssh，打开robots.txt看看内容</p>
+<p><img src="/images/CTF/CTF-SSH/20190729_CTF_robots.png"></p>
+<p>这里有三个目录，打开taxes获得第一个flag</p>
+<p><img src="/images/CTF/CTF-SSH/20190729_CTF_taxes.png"></p>
+<p>下面我们看看敏感目录.ssh</p>
+<p><img src="/images/CTF/CTF-SSH/20190729_CTF_ssh.png"></p>
+<p>我们发现访问id_rsa和authorized_keys文件可以进行下载，这里就存在了私钥泄漏。</p>
+<p>对私钥进行赋读写权限<code>chmod 600 文件名</code>，<code>ls -alh</code>查看权限。</p>
+<p>有了私钥，我们就可以尝试使用ssh命令对靶场机器进行远程登陆，用户名可以在认证关键字文件中发现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -i id_rsa simon@192.168.50.112</span><br></pre></td></tr></table></figure>
+<p>但是在登录时要求我们输入密码。</p>
+<h2 id="解密ssh密钥信息">解密ssh密钥信息</h2>
+<p>使用ssh2john将id_rsa秘钥信息转换为john可以识别的信息。(安装:https://github.com/koboi137/john)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod 600 id_rsa</span><br><span class="line">/opt/john/ssh2john.py id_rsa &gt; rsacrack</span><br></pre></td></tr></table></figure>
+<p>利用字典解密rsacrack信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zcat /usr/share/wordlists/rockyou.txt.gz | john --pipe --rules rsacrack</span><br></pre></td></tr></table></figure>
+<p>得到密码：starwars</p>
+<p>成功远程登录！pwd查看下当前目录，ls查看下当前目录文件，发现并没有我们想要的。这时候我们应该想到去访问root目录。访问之后确实发现了flag.txt，但是我们确没有权限访问，这时候就是如何提权的问题了。</p>
+<h2 id="提升权限">提升权限</h2>
+<p>查找具有root权限的文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -perm -4000 2&gt;dev/null</span><br></pre></td></tr></table></figure>
+<p>这条命令是从根目录开始查找，看哪些命令是具有执行权限的。其中<code>2&gt;dev/null</code>用于防止错误信息。</p>
+<p>发现有一条命令是read_message，而我们目录下刚好有个read_message.c文件，查看一下，发现第二个flag和一段c代码。</p>
+<p>从c代码可以看出，大概意思就是输入一段文字和已知字符串simon进行匹配，匹配成功输出一段文字和message目录下的一个文件。我们如果输入一个长度为20的数组，如果溢出会不会执行。</p>
+<p>输入Simon匹配c，再加入十五个字符，最后再接/bin/sh提升权限。</p>
+<p>成功提权，然后我们用提权后的用户去访问之前的flag.txt，拿到第三个flag。</p>
 
       
     </div>
 
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------Thank you for your reading-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/ctf/" rel="tag"># ctf</a>
+          
+            <a href="/tags/ssh/" rel="tag"># ssh</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/29/CTF-Chapter-1-Introduction/" rel="next" title="CTF Chapter-1 Introduction">
+                <i class="fa fa-chevron-left"></i> CTF Chapter-1 Introduction
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
 
         </div>
         
@@ -465,8 +693,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
 
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -606,6 +843,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ctf-ssh-私钥泄漏"><span class="nav-number">1.</span> <span class="nav-text">CTF-SSH 私钥泄漏</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#信息探测"><span class="nav-number">1.1.</span> <span class="nav-text">信息探测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析探测结果"><span class="nav-number">1.2.</span> <span class="nav-text">分析探测结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#探测大端口的信息"><span class="nav-number">1.2.1.</span> <span class="nav-text">探测大端口的信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#针对隐藏页面分析"><span class="nav-number">1.2.2.</span> <span class="nav-text">针对隐藏页面分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解密ssh密钥信息"><span class="nav-number">1.3.</span> <span class="nav-text">解密ssh密钥信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提升权限"><span class="nav-number">1.4.</span> <span class="nav-text">提升权限</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -755,6 +1009,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
 
   <script src="/js/next-boot.js?v=7.2.0"></script>
 
@@ -794,6 +1052,8 @@
 
 
 
+
+  
 
 
   
