@@ -100,24 +100,18 @@
   };
 </script>
 
-  <meta name="description" content="CTF-SSH 私钥泄漏 实验环境：  kali linux: 192.168.50.180 靶场机器: 192.168.50.112  目的：获取靶场机器的flag值 信息探测 对于只是给定一个对应IP地址的靶场机器，我们需要对其进行扫描，探测开放的服务。 渗透其实是针对服务的漏洞探测，然后进行对应的数据包发送，获取机器的最高权限。 挖掘开放服务信息： 1nmap -sV 192.168.50">
-<meta name="keywords" content="ctf,kali linux,ssh">
+  <meta name="description" content="方法名称：规划问题求解 在数学建模中的应用场合：多约束线性规划、整数规划和不太复杂的多约束非线性、整数规划">
+<meta name="keywords" content="matlab,mcm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CTF Chapter-2 CTF-SSH">
-<meta property="og:url" content="http://yoursite.com/2019/07/29/CTF-Chapter-2-CTF-SSH/index.html">
+<meta property="og:title" content="MATLAB Chapter-2 规划问题">
+<meta property="og:url" content="http://yoursite.com/2019/07/31/MATLAB-Chapter-2-规划问题/index.html">
 <meta property="og:site_name" content="Rian Ng">
-<meta property="og:description" content="CTF-SSH 私钥泄漏 实验环境：  kali linux: 192.168.50.180 靶场机器: 192.168.50.112  目的：获取靶场机器的flag值 信息探测 对于只是给定一个对应IP地址的靶场机器，我们需要对其进行扫描，探测开放的服务。 渗透其实是针对服务的漏洞探测，然后进行对应的数据包发送，获取机器的最高权限。 挖掘开放服务信息： 1nmap -sV 192.168.50">
+<meta property="og:description" content="方法名称：规划问题求解 在数学建模中的应用场合：多约束线性规划、整数规划和不太复杂的多约束非线性、整数规划">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/images/CTF/CTF-SSH/20190729_CTF_nmap_sV.png">
-<meta property="og:image" content="http://yoursite.com/images/CTF/CTF-SSH/20190729_CTF_dirb.png">
-<meta property="og:image" content="http://yoursite.com/images/CTF/CTF-SSH/20190729_CTF_robots.png">
-<meta property="og:image" content="http://yoursite.com/images/CTF/CTF-SSH/20190729_CTF_taxes.png">
-<meta property="og:image" content="http://yoursite.com/images/CTF/CTF-SSH/20190729_CTF_ssh.png">
-<meta property="og:updated_time" content="2019-07-29T16:23:45.838Z">
+<meta property="og:updated_time" content="2019-07-31T14:14:56.711Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CTF Chapter-2 CTF-SSH">
-<meta name="twitter:description" content="CTF-SSH 私钥泄漏 实验环境：  kali linux: 192.168.50.180 靶场机器: 192.168.50.112  目的：获取靶场机器的flag值 信息探测 对于只是给定一个对应IP地址的靶场机器，我们需要对其进行扫描，探测开放的服务。 渗透其实是针对服务的漏洞探测，然后进行对应的数据包发送，获取机器的最高权限。 挖掘开放服务信息： 1nmap -sV 192.168.50">
-<meta name="twitter:image" content="http://yoursite.com/images/CTF/CTF-SSH/20190729_CTF_nmap_sV.png">
+<meta name="twitter:title" content="MATLAB Chapter-2 规划问题">
+<meta name="twitter:description" content="方法名称：规划问题求解 在数学建模中的应用场合：多约束线性规划、整数规划和不太复杂的多约束非线性、整数规划">
 
 
 
@@ -127,7 +121,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2019/07/29/CTF-Chapter-2-CTF-SSH/">
+  <link rel="canonical" href="http://yoursite.com/2019/07/31/MATLAB-Chapter-2-规划问题/">
 
 
 
@@ -138,7 +132,7 @@
 </script>
 
   
-  <title>CTF Chapter-2 CTF-SSH | Rian Ng</title>
+  <title>MATLAB Chapter-2 规划问题 | Rian Ng</title>
   
 
 
@@ -397,7 +391,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/29/CTF-Chapter-2-CTF-SSH/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/31/MATLAB-Chapter-2-规划问题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Rian Ng">
@@ -414,7 +408,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">CTF Chapter-2 CTF-SSH
+          <h1 class="post-title" itemprop="name headline">MATLAB Chapter-2 规划问题
 
               
             
@@ -440,23 +434,13 @@
                 
               
 
-              <time title="Created: 2019-07-29 23:18:43" itemprop="dateCreated datePublished" datetime="2019-07-29T23:18:43+08:00">2019-07-29</time>
+              <time title="Created: 2019-07-31 20:28:20 / Modified: 22:14:56" itemprop="dateCreated datePublished" datetime="2019-07-31T20:28:20+08:00">2019-07-31</time>
             </span>
           
 
           
             
 
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-07-30 00:23:45" itemprop="dateModified" datetime="2019-07-30T00:23:45+08:00">2019-07-30</time>
-              </span>
             
           
 
@@ -469,7 +453,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/MCM/" itemprop="url" rel="index"><span itemprop="name">MCM</span></a></span>
 
                 
                 
@@ -487,8 +471,8 @@
                 </span>
             
                 <span class="post-meta-item-text">Comments: </span>
-                <a href="/2019/07/29/CTF-Chapter-2-CTF-SSH/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/29/CTF-Chapter-2-CTF-SSH/" itemprop="commentCount"></span>
+                <a href="/2019/07/31/MATLAB-Chapter-2-规划问题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/31/MATLAB-Chapter-2-规划问题/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -529,59 +513,126 @@
       
 
       
-        <a id="more"></a>
-<h1 id="ctf-ssh-私钥泄漏">CTF-SSH 私钥泄漏</h1>
-<p>实验环境：</p>
-<ul>
-<li>kali linux: 192.168.50.180</li>
-<li>靶场机器: 192.168.50.112</li>
-</ul>
-<p>目的：获取靶场机器的flag值</p>
-<h2 id="信息探测">信息探测</h2>
-<p>对于只是给定一个对应IP地址的靶场机器，我们需要对其进行扫描，探测开放的服务。</p>
-<p>渗透其实是针对服务的漏洞探测，然后进行对应的数据包发送，获取机器的最高权限。</p>
-<p>挖掘开放服务信息：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sV 192.168.50.112</span><br></pre></td></tr></table></figure>
-<p><img src="/images/CTF/CTF-SSH/20190729_CTF_nmap_sV.png"></p>
-<h2 id="分析探测结果">分析探测结果</h2>
-<p>每一个服务对应计算机的一个端口，用来进行通信。常用端口0～1023端口，在扫描结果中查找特征端口。</p>
-<p>针对特殊端口进行探测，尤其对开发大端口的http服务进行排查。</p>
-<h3 id="探测大端口的信息">探测大端口的信息</h3>
-<p>对于开放http服务的大端口，可以采取http://ip:port/的形式访问。</p>
-<p>查看源代码获取对应信息；如果没有flag信息，使用工具探测隐藏页面：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dirb http://ip:port/</span><br></pre></td></tr></table></figure>
-<p><img src="/images/CTF/CTF-SSH/20190729_CTF_dirb.png"></p>
-<h3 id="针对隐藏页面分析">针对隐藏页面分析</h3>
-<ul>
-<li>直接使用浏览器访问，查看效果、对应源代码。可能会获取到flag，或者下一步对应的提示。</li>
-<li>挖掘ssh信息，不断访问获取更多泄漏的ssh秘钥信息。</li>
-</ul>
-<p>发现这里有两个敏感目录robots.txt和.ssh，打开robots.txt看看内容</p>
-<p><img src="/images/CTF/CTF-SSH/20190729_CTF_robots.png"></p>
-<p>这里有三个目录，打开taxes获得第一个flag</p>
-<p><img src="/images/CTF/CTF-SSH/20190729_CTF_taxes.png"></p>
-<p>下面我们看看敏感目录.ssh</p>
-<p><img src="/images/CTF/CTF-SSH/20190729_CTF_ssh.png"></p>
-<p>我们发现访问id_rsa和authorized_keys文件可以进行下载，这里就存在了私钥泄漏。</p>
-<p>对私钥进行赋读写权限<code>chmod 600 文件名</code>，<code>ls -alh</code>查看权限。</p>
-<p>有了私钥，我们就可以尝试使用ssh命令对靶场机器进行远程登陆，用户名可以在认证关键字文件中发现。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -i id_rsa simon@192.168.50.112</span><br></pre></td></tr></table></figure>
-<p>但是在登录时要求我们输入密码。</p>
-<h2 id="解密ssh密钥信息">解密ssh密钥信息</h2>
-<p>使用ssh2john将id_rsa秘钥信息转换为john可以识别的信息。(安装:https://github.com/koboi137/john)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod 600 id_rsa</span><br><span class="line">/opt/john/ssh2john.py id_rsa &gt; rsacrack</span><br></pre></td></tr></table></figure>
-<p>利用字典解密rsacrack信息。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zcat /usr/share/wordlists/rockyou.txt.gz | john --pipe --rules rsacrack</span><br></pre></td></tr></table></figure>
-<p>得到密码：starwars</p>
-<p>成功远程登录！pwd查看下当前目录，ls查看下当前目录文件，发现并没有我们想要的。这时候我们应该想到去访问root目录。访问之后确实发现了flag.txt，但是我们确没有权限访问，这时候就是如何提权的问题了。</p>
-<h2 id="提升权限">提升权限</h2>
-<p>查找具有root权限的文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -perm -4000 2&gt;dev/null</span><br></pre></td></tr></table></figure>
-<p>这条命令是从根目录开始查找，看哪些命令是具有执行权限的。其中<code>2&gt;dev/null</code>用于防止错误信息。</p>
-<p>发现有一条命令是read_message，而我们目录下刚好有个read_message.c文件，查看一下，发现第二个flag和一段c代码。</p>
-<p>从c代码可以看出，大概意思就是输入一段文字和已知字符串simon进行匹配，匹配成功输出一段文字和message目录下的一个文件。我们如果输入一个长度为20的数组，如果溢出会不会执行。</p>
-<p>输入Simon匹配c，再加入十五个字符，最后再接/bin/sh提升权限。</p>
-<p>成功提权，然后我们用提权后的用户去访问之前的flag.txt，拿到第三个flag。</p>
+        <p>方法名称：规划问题求解</p>
+<p>在数学建模中的应用场合：多约束线性规划、整数规划和不太复杂的多约束非线性、整数规划</p>
+<a id="more"></a>
+<h1 id="线性规划">线性规划</h1>
+<h2 id="线性规划的实例与定义">线性规划的实例与定义</h2>
+<p>【例2-1】中央电视台为改版后的节目播放两套宣传片。其中宣传片甲播映时间为3.5min，广告时间为30s，收视观众为60万人；宣传片乙播映时间为1min，广告时间为1min，收视观众为20万人。广告公司规定每周至少有3.5min广告，而电视台每周只能为该栏目宣传片提高不多于16min的节目时间。电视台每周应播映两套宣传片各多少次才能使得收视观众最多？</p>
+<p>分析：建模是解决线性规划问题极为重要的环节和技术。一个正确的数学模型的建立要求建模者熟悉规划问题的生产和管理内容，明确目标要求和错综复杂的约束条件。首先将已知数据列在下表：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">类别</th>
+<th style="text-align: center;">播放片甲</th>
+<th style="text-align: center;">播放片乙</th>
+<th style="text-align: center;">节目要求</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">片集时间/min</td>
+<td style="text-align: center;">3.5</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">≤16</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">广告时间/min</td>
+<td style="text-align: center;">0.5</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">≥3.5，≤16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">收视观众/万人</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<p>设电视台每周应播映片甲<span class="math inline">\(x\)</span>次，片乙<span class="math inline">\(y\)</span>次，总收视观众为<span class="math inline">\(z\)</span>万人，则</p>
+<p>目标函数：</p>
+<p><span class="math display">\[\max z = 60x+20y\]</span></p>
+<p>约束条件：</p>
+<p><span class="math display">\[4x+2y≤16 \\ 0.5x+y≥3.5 \\ x,y\in N\]</span></p>
+<p>其中，变量<span class="math inline">\(x,y\)</span>称为决策变量。加上目标函数和约束条件即为一规划问题数学模型的三个要素。由于上面的目标函数及约束条件均为线性函数，故被称为线性规划问题。</p>
+<p>在解决实际问题时，把问题归结成一个线性规划数学模型是很重要的一步，但往往也是困难的一步，模型建立的是否恰当直接影响到求解。而选取适当的决策变量，是建立有效模型的关键之一。</p>
+<h2 id="线性规划的matlab标准形式">线性规划的MATLAB标准形式</h2>
+<p>线性规划的目标函数可以是求最大值，也可以是求最小值；约束条件的不等号可以是小于号也可以是大于号。为例避免形式多样性带来的不便，MATLAB中规定线性规划的标准形式为：</p>
+<p><span class="math display">\[\min_xc^Tx \quad s.t.\ Ax≤b\]</span></p>
+<p>其中，<span class="math inline">\(c\)</span>和<span class="math inline">\(x\)</span>为<span class="math inline">\(n\)</span>维列向量；<span class="math inline">\(b\)</span>为<span class="math inline">\(m\)</span>维列向量；<span class="math inline">\(A\)</span>为<span class="math inline">\(m\times n\)</span>矩阵。</p>
+<p>例如线性规划<span class="math inline">\(max_xc^Tx \quad s.t. \ Ax≥b\)</span>的MATLAB标准型为<span class="math inline">\(min_x-c^Tx\quad s.t.\ -Ax≤-b\)</span></p>
+<h2 id="线性规划问题解的概念">线性规划问题解的概念</h2>
+<p>一般线性规划问题的标准型为：</p>
+<p><span class="math display">\[\min z=\sum_{j=1}^nc_jx_j\\ s.t. \ \sum_{j=1}^na_{ij}x_j≤b_j,\ i=1,2,…,m\]</span></p>
+<p>满足约束条件式的解<span class="math inline">\(x=(x_1,x_2,…,x_n)\)</span>称为线性规划问题的可行解，而使目标函数达到最小值的可行解称为最优解。所有可行解构成的集合称为问题的可行域，记为<span class="math inline">\(R\)</span>。</p>
+<h2 id="求解线性规划的matlab解法">求解线性规划的MATLAB解法</h2>
+<p>若线性规划问题有有限最优解，则一定有某个最优解是可行区域的一个极点。基于此，单纯形法的基本思路是：先找出可行域的一个极点，据一定规则判断其是否最优，否则转换到与之相邻的另一极点，并使目标函数值更优；如此下去，直到找到某一最优解为止。</p>
+<p>MATLAB中线性规划的标准型为：</p>
+<p><span class="math display">\[\min_xc^Tx \quad s.t.\ Ax≤b\]</span></p>
+<p>基本函数形式为linprog(c, A, b)，它的返回值是向量<span class="math inline">\(x\)</span>的值。还有其他一些函数调用形式，如：<code>[x, fval] = linprog(c, A, b, Aeq, beq, LB, UB, X0, OPTIONS)</code>。其中，fval返回目标函数的值；Aeq和beq对应等式约束<span class="math inline">\(Ax=b\)</span>；LB和UB分别是变量x的下界和上界；X0是x的初始值；OPTIONS是控制参数。</p>
+<p>【例2-2】求解线性规划问题：<span class="math display">\[\min z = 2x_1+3x_2+x_3\\s.t.\ x_1+4x_2+2x_3≥8\\3x_1+2x_2≥6\\x_1,x_2,x_3≥0\]</span></p>
+<p>MATLAB程序如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">c = [2; 3; 1];</span><br><span class="line">a = [1, 4, 2; 3, 2, 0];</span><br><span class="line">b = [8; 6];</span><br><span class="line">[x, y] = linprog(c, -a, -b, [], [], zeros(3, 1))  % []代替Aeq和beq表示缺省</span><br></pre></td></tr></table></figure>
+<p>【例2-3】求解下面的优化问题：<span class="math display">\[\min z=-5x_1-4x_2-6x_3\\s.t.\ x_1-x_2+x_3≤20\\3x_1+2x_2+4x_3≤42\\3x_1+2x_2≤30\\0≤x_1,0≤x_2,0≤x_3\]</span></p>
+<p>解：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; f = [-5; -4; -6];</span><br><span class="line">&gt;&gt; A = [1 -1 1; 3 2 4; 3 2 0];</span><br><span class="line">&gt;&gt; b = [20; 42; 30];</span><br><span class="line">&gt;&gt; lb = zeros(3, 1);</span><br><span class="line">&gt;&gt; [x, fval, exitflag, output, lambda] = linprog(f, A, b, [], [], lb)</span><br></pre></td></tr></table></figure>
+<p>结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">x =  % 最优解</span><br><span class="line">         0</span><br><span class="line">   15.0000</span><br><span class="line">    3.0000</span><br><span class="line">fval =  % 最优值</span><br><span class="line">   -78</span><br><span class="line">exitflag =  % 收敛</span><br><span class="line">     1</span><br><span class="line">output = </span><br><span class="line">         iterations: 3  % 迭代次数</span><br><span class="line">    constrviolation: 0</span><br><span class="line">            message: &apos;Optimal solution found.&apos;</span><br><span class="line">          algorithm: &apos;dual-simplex&apos;  % 所使用规则</span><br><span class="line">      firstorderopt: 1.7764e-15</span><br><span class="line">lambda = </span><br><span class="line">      lower: [3×1 double]</span><br><span class="line">      upper: [3×1 double]</span><br><span class="line">      eqlin: []</span><br><span class="line">    ineqlin: [3×1 double]</span><br><span class="line">&gt;&gt; lambda.ineqlin</span><br><span class="line">ans =</span><br><span class="line">         0</span><br><span class="line">    1.5000</span><br><span class="line">    0.5000</span><br><span class="line">&gt;&gt; lambda.lower</span><br><span class="line">ans =</span><br><span class="line">    1.0000</span><br><span class="line">         0</span><br><span class="line">         0</span><br></pre></td></tr></table></figure>
+<p>【例2-4】求解下列线性规划问题：<span class="math display">\[\max_z=2x_1+3x_2-5x_3\\s.t.\ x_1+x_2+x_3=7\\2x_1-5x_2+x_3≥10\\x_1,x_2,x_3≥0\]</span></p>
+<p>解：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">c = [2; 3; -5];</span><br><span class="line">a = [-2, 5, -1];</span><br><span class="line">b = -10;</span><br><span class="line">aeq = [1, 1, 1];</span><br><span class="line">beq = 7;</span><br><span class="line">x = linprog(-c, a, b, aeq, beq, zeros(3,1))</span><br></pre></td></tr></table></figure>
+<p>【例2-5】求解下列线性规划问题：<span class="math display">\[\max z=170.8582x_1-17.7254x_2+41.2582x_3+2.2182x_4+131.8182x_5-500000\\s.t.\ x_1-0.17037x_2-0.5324x_3+x_5≤0\\0.17037x_2+0.5324x_3≤888115\\x_1+32\%x_2+x_3≤166805\\x_2≤521265.625\\x_3+x_4≤683400\\x_4+x_5≥660000\\x_j≥0,j=1,2,3,4,5\]</span></p>
+<p>解：为了便于求解，将上述求解最大值线性规划问题转化成求解最小值问题：<span class="math display">\[\min z&#39;=-170.8582x_1+17.7254x_2-41.2582x_3-2.2182x_4-131.8182x_5+500000x_6\\s.t.\ x_1-0.17037x_2-0.5324x_3+x_5≤0\\0.17037x_2+0.5324x_3≤888115\\x_1+32\%x_2+x_3≤166805\\x_2≤521265.625\\x_3+x_4≤683400\\-x_4-x_5≤-660000\\x_6=1\\x_j≥0,j=1,2,3,4,5\]</span></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">f = [-170.8582 17.7254 -41.2582 -2.2182 -131.8182 500000];</span><br><span class="line">A = [1 -0.17037 -0.5324 0 1 0; 0 0.17037 0.5324 0 0 0; 1 0.32 1 0 0 0; 0 1 0 0 0 0; 0 0 1 1 0 0; 0 0 0 -1 -1 0];</span><br><span class="line">b = [0; 888115; 166805; 521265.625; 683400; -660000];</span><br><span class="line">Aeq = [0 0 0 0 0 1];</span><br><span class="line">beq = [1];</span><br><span class="line">lb = [0; 0; 0; 0; 0; 0];</span><br><span class="line">[x, fval, exitflag, output, lambda] = linprog(f, A, b, Aeq, beq, lb, [])</span><br></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">x =</span><br><span class="line">   1.0e+05 *</span><br><span class="line">         0</span><br><span class="line">    1.7062</span><br><span class="line">    1.1221</span><br><span class="line">    5.7119</span><br><span class="line">    0.8881</span><br><span class="line">    0.0000</span><br><span class="line">fval =</span><br><span class="line">  -1.4079e+07</span><br></pre></td></tr></table></figure>
+<p>即<span class="math display">\[x_1=0,x_2=170618,x_3=112207,x_4=571193,x_5=88807,x_6=1\\\min z&#39;=-14078646,\max z=-\min z&#39;=14078646\]</span></p>
+<h1 id="非线性规划">非线性规划</h1>
+<p>如果目标函数或约束条件中包含非线性函数，就称这种规划问题为非线性规划问题。一般说来，解非线性规划要比解线性规划问题困难得多，而且非线性规划也不像线性规划那样有单纯形法这一通用方法。非线性规划目前还没有适用于各种问题的一般算法，各种方法都有自己特定的适用范围。</p>
+<p>【例2-6】投资决策问题：某企业有<span class="math inline">\(n\)</span>个项目可供选择投资，并且至少要对其中一个项目投资。已知该企业拥有总资金<span class="math inline">\(A\)</span>元，投资于第<span class="math inline">\(i(i=1,2,…,n)\)</span>个项目需花资金<span class="math inline">\(a_i\)</span>元，并预计可收益<span class="math inline">\(b_i\)</span>元。试选择最佳投资方案。</p>
+<p>解：设投资决策变量为</p>
+<p><span class="math display">\[x_i = \left\{ \begin{array}{l} 1,决定投资第i个项目\\0,决定不投资第i个项目\end{array},i=1,2,…,n\right.\]</span></p>
+<p>则投资总额为<span class="math inline">\(\sum_{i=1}^na_ix_i\)</span>，投资总收益为<span class="math inline">\(\sum_{i=1}^nb_ix_i\)</span>。</p>
+<p>因为该公司至少要对一个项目投资，并且总的投资金额不能超过总资金<span class="math inline">\(A\)</span>，故有限制条件：</p>
+<p><span class="math display">\[0&lt;\sum_{i=1}^na_ix_i≤A\]</span></p>
+<p>由于<span class="math inline">\(x_i(i=1,2,…,n)\)</span>只取值0或1，所以还有：</p>
+<p><span class="math display">\[x_i(1-x_i)=0,i=1,2,…,n\]</span></p>
+<p>另外，该公司至少要对一个项目投资，因此有：</p>
+<p><span class="math display">\[\sum_{i=1}^nx_i≥1\]</span></p>
+<p>最佳投资方案应是投资额最小而总收益最大的方案，所以这个最佳投资决策问题归结为在总资金以及决策变量的限制条件下，极大化利润与总投资之差。因此，其数学模型为：</p>
+<p><span class="math display">\[\max Q=\sum_{i=1}^nb_ix_i-\sum_{i=1}^na_ix_i\\s.t.\ \left\{\begin{array}{l}0&lt;\sum_{i=1}^na_ix_i≤A\\x_i(1-x_i)=0,i=1,2,…,n\\\sum_{i=1}^nx_i≥1\end{array}\right.\]</span></p>
+<p>该例是在一组等式或不等式的约束下，求一个函数的最大值问题，其中目标函数或约束条件中至少有一个非线性函数，这类问题称之为非线性规划问题，简记为(NP)。可概括为一般形式：</p>
+<p><span class="math display">\[\min f(x)\\ s.t.\ h_j(x)≤0, j=1,2,…,q\\g_i(x)=0,i=1,2,…,p\]</span></p>
+<p>其中，<span class="math inline">\(x=[x_1\ x_2\ …\ x_n]^T\)</span>称为模型(NP)的决策变量；<span class="math inline">\(f\)</span>称为目标函数；<span class="math inline">\(g_i(i=1,2,…,p)\)</span>和<span class="math inline">\(h_i(j=1,2,…,q)\)</span>称为约束函数。另外，<span class="math inline">\(g_i(x)=0(i=1,2,…,p)\)</span>称为等式约束；<span class="math inline">\(h_j(x)≤0(j=1,2,…,q)\)</span>称为不等式约束。</p>
+<h2 id="非线性规划的matlab解法">非线性规划的MATLAB解法</h2>
+<p>在MATLAB中非线性规划的数学模型可写成以下形式：</p>
+<p><span class="math display">\[\min f(x)\\s.t.\left\{ \begin{array}{l} Ax≤B\\ Aeq·x=Beq\\ C(x)≤0\\ Ceq(x)=0\end{array}\right.\]</span></p>
+<p>其中，<span class="math inline">\(f(x)\)</span>是标量函数；<span class="math inline">\(A,B,Aeq,Beq\)</span>是相应维数的矩阵和向量；<span class="math inline">\(C(x),Ceq(x)\)</span>是非线性向量函数。</p>
+<p>MATLAB中的命令是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X = FMINCON(FUN, X0, A, B, Aeq, Beq, LB, UB, NONLCON, OPTIONS)</span><br></pre></td></tr></table></figure>
+<p>它的返回值是向量<span class="math inline">\(x\)</span>。其中，FUN是用M文件定义的函数f(x)。X0是<span class="math inline">\(x\)</span>的初始值。A,B,Aeq,Beq定义了线性约束<span class="math inline">\(Ax≤B,Aeq·x=Beq\)</span>，如果没有线性约束，则A=[],B=[],Aeq=[],Beq=[]。LB和UB是变量<span class="math inline">\(x\)</span>的下界和上界，如果上界和下界没有约束，则LB=[],UB=[]；如果<span class="math inline">\(x\)</span>无下界，则LB=-inf；如果<span class="math inline">\(x\)</span>无上界，则UB=inf。NONLCON是用M文件定义的非线性向量函数<span class="math inline">\(C(x),Ceq(x)\)</span>。OPTIONS定义了优化参数，可以使用MATLAB默认的参数设置。</p>
+<p>【例2-7】求下列非线性规划问题：</p>
+<p><span class="math display">\[\min f(x)=x_1^2+x_2^2+8\\s.t.\left\{\begin{array}{l}x_1^2-x_2≥0\\ -x_1-x_2^2+2=0\\ x_1,x_2≥0\end{array}\right.\]</span></p>
+<p>编写M文件fun1.m和fun2.m</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">function f = fun1(x);</span><br><span class="line">f = x(1)^2+x(2)^2+8;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function [g, h] = fun2(x);</span><br><span class="line">g = -x(1)^2+x(2);</span><br><span class="line">h = -x(1)-x(2)^2+2;  % 等式约束</span><br></pre></td></tr></table></figure>
+<p>在MATLAB中执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">options = optimset;</span><br><span class="line">[x, y] = fmincon(&apos;fun1&apos;, rand(2,1), [], [], [], [], zeros(2,1), [], &apos;fun2&apos;, options)</span><br></pre></td></tr></table></figure>
+<p>就可以求得当<span class="math inline">\(x_1=1、x_2=1\)</span>时，最小值<span class="math inline">\(y=10\)</span>。</p>
+<p>【例2-8】求下列非线性规划问题：</p>
+<p><span class="math display">\[\max z = \sqrt{x_1}+\sqrt{x_2}+\sqrt{x_3}+\sqrt{x_4}\\s.t.\left\{\begin{array}{l}x_1≤400\\ 1.1x_1+x_2≤440\\1.21x_1+1.1x_2+x_3≤484\\1.331x_1+1.21x_2+1.1x_3+x_4≤532.4\\ x_i≥0,i=1,2,3,4\end{array}\right.\]</span></p>
+<p>编写M文件，定义目标函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">function f = fun44(x)</span><br><span class="line">f = -(sqrt(x(1))+sqrt(x(2))+sqrt(x(3))+sqrt(x(4)));</span><br></pre></td></tr></table></figure>
+<p>编写M文件，定义约束条件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function [g, ceq] = mycon1(x)</span><br><span class="line">g(1) = x(1)-400;</span><br><span class="line">g(2) = 1.1*x(1)+x(2)-440;</span><br><span class="line">g(3) = 1.21*x(1)+1.1*x(2)+x(3)-484;</span><br><span class="line">g(4) = 1.331*x(1)+1.21*x(2)+1.1*x(3)+x(4)-532.4;</span><br><span class="line">ceq = 0;</span><br></pre></td></tr></table></figure>
+<p>编写主程序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">x0 = [1; 1; 1; 1];</span><br><span class="line">lb = [0; 0; 0; 0];</span><br><span class="line">ub = [];</span><br><span class="line">A = [];</span><br><span class="line">b = [];</span><br><span class="line">Aeq = [];</span><br><span class="line">beq = [];</span><br><span class="line">[x, fval] = fmincon(&apos;fun44&apos;, x0, A, b, Aeq, beq, lb, ub, &apos;mycon1&apos;)</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x =</span><br><span class="line">   86.1883</span><br><span class="line">  104.2878</span><br><span class="line">  126.1883</span><br><span class="line">  152.6879</span><br><span class="line">fval =</span><br><span class="line">  -43.0860</span><br></pre></td></tr></table></figure>
+<p>所以最终结果为：</p>
+<p><span class="math display">\[x_1=86.19,x_2=104.29,x_3=126.19,x_4=152.69,z=-(-43.09)=43.09\]</span></p>
+<h2 id="二次规划">二次规划</h2>
 
       
     </div>
@@ -622,11 +673,9 @@
         
         <div class="post-tags">
           
-            <a href="/tags/ctf/" rel="tag"># ctf</a>
+            <a href="/tags/matlab/" rel="tag"># matlab</a>
           
-            <a href="/tags/kali-linux/" rel="tag"># kali linux</a>
-          
-            <a href="/tags/ssh/" rel="tag"># ssh</a>
+            <a href="/tags/mcm/" rel="tag"># mcm</a>
           
         </div>
       
@@ -639,8 +688,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/29/CTF-Chapter-1-Introduction/" rel="next" title="CTF Chapter-1 Introduction">
-                <i class="fa fa-chevron-left"></i> CTF Chapter-1 Introduction
+              <a href="/2019/07/31/MATLAB-Chapter-1-数学建模常规方法/" rel="next" title="MATLAB Chapter-1 数学建模常规方法">
+                <i class="fa fa-chevron-left"></i> MATLAB Chapter-1 数学建模常规方法
               </a>
             
           </div>
@@ -648,10 +697,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/31/MachineLearning-Chapter-5-Dimensionality-Reduction/" rel="prev" title="MachineLearning Chapter-5 Dimensionality Reduction">
-                MachineLearning Chapter-5 Dimensionality Reduction <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -868,7 +913,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ctf-ssh-私钥泄漏"><span class="nav-number">1.</span> <span class="nav-text">CTF-SSH 私钥泄漏</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#信息探测"><span class="nav-number">1.1.</span> <span class="nav-text">信息探测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析探测结果"><span class="nav-number">1.2.</span> <span class="nav-text">分析探测结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#探测大端口的信息"><span class="nav-number">1.2.1.</span> <span class="nav-text">探测大端口的信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#针对隐藏页面分析"><span class="nav-number">1.2.2.</span> <span class="nav-text">针对隐藏页面分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解密ssh密钥信息"><span class="nav-number">1.3.</span> <span class="nav-text">解密ssh密钥信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提升权限"><span class="nav-number">1.4.</span> <span class="nav-text">提升权限</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线性规划"><span class="nav-number">1.</span> <span class="nav-text">线性规划</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线性规划的实例与定义"><span class="nav-number">1.1.</span> <span class="nav-text">线性规划的实例与定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性规划的matlab标准形式"><span class="nav-number">1.2.</span> <span class="nav-text">线性规划的MATLAB标准形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性规划问题解的概念"><span class="nav-number">1.3.</span> <span class="nav-text">线性规划问题解的概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#求解线性规划的matlab解法"><span class="nav-number">1.4.</span> <span class="nav-text">求解线性规划的MATLAB解法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#非线性规划"><span class="nav-number">2.</span> <span class="nav-text">非线性规划</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#非线性规划的matlab解法"><span class="nav-number">2.1.</span> <span class="nav-text">非线性规划的MATLAB解法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二次规划"><span class="nav-number">2.2.</span> <span class="nav-text">二次规划</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1389,7 +1434,7 @@
         onPopupClose();
       }
     });
-  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </script>
 
 
 
@@ -1405,6 +1450,46 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
   
 
 
